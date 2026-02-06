@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "965276931515",
+    "project_id": "ozteam2final",
+    "storage_bucket": "ozteam2final.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965276931515:android:29590a01e2f8174b35a09e",
+        "android_client_info": {
+          "package_name": "com.firebase.OZTeam2Final"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_TU8sxhHu_aSfjS2wkG3bdSzoL9qrEOc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

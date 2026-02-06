@@ -1,0 +1,6 @@
+@TeamProjectServer_HostAddress = http://localhost:5016
+
+GET {{TeamProjectServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

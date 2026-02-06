@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Icon
+  m_EditorClassIdentifier: 
+  m_GroupName: Icon
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 654b2f53ec90e924d86bc9a9e9d952b1
+  m_SerializeEntries:
+  - m_GUID: 2d60751bf70967541befe08edef3d3fc
+    m_Address: ICON_SWORD_WOOD
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Weapon
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0a53ac3cbffadee45bf38f678cba0aa8, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 58bdeaccc36d99344bc8c842b829e9d8, type: 2}
+    - {fileID: 11400000, guid: fe258fdecc138334183a1033f6ec3af1, type: 2}

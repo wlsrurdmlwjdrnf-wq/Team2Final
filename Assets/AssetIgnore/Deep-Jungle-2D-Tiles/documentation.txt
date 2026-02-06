@@ -1,0 +1,118 @@
+
+
+Here’s a new documentation template for a pack of 40 tileable 2D textures designed for background use in platformer games, with simple and clear steps for beginners.
+
+---
+
+# **Tileable 2D Texture Pack Documentation**
+
+```
+       /\  /\  /\          /\  /\  /\
+      /  \/  \/  \  /\    /  \/  \/  \
+     /  /\  /\  /\ \/ \  /  /\  /\  /\
+    /__/__\/__\/__\__/\/__/__\/__\/__\
+  TILEABLE TEXTURES FOR 2D PLATFORMERS
+              - JUNGLE PACK -
+```
+
+---
+
+## **Package Name**  
+_Author: Supatronix
+_Version: 1.0_  
+
+---
+
+### **Summary**
+
+This pack contains 40 tileable 2D textures designed for platformer games, perfect for creating seamless background environments like forests, caves, jungles, and more. Each texture is 1024x1024 pixels and tileable for easy use in repeating patterns.
+
+### **Features**
+
+- 40 seamless, tileable textures
+- Designed for 2D backgrounds (platformers, side-scrollers)
+- Easy to implement and swap between textures
+- Optimized for mobile and desktop
+
+---
+
+### **Technical Guide**
+
+#### **Getting Started**
+
+1. **Import the Package into Unity:**
+   - In Unity, go to `Assets` → `Import Package` → `Custom Package...`.
+   - Select the `.unitypackage` file and click `Import`.
+   - You will find the textures in `Assets/[PackageName]/Textures`.
+
+2. **Create a New Canvas:**
+   - Right-click in the **Hierarchy** window → `UI` → `Canvas`.
+   - Rename the Canvas for easier management (e.g., “Background Canvas”).
+   - Adjust the **Canvas** settings as needed (e.g., set `Render Mode` to `Screen Space - Camera` for games).
+
+3. **Create a 2D Sprite for Background:**
+   - Right-click in the **Hierarchy** window → `2D Object` → `Sprite`.
+   - Select the sprite and, in the **Inspector** window, assign one of the textures by dragging it into the `Sprite Renderer`'s `Sprite` field.
+
+4. **Adjust Sprite Settings:**
+   - Use the **Rect Transform** tool to adjust the size and position of the sprite to fit the background.
+   - In the `Sprite Renderer` settings, ensure that the **Draw Mode** is set to `Tiled` for repeating patterns.
+
+#### **Swapping Between Textures**
+
+1. To swap the background texture, select the sprite in the **Hierarchy**.
+2. In the **Inspector**, drag and drop a new texture into the `Sprite Renderer`'s `Sprite` field.
+3. Your background will automatically update to the new texture. You can swap textures at any time to match different levels or environments in your game.
+
+---
+
+### **Technical Specifications**
+
+- **Texture Format**: PNG  
+- **Resolution**: 1024x1024 pixels  
+- **Tileable**: Yes  
+- **Texture Type**: Sprite (2D and UI)
+- **Recommended Import Settings**:  
+  - **Texture Type**: Sprite (2D and UI)  
+  - **Sprite Mode**: Single  
+  - **Pixels Per Unit**: 100 (default)  
+  - **Filter Mode**: Point (for crisp pixel art)  
+  - **Compression**: None (for highest quality)
+
+---
+
+### **To-Do Steps**
+
+1. **Ensure Unity Version**  
+   Make sure you're using Unity 2020.3 or higher for optimal performance.
+
+2. **Import Package**  
+   Follow the steps in the technical guide to import the textures into your project.
+
+3. **Set Up Background Sprite**  
+   Create a sprite object, adjust its size to fit the screen, and assign a texture to it.
+
+4. **Use Tiled Mode**  
+   Set the sprite to `Tiled` mode to create a repeating pattern. Adjust the size and tiling as needed.
+
+5. **Swap Textures**  
+   Swap textures easily via the `Sprite Renderer` in the Inspector to test different designs.
+
+---
+
+### **Contact & Support**
+
+For any support or questions, feel free to reach out at supatronix@pm.me. We're happy to help!
+
+**Thank you for using the Tileable 2D Texture Pack!**
+
+---
+
+```
+         ^   ^^       ^^^   ^    ^^^
+      ^^^  ^^^  ^^^   ^^^^^  ^   ^^^  ^
+   ^^    ^^   ^^^^^    ^^   ^^  ^^  ^  ^^^
+^^   ^^^^^  ^^^ ^^^   ^^     ^^   ^^^ ^^ 
+   THE JUNGLE AWAITS - IMMERSE YOURSELF!
+```
+
