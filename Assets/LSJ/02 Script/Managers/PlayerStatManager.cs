@@ -100,10 +100,21 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         MarkDirty();
     }
 
-    public void RemoveModifier(StatModifier modifier)
+    public bool RemoveModifier(StatModifier modifier)
     {
-        _modifiers.Remove(modifier);
-        MarkDirty();
+        for (int i = 0; i < _modifiers.Count; i++)
+        {
+            var m = _modifiers[i];
+            if (m.statType == modifier.statType &&
+                m.operation == modifier.operation &&
+                Mathf.Approximately(m.value, modifier.value))
+            {
+                _modifiers.RemoveAt(i); 
+                MarkDirty();
+                return true;
+            }
+        }
+        return false;
     }
     // 모디파이어 객체 비교 쉽게 하는 거 추가하기
 

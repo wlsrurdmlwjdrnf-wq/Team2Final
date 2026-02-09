@@ -1,6 +1,53 @@
+using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class MonsterContainer : MonoBehaviour
 {
-    // 몬스터 배치 및 스폰
+    [SerializeField] private List<GameObject> monsterPrefabs;
+    [SerializeField] private int spawnCount = 10;
+    [SerializeField] private float spawnAreaWidth = 20f;
+    [SerializeField] private float minDistance = 2.5f;
+    [SerializeField] private float yFixedPosition = 1f; // 고정
+
+    private void OnEnable()
+    {
+        SpawnMonsters();
+    }
+
+    private void SpawnMonsters()
+    {
+        float startX = transform.position.x;
+        float endX = startX + spawnAreaWidth;
+
+        List<float> xPositions = GetValidXPositions(spawnCount, startX, endX);
+
+        for (int i = 0; i < spawnCount && i < xPositions.Count; i++)
+        {
+            float x = xPositions[i];
+
+            // 랜덤 프리팹 선택
+            GameObject prefab = monsterPrefabs[Random.Range(0, monsterPrefabs.Count)];
+            PoolManager2.Instance.Get(prefab, new Vector3(x, yFixedPosition, 0), Quaternion.identity,transform);
+        }
+    }
+
+    private List<float> GetValidXPositions(int count, float start, float end)
+    {
+        List<float> positions = new List<float>();
+        for (int i = 0; i < count; i++)
+        {
+            float candidate;
+            int tries = 0;
+            do
+            {
+                candidate = Random.Range(start, end);
+                tries++;
+            } while (positions.Exists(p => Mathf.Abs(p - candidate) < minDistance) && tries < 50);
+
+            positions.Add(candidate);
+        }
+        positions.Sort();
+        return positions;
+    }
 }

@@ -5,13 +5,12 @@ using UnityEngine;
 public class PlayerKnockBackState : IEntityState
 {
     private readonly Player _player;
-    private WaitForSeconds _knockBackDuration = new WaitForSeconds(1f);
+    private WaitForSeconds _knockBackDuration = new WaitForSeconds(0.7f);
     public PlayerKnockBackState(Player player) => _player = player;
     public void OnEnter()
     {
         _player.LockState(true);
 
-        _player.Animator.speed = 1f;
         _player.Animator.SetInteger("AttackIndex", 0);
         _player.Animator.SetBool("IsKnockBack", true);
 

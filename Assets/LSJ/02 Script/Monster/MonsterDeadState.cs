@@ -9,12 +9,8 @@ public class MonsterDeadState : IEntityState
     public MonsterDeadState(MonsterBase monster) => _monster = monster;
     public void OnEnter() 
     {
-        _monster.LockState(true);
-
         _monster.Animator.SetBool("IsAttacking",false);
         _monster.Animator.SetBool("IsDead",true);
-
-        _monster.GetComponent<Collider2D>().enabled = false;
     }
     public void OnUpdate() { }
     public void OnFixedUpdate() { }

@@ -12,6 +12,7 @@ public class Player : EntityStateMachine
 
     private Animator _anim;
     private SpriteRenderer _sr;
+    private Collider2D _col;
 
     private float _lastAttackTime;
 
@@ -23,6 +24,7 @@ public class Player : EntityStateMachine
 
     public Animator Animator => _anim;
     public SpriteRenderer SpriteRenderer => _sr;
+    public Collider2D Collider => _col;
     public Transform AttackPoint => _attackPoint;
     public LayerMask MonsterLayer => _monsterLayer;
     public float AttackRange => _attackRange;
@@ -43,7 +45,7 @@ public class Player : EntityStateMachine
 
         _anim = GetComponent<Animator>();
         _sr = GetComponent<SpriteRenderer>();
-        _lastAttackTime = Time.time;
+        _col = GetComponent<Collider2D>();
 
         // 상태 초기화
         IdleState = new PlayerIdleState(this);
@@ -51,10 +53,13 @@ public class Player : EntityStateMachine
         SkillState = new PlayerSkillState(this);
         KnockBackState = new PlayerKnockBackState(this);
         DeadState = new PlayerDeadState(this);
-
+    }
+    private void OnEnable()
+    {
+        _col.enabled = true;
+        _lastAttackTime = Time.time;
         ChangeState(IdleState);
     }
-
     public bool CanAttack()
     {
         return Time.time >= _lastAttackTime + (1f / PlayerStatManager.Instance.AttackSpeed);
@@ -82,5 +87,32 @@ public class Player : EntityStateMachine
     private void OnDisable()
     {
         OnKnockBack -= ChangeKnockBackState;
+    }
+
+    // Animation Event가 부를 함수
+    public void OnAttackHit()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(
+            AttackPoint.position,
+            AttackRange,
+            MonsterLayer
+        );
+        if (hits.Length > 0)
+        {
+            IDamageable target = hits[0].GetComponent<IDamageable>();
+            if (target != null)
+            {
+                BigNumber damage = PlayerStatManager.Instance.AttackPower;
+                // 크리티컬
+                if (UnityEngine.Random.value < PlayerStatManager.Instance.CritRate)
+                {
+                    damage *= PlayerStatManager.Instance.CritDamage;
+                }
+                target.TakeDamage(damage);
+                LastAttackTime = Time.time;
+
+                // 이펙트나 사운드 넣으면 될 듯
+            }
+        }
     }
 }

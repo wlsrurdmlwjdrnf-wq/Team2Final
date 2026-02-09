@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MonsterBase : EntityStateMachine, IDamageable
+public class MonsterBase : EntityStateMachine, IDamageable, IPoolable
 {
     [SerializeField] protected MonsterBaseStatsSO _baseStats;
 
     protected Animator _anim;
     protected SpriteRenderer _sr;
+    protected Collider2D _col;
     public string Name { get; protected set; }
     public BigNumber CurrentHP {  get; protected set; }
     public BigNumber CurrentAtk { get; protected set; }
@@ -17,6 +18,7 @@ public class MonsterBase : EntityStateMachine, IDamageable
     public MonsterDeadState DeadState { get; protected set; }
     public Animator Animator => _anim;
     public SpriteRenderer SpriteRenderer => _sr;
+    public Collider2D Collider => _col;
 
     protected virtual void Awake()
     {
@@ -27,14 +29,19 @@ public class MonsterBase : EntityStateMachine, IDamageable
 
         IdleState = new MonsterIdleState(this);
         DeadState = new MonsterDeadState(this);
-
-        ChangeState(IdleState);
     }
-    protected void OnEnable()
+    public void OnSpawn()
     {
+        _col.enabled = true;
         CurrentHP = MonsterStatCorrection(_baseStats.baseMaxHP);
         CurrentAtk = MonsterStatCorrection(_baseStats.baseAttackPower);
         CurrentDef = MonsterStatCorrection(_baseStats.baseDefensivePower);
+
+        ChangeState(IdleState);
+    }
+    public void OnDespawn()
+    {
+        _col.enabled = false;
     }
     public void TakeDamage(BigNumber amount)
     {
@@ -50,6 +57,7 @@ public class MonsterBase : EntityStateMachine, IDamageable
     protected void Die()
     {
         ChangeState(DeadState);
+        OnDespawn();
     }
 
     // 스테이지에 따른 스탯 수치 보정
