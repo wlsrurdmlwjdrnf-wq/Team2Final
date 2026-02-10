@@ -1,4 +1,6 @@
+
 #if UNITY_EDITOR
+
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -8,24 +10,24 @@ public static class DatabaseBuilder
     [MenuItem("Tools/Generate/Weapon Database")]
     public static void GenerateWeaponDatabase()
     {
-        // Àú °æ·Î¿¡¼­ ¾ÆÀÌÅÛµ¥ÀÌÅÍSOÀÎ ³à¼®µé guid °¡Á®¿È
+        // ì € ê²½ë¡œì—ì„œ ì•„ì´í…œë°ì´í„°SOì¸ ë…€ì„ë“¤ guid ê°€ì ¸ì˜´
         string[] guids = AssetDatabase.FindAssets("t:ItemDataSO", new[] { "Assets/JSH/SO/Weapon" });
         List<ItemDataSO> items = new List<ItemDataSO>();
 
         foreach (string guid in guids)
         {
-            //guid > ¿¡¼Â °íÀ¯ ÁÖ¼Ò°°Àº°Å
+            //guid > ì—ì…‹ ê³ ìœ  ì£¼ì†Œê°™ì€ê±°
             string path = AssetDatabase.GUIDToAssetPath(guid);
-            //ÁÖ¼Ò ¹Ş¾Æ¼­ ½ÇÁ¦ µ¥ÀÌÅÍ ¹Ş¾Æ¿È
+            //ì£¼ì†Œ ë°›ì•„ì„œ ì‹¤ì œ ë°ì´í„° ë°›ì•„ì˜´
             ItemDataSO item = AssetDatabase.LoadAssetAtPath<ItemDataSO>(path);
             if (item != null && item.Type == EDataType.Weapon)
                 items.Add(item);
         }
-        //ÀÌ °æ·Î¿¡ µ¥ÀÌÅÍº£ÀÌ½º°¡ ÀÖÀ¸¸é °¡Á®¿À°í
+        //ì´ ê²½ë¡œì— ë°ì´í„°ë² ì´ìŠ¤ê°€ ìˆìœ¼ë©´ ê°€ì ¸ì˜¤ê³ 
         string dbPath = "Assets/JSH/SO/WeaponDatabase.asset";
         ItemDatabaseSO database = AssetDatabase.LoadAssetAtPath<ItemDatabaseSO>(dbPath);
 
-        //¾øÀ¸¸é »ı¼º
+        //ì—†ìœ¼ë©´ ìƒì„±
         if (database == null)
         {
             database = ScriptableObject.CreateInstance<ItemDatabaseSO>();
@@ -33,8 +35,8 @@ public static class DatabaseBuilder
         }
 
         database.items = items;
-        EditorUtility.SetDirty(database);  //º¯°æµÈ ¿¡¼ÂÀ» Ç¥½ÃÇØÁÜ
-        AssetDatabase.SaveAssets();  //º¯°æµÊ(SetDirty) Ç¥½ÃµÈ ¿¡¼ÂÀ» ½ÇÁ¦·Î µğ½ºÅ©¿¡ ÀúÀå
+        EditorUtility.SetDirty(database);  //ë³€ê²½ëœ ì—ì…‹ì„ í‘œì‹œí•´ì¤Œ
+        AssetDatabase.SaveAssets();  //ë³€ê²½ë¨(SetDirty) í‘œì‹œëœ ì—ì…‹ì„ ì‹¤ì œë¡œ ë””ìŠ¤í¬ì— ì €ì¥
 
         Debug.Log($"WeaponDatabaseSO : {items.Count}");
     }

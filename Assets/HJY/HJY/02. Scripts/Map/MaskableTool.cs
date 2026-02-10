@@ -1,15 +1,18 @@
+
 #if UNITY_EDITOR
+
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
-// ÇÏÀÌ¾î¶óÅ° Ã¢¿¡¼­ ¼±ÅÃÇÑ ¿ÀºêÁ§Æ® ¼Ó Image ÄÄÆ÷³ÍÆ®ÀÇ maskableÀ» ²¨¼­ ÀÌ¹ÌÁö°¡ º¸ÀÌ°Ô ¸¸µê
-// mask ¿µ¿ª ¾Æ´Ï¾îµµ º¸ÀÌ°Ô²û Á¶ÀıÇØ¼­ ÀÌ¹ÌÁö ÆíÁıÇÏ±â ½±°Ô ¸¸µå´Â ±â´ÉÀÓ
-// ÆíÁıÀÌ ³¡³ª¸é maskableÀ» ´Ù½Ã ÄÑ¼­ ºÒÇÊ¿äÇÑ ¸¶½ºÅ© °è»êÀ» ÁÙ¿©¼­ ¼º´É °³¼±ÇÒ °Í!!!
+// í•˜ì´ì–´ë¼í‚¤ ì°½ì—ì„œ ì„ íƒí•œ ì˜¤ë¸Œì íŠ¸ ì† Image ì»´í¬ë„ŒíŠ¸ì˜ maskableì„ êº¼ì„œ ì´ë¯¸ì§€ê°€ ë³´ì´ê²Œ ë§Œë“¦
+// mask ì˜ì—­ ì•„ë‹ˆì–´ë„ ë³´ì´ê²Œë” ì¡°ì ˆí•´ì„œ ì´ë¯¸ì§€ í¸ì§‘í•˜ê¸° ì‰½ê²Œ ë§Œë“œëŠ” ê¸°ëŠ¥ì„
+// í¸ì§‘ì´ ëë‚˜ë©´ maskableì„ ë‹¤ì‹œ ì¼œì„œ ë¶ˆí•„ìš”í•œ ë§ˆìŠ¤í¬ ê³„ì‚°ì„ ì¤„ì—¬ì„œ ì„±ëŠ¥ ê°œì„ í•  ê²ƒ!!!
 public class MaskableTool
 {
     [MenuItem("Tools/Maskable/Disable Selected")]
-    // ¼±ÅÃÇÑ ¸ğµç ¿ÀºêÁ§Æ®ÀÇ Image ÄÄÆ÷³ÍÆ® maskableÀ» ²¨¶ó
+    // ì„ íƒí•œ ëª¨ë“  ì˜¤ë¸Œì íŠ¸ì˜ Image ì»´í¬ë„ŒíŠ¸ maskableì„ êº¼ë¼
     static void DisableSelected()
     {
         foreach (var obj in Selection.gameObjects)
@@ -22,7 +25,7 @@ public class MaskableTool
     }
 
     [MenuItem("Tools/Maskable/Enable Selected")]
-    // ¼±ÅÃÇÑ ¸ğµç ¿ÀºêÁ§Æ®ÀÇ Image ÄÄÆ÷³ÍÆ® maskableÀ» ÄÑ¶ó
+    // ì„ íƒí•œ ëª¨ë“  ì˜¤ë¸Œì íŠ¸ì˜ Image ì»´í¬ë„ŒíŠ¸ maskableì„ ì¼œë¼
     static void EnableSelected()
     {
         foreach (var obj in Selection.gameObjects)
