@@ -3,7 +3,7 @@ using TMPro;
 using DG.Tweening;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class DamageText : MonoBehaviour, IPoolable
+public class DamageText : MonoBehaviour, IPoolable2
 {
     [SerializeField] private TextMeshProUGUI tmpText;
 

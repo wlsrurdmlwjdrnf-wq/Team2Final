@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public interface IPoolable
+public interface IPoolable2
 {
     void OnSpawn(); 
     void OnDespawn(); 
@@ -68,7 +68,7 @@ public class PoolManager2 : Singleton<PoolManager2>
     private void OnTakeFromPool(GameObject obj)
     {
         obj.SetActive(true);
-        if (obj.TryGetComponent<IPoolable>(out var poolable))
+        if (obj.TryGetComponent<IPoolable2>(out var poolable))
         {
             poolable.OnSpawn();
         }
@@ -76,7 +76,7 @@ public class PoolManager2 : Singleton<PoolManager2>
 
     private void OnReturnedToPool(GameObject obj)
     {
-        if (obj.TryGetComponent<IPoolable>(out var poolable))
+        if (obj.TryGetComponent<IPoolable2>(out var poolable))
         {
             poolable.OnDespawn();
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MonsterBase : EntityStateMachine, IDamageable, IPoolable
+public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
 {
     [SerializeField] protected MonsterBaseStatsSO _baseStats;
     [SerializeField] protected GameObject _damageTextPrefab;
