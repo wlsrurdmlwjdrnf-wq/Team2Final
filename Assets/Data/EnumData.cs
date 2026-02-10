@@ -2,7 +2,6 @@ public enum ElementType
 {
     Fire,
 }
-
 public enum GradeType
 {     
     Normal,
@@ -10,7 +9,8 @@ public enum GradeType
     Rare,
     Heroic,
     Legendary,
-    Mythical
+    Mythical,
+    Immortal
 }
 
 public enum Tier
