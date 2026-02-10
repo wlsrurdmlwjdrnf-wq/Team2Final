@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerKnockBackState : IEntityState
 {
     private readonly Player _player;
-    private WaitForSeconds _knockBackDuration = new WaitForSeconds(0.7f);
+    private WaitForSeconds _knockBackDuration = new WaitForSeconds(0.6f); // 넉백 애니메이션 길이
     public PlayerKnockBackState(Player player) => _player = player;
     public void OnEnter()
     {

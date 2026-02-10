@@ -18,24 +18,29 @@ public class PlayerAttackState : IEntityState
         while (_attackIndex == rand) rand = Random.Range(1, 4);
         _attackIndex = rand;
 
-        _player.Animator.SetInteger("AttackIndex", _attackIndex);
+        if (_player.CanAttack())
+        {
+            _player.LastAttackTime = Time.time;
+            _player.Animator.SetInteger("AttackIndex", _attackIndex);
+        }
+        else
+            _player.Animator.Play("Stand");
+
+        Debug.Log("ATTACK");
     }
 
     public void OnUpdate()
     {
-        if (_player.CanAttack())
-        {
-            Collider2D hit = Physics2D.OverlapCircle(
-                _player.AttackPoint.position,
-                _player.AttackRange,
-                _player.MonsterLayer
-            );
+        Collider2D hit = Physics2D.OverlapCircle(
+            _player.AttackPoint.position,
+            _player.AttackRange,
+            _player.MonsterLayer
+        );
 
-            if (hit == null)
-                _player.ChangeState(_player.IdleState);
-            else
-                _player.ChangeState(_player.AttackState); // 재진입
-        }
+        if (hit == null)
+            _player.ChangeState(_player.IdleState);
+        else if (_player.CanAttack())
+            _player.ChangeState(_player.AttackState); // 재진입
     }
 
     public void OnFixedUpdate() { }

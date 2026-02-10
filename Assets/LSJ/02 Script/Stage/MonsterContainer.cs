@@ -8,7 +8,7 @@ public class MonsterContainer : MonoBehaviour
     [SerializeField] private int spawnCount = 10;
     [SerializeField] private float spawnAreaWidth = 20f;
     [SerializeField] private float minDistance = 2.5f;
-    [SerializeField] private float yFixedPosition = 1f; // 고정
+    [SerializeField] private float yFixedPosition = 0.2f; // 고정
 
     private void OnEnable()
     {
@@ -28,7 +28,7 @@ public class MonsterContainer : MonoBehaviour
 
             // 랜덤 프리팹 선택
             GameObject prefab = monsterPrefabs[Random.Range(0, monsterPrefabs.Count)];
-            PoolManager2.Instance.Get(prefab, new Vector3(x, yFixedPosition, 0), Quaternion.identity,transform);
+            PoolManager2.Instance.Get(prefab, new Vector3(x, yFixedPosition, 0), Quaternion.identity, transform);
         }
     }
 

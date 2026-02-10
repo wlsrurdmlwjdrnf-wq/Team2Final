@@ -1,4 +1,4 @@
 public interface IDamageable
 {
-    public void TakeDamage(BigNumber amount);
+    public void TakeDamage(BigNumber amount, bool isCritical = false);
 }

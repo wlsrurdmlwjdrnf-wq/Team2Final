@@ -82,6 +82,11 @@ public class PoolManager2 : Singleton<PoolManager2>
         }
         obj.SetActive(false);
         obj.transform.SetParent(transform); // 풀 아래로 정리
+        
+        // 트랜스폼 초기화
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+        obj.transform.localScale = Vector3.one;
     }
 
     private void OnDestroyPoolObject(GameObject obj)

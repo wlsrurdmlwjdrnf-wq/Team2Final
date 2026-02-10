@@ -198,6 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseStats: {fileID: 11400000, guid: 260f8538b638d0947864f2b03d677c4f, type: 2}
+  _damageTextPrefab: {fileID: 5744721325997502162, guid: d37e935060377c5468309050800bf7f5, type: 3}
   _attackPoint: {fileID: 6287573248301920004}
   _playerLayer:
     serializedVersion: 2

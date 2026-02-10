@@ -107,12 +107,16 @@ public class Player : EntityStateMachine
                 if (UnityEngine.Random.value < PlayerStatManager.Instance.CritRate)
                 {
                     damage *= PlayerStatManager.Instance.CritDamage;
+                    target.TakeDamage(damage, true);
                 }
-                target.TakeDamage(damage);
-                LastAttackTime = Time.time;
+                else target.TakeDamage(damage);
 
                 // 이펙트나 사운드 넣으면 될 듯
             }
         }
+    }
+    public void OnChangeIdle()
+    {
+        ChangeState(IdleState);
     }
 }
