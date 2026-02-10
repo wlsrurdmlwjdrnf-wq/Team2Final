@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SQLite4Unity3d;
@@ -176,3 +178,5 @@ public class ImportJson : EditorWindow
         }
     }
 }
+
+#endif

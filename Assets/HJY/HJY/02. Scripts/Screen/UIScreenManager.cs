@@ -16,7 +16,7 @@ public class UIScreenManager : MonoBehaviour
         Instance = this;
     }
 
-    // 새로운 화면을 열기
+    // 새로운 화면을 열기w
     public async void OpenScreen(string addressKey)
     {
         // 기존 화면이 있으면 제거

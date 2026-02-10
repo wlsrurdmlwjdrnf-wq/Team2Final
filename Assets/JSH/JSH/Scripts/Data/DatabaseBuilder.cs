@@ -1,3 +1,6 @@
+
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -97,3 +100,4 @@ public static class DatabaseBuilder
     }
 }
 
+#endif

@@ -1,7 +1,10 @@
 
+#if UNITY_EDITOR
+
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 // 하이어라키 창에서 선택한 오브젝트 속 Image 컴포넌트의 maskable을 꺼서 이미지가 보이게 만듦
 // mask 영역 아니어도 보이게끔 조절해서 이미지 편집하기 쉽게 만드는 기능임
@@ -34,3 +37,5 @@ public class MaskableTool
         }
     }
 }
+
+#endif
