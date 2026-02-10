@@ -7,7 +7,7 @@ public class StageRoot : MonoBehaviour
 
     private Coroutine _knockBackCo;
     private StatModifier _knockBackModifier;
-    private WaitForSeconds _knockBackDuration = new WaitForSeconds(1f); // 넉백애니메이션 길이임
+    private WaitForSeconds _knockBackDuration = new WaitForSeconds(0.6f); // 넉백애니메이션 길이
 
     private StatModifier _stopMoveModifier;
     private bool _isStop = false; // 멈춤 상태인지
@@ -54,7 +54,7 @@ public class StageRoot : MonoBehaviour
     private IEnumerator KnockBackRoutine()
     {
         HandleResumeMove();
-        _knockBackModifier = new StatModifier(StatType.MoveSpeed, Operation.Multiply, -2f);
+        _knockBackModifier = new StatModifier(StatType.MoveSpeed, Operation.Multiply, -2.5f);
         PlayerStatManager.Instance.AddModifier(_knockBackModifier);
         yield return _knockBackDuration;
         PlayerStatManager.Instance.RemoveModifier(_knockBackModifier);
