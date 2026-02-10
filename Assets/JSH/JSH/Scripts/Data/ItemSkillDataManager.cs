@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -58,13 +57,18 @@ public class ItemSkillDataManager : MonoBehaviour
     //이쪽은 더 보강할 필요가 있음
     public SkillDataSO GetSkillData(ItemCard card) 
     {
+        List<SkillDataSO> dataLists = new List<SkillDataSO>();
         foreach (var skill in SkillDatabase.skills) 
         {
-            if (skill.Type == card.Type &&
-                skill.Grade == card.Grade) 
+            if (skill.Type == card.Type && skill.Grade == card.Grade) 
             {
-                return skill;
+                dataLists.Add(skill);
             }
+        }
+        if (dataLists.Count > 0) 
+        {
+            int index = Random.Range(0, dataLists.Count);
+            return dataLists[index];
         }
         return null;
     }

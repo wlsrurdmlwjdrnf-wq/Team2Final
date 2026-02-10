@@ -1,31 +1,87 @@
+using System;
+using UnityEngine;
 
 public class InventorySlot
 {
-    public int stack; 
-    public IUpgradable instance;  //스킬, 아이템 인스턴스 이 안에 데이터 있음
-    public bool unlocked;
+    public Guid Id { get; private set; }
+    public ScriptableObject BaseData;
+    public int Stack;
+    public int Level;
+    public bool Unlocked;
+    public float ActiveEffectValue;
+    public float PassiveEffectValue;
 
-    public InventorySlot(IUpgradable instance, int stack, bool unlocked = false)
+    public InventorySlot(ScriptableObject baseData, int stack, bool unlocked = false)
     {
-        this.instance = instance;
-        this.stack = stack;
-        this.unlocked = unlocked; 
+        Id = Guid.NewGuid();
+        this.BaseData = baseData;
+        this.Stack = stack;
+        this.Unlocked = unlocked;
+
+        if (baseData is ItemDataSO item)
+        {
+            Level = item.Level;
+            ActiveEffectValue = item.EquipATK;
+            PassiveEffectValue = item.PassiveATK;
+        }
+        else if (baseData is SkillDataSO skill) 
+        {
+            Level = skill.Level;
+            ActiveEffectValue = skill.Damage;
+            PassiveEffectValue = skill.ModifyAmount;
+        }
+    }
+    public int GetUpgradeCost() 
+    {
+        return Level * 100; //임시
+    }
+    public void Upgrade() 
+    {
+        Level++;
+        ActiveEffectValue = CalculateEffect(0, Level);
+        PassiveEffectValue = CalculateEffect(1, Level);
     }
 
-    public bool TryCombine(int requireStack, out IUpgradable newInstance)
+    public float CalculateEffect(int type,int level) 
     {
-        newInstance = null;
-        if (stack < requireStack) return false;
-        if (instance is ItemInstance itemInstance)
+        float effectValue = 0;
+        if (BaseData is ItemDataSO item)
         {
-            var baseData = itemInstance.baseData;
-            int tier = baseData.Tier;
-            GradeType grade = baseData.Grade;
-
-            if (tier > 1)
+            switch (type) 
             {
-                tier--;
+                case 0:
+                    effectValue = item.EquipATK + level * 10f;
+                    break;
+                case 1:
+                    effectValue = item.PassiveATK + level * 10f;
+                    break;
             }
+        }
+        else if (BaseData is SkillDataSO skill)
+        {
+            switch (type)
+            {
+                case 0:
+                    effectValue = skill.Damage + level * 10f;
+                    break;
+                case 1:
+                    effectValue = skill.ModifyAmount + level * 10f;
+                    break;
+            }
+        }
+        return effectValue;
+    }
+
+    public bool TryCombine(int requireStack, out InventorySlot newSlot)
+    {
+        newSlot = null;
+        if (Stack < requireStack) return false;
+        if (BaseData is ItemDataSO itemData)
+        {
+            int tier = itemData.Tier;
+            GradeType grade = itemData.Grade;
+
+            if (tier > 1) { tier--; }
             else
             {
                 grade = GetNextRarity(grade);
@@ -34,7 +90,7 @@ public class InventorySlot
 
             ItemCard card = new ItemCard
             {
-                Type = baseData.Type,
+                Type = itemData.Type,
                 Grade = grade,
                 Tier = tier
             };
@@ -42,17 +98,16 @@ public class InventorySlot
             ItemDataSO newData = ItemSkillDataManager.Instance.GetItemData(card);
             if (newData != null)
             {
-                newInstance = new ItemInstance(newData);
+                newSlot = new InventorySlot(newData, 1, true);
             }
         }
-        else if (instance is SkillInstance skillInstance)
+        else if (BaseData is SkillDataSO skillData)
         {
-            var baseData = skillInstance.baseData;
-            GradeType rarity = GetNextRarity(baseData.Grade);
+            GradeType rarity = GetNextRarity(skillData.Grade);
 
             ItemCard card = new ItemCard
             {
-                Type = baseData.Type,
+                Type = skillData.Type,
                 Grade = rarity,
                 Tier = 4
             };
@@ -60,11 +115,20 @@ public class InventorySlot
             SkillDataSO newSkill = ItemSkillDataManager.Instance.GetSkillData(card);
             if (newSkill != null)
             {
-                newInstance = SkillFactory.CreateInstance(newSkill);
+                newSlot = new InventorySlot(newSkill, 1, true);
             }
         }
-        stack -= requireStack;
+        Stack -= requireStack;
         return true;
+    }
+    public EDataType GetDataType() 
+    {
+        if (BaseData is ItemDataSO item)
+            return item.Type;
+        else if (BaseData is SkillDataSO skill)
+            return skill.Type;
+        EDataType type = EDataType.Weapon;
+        return type;
     }
     private GradeType GetNextRarity(GradeType rarity)
     {

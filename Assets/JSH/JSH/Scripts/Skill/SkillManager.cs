@@ -5,25 +5,47 @@ public class SkillManager : MonoBehaviour
 {
     public static SkillManager Instance { get; private set; }
     private List<SkillInstance> _equippedSkills = new List<SkillInstance>();
+    [SerializeField] private GameEventChannelSO _eventChannel;
     //나중에 수정 필요
     private PlayerStatManager _statManager;
     private void Awake()
     {
         Instance = this;
     }
-    public void Initialize() 
+    private void Start()
     {
         //나중에 수정 필요
         _statManager = PlayerStatManager.Instance;
+    }
+    private void OnEnable()
+    {
+        _eventChannel.OnEventRaised += HandleEvent;
+    }
+    private void OnDisable()
+    {
+        _eventChannel.OnEventRaised -= HandleEvent;
+    }
+    private void HandleEvent(EGameEventType eventType, object payload) 
+    {
+        if (eventType == EGameEventType.SlotUpdated || 
+            eventType == EGameEventType.EquipRequest ||
+            eventType == EGameEventType.EquipChanged) 
+        {
+            if(payload is InventorySlot slot && slot.BaseData is SkillDataSO)
+                RefreshSlots();
+        }
+    }
+    public void RefreshSlots() 
+    {
         _equippedSkills.Clear();
         List<InventorySlot> equippedSlots = InventorySystem.Instance.GetEquippedSkills();
 
-        foreach (var data in equippedSlots) 
+        foreach (var slot in equippedSlots) 
         {
-            if (data.instance is SkillInstance skill) 
+            if (slot.BaseData is SkillDataSO skillData) 
             {
-                _equippedSkills.Add(skill);
-                SkillInstance instance = SkillFactory.CreateInstance(skill.baseData);
+                SkillInstance instance = SkillFactory.CreateInstance(skillData);
+                _equippedSkills.Add(instance);
             }
         }
     }

@@ -7,8 +7,6 @@ public struct ItemCard
     public EDataType Type;
     public GradeType Grade;
     public int Tier;
-
-
     public ItemCard(EDataType type, GradeType rarity, int grade = 0) 
     {
         this.Type = type;
@@ -20,13 +18,16 @@ public struct ItemCard
 public class GachaSystem : MonoBehaviour
 {
     public int GachaCost = 50;
-    private int _weaaponGachaLvl = 0;
-    private int _accessoriesGachaLvl = 0;
+    private int _weaponGachaLvl = 0;
+    private int _accessoryGachaLvl = 0;
+    private int _weaponGachaCount = 0;
+    private int _accessoryGachaCount = 0;
     private float _min = 0;
     private float _max = 100;
 
     //°¡Ã­ °á°ú ¸®½ºÆ®
     public List<ItemCard> gachaResults = new List<ItemCard>();
+    [SerializeField] private GameEventChannelSO _eventChannel;
 
     //¹«±â & ¾Ç¼¼ Grade È®·ü
     private Dictionary<GradeType, float[]> _itemGradeChanceTable = new Dictionary<GradeType, float[]>
@@ -49,12 +50,21 @@ public class GachaSystem : MonoBehaviour
         { GradeType.Mythical,  new float[]{ 1f } }
     };
     //¹«±â & ¾Ç¼¼ Tier È®·ü
-    private int[] _ItemTierChanceTable = { 40, 30, 20, 10 };
+    private int[] _itemTierChanceTable = { 40, 30, 20, 10 };
+    //°¡Ã­·¹º§¾÷Å×ÀÌºí
+    private int[] _gachaLevelTable = { 100, 250, 1000, 4000, 12000, 25000, 27500, 55000, 88000, 100000 };
     private void Start()
     {
         InventorySystem.Instance.Initialize();
         Initialize();
-        TestUIManager.Instance.Initialize();
+    }
+    private void OnEnable()
+    {
+        _eventChannel.OnEventRaised += HandleEvent;
+    }
+    private void OnDisable()
+    {
+        _eventChannel.OnEventRaised -= HandleEvent;
     }
     public void Initialize()
     {
@@ -82,44 +92,36 @@ public class GachaSystem : MonoBehaviour
         InventorySystem.Instance.PrintInventory(EDataType.Accessories);
         InventorySystem.Instance.PrintInventory(EDataType.Skill);
 
-        InventorySystem.Instance.Equip(EDataType.Weapon, 0);
-        InventorySystem.Instance.Equip(EDataType.Accessories, 0);
-        InventorySystem.Instance.Equip(EDataType.Skill, 0);
-        InventorySystem.Instance.Equip(EDataType.Skill, 1);
-        InventorySystem.Instance.Equip(EDataType.Skill, 2);
-        InventorySystem.Instance.Equip(EDataType.Skill, 3);
-
         TotalStats stat = InventorySystem.Instance.CalculateStats();
         Debug.Log($"TotalATK:{stat.ATK},HP{stat.HP}");
-        SkillManager.Instance.Initialize();
+        SkillManager.Instance.RefreshSlots();
+    }
+    private void HandleEvent(EGameEventType type, object payload)
+    {
+        switch (type)
+        {
+            case EGameEventType.GachaRequest:
+                if (payload is GachaRequestPayload request)
+                {
+                    DrawGacha(request.Type, request.Count);
+                }
+                break;
+        }
     }
     //°¡Ã­½ÇÇà
-    public void TestPull(EDataType gachaType) 
-    {
-        DrawGacha(gachaType, 11);
-    }
     public void DrawGacha(EDataType gachaType, int count = 1)
     {
+        int totalCost = GachaCost * count;
+        //ÇÃ·¹ÀÌ¾î ÀçÈ­¶û ºñ±³
+        Debug.Log($"{gachaType}:{count}, Cost:{GachaCost * count}");
         gachaResults.Clear();
         for (int i = 0; i < count; i++)
         {
             gachaResults.Add(DrawOnce(gachaType));
         }
-
         foreach (var card in gachaResults)
         {
-            switch (gachaType)
-            {
-                case EDataType.Weapon:
-                    InventorySystem.Instance.AddItem(ItemSkillDataManager.Instance.GetItemData(card));
-                    break;
-                case EDataType.Accessories:
-                    InventorySystem.Instance.AddItem(ItemSkillDataManager.Instance.GetItemData(card));
-                    break;
-                case EDataType.Skill:
-                    InventorySystem.Instance.AddSkill(ItemSkillDataManager.Instance.GetSkillData(card));
-                    break;
-            }
+            _eventChannel.RaiseEvent(EGameEventType.GachaPull, card);
         }
     }
     private ItemCard DrawOnce(EDataType gachaType) 
@@ -128,15 +130,19 @@ public class GachaSystem : MonoBehaviour
         switch (gachaType)
         {
             case EDataType.Weapon:
+                _weaponGachaCount++;
+                if (_weaponGachaCount >= _gachaLevelTable[_weaponGachaLvl]) { _weaponGachaLvl++; }
                 return new ItemCard(
                     gachaType,
-                    DrawRarity(_itemGradeChanceTable, _weaaponGachaLvl),
+                    DrawRarity(_itemGradeChanceTable, _weaponGachaLvl),
                     DrawGrade()
                     );
             case EDataType.Accessories:
+                _accessoryGachaCount++;
+                if (_accessoryGachaCount >= _gachaLevelTable[_accessoryGachaLvl]) { _accessoryGachaLvl++; }
                 return new ItemCard(
                   gachaType,
-                  DrawRarity(_itemGradeChanceTable, _accessoriesGachaLvl),
+                  DrawRarity(_itemGradeChanceTable, _accessoryGachaLvl),
                   DrawGrade()
                   );
             case EDataType.Skill:
@@ -146,7 +152,7 @@ public class GachaSystem : MonoBehaviour
                   );
             default:
                 return new ItemCard(EDataType.Weapon, GradeType.Normal);
-        }
+        } 
     }
     //Èñ±Íµµ ÃßÃ· > ÀÏ¹Ý, ·¹¾î, ½ÅÈ­ µîµî...
     private GradeType DrawRarity( Dictionary<GradeType, float[]> gachaTable, int gachaLvl = 0) 
@@ -174,15 +180,15 @@ public class GachaSystem : MonoBehaviour
         float randomValue = Random.Range(_min, _max);
         float cumulative = 0;
 
-        for (int i = 0; i < _ItemTierChanceTable.Length; i++) 
+        for (int i = 0; i < _itemTierChanceTable.Length; i++) 
         {
-            cumulative += _ItemTierChanceTable[i];
+            cumulative += _itemTierChanceTable[i];
             if (randomValue <= cumulative)
             {
-                return _ItemTierChanceTable.Length - i;
+                return _itemTierChanceTable.Length - i;
             }
         }
-        return _ItemTierChanceTable.Length;
+        return _itemTierChanceTable.Length;
     }
 }
 

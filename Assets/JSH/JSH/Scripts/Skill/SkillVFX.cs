@@ -1,16 +1,22 @@
 using UnityEngine;
 
-public class SkillVFX : MonoBehaviour
+public class SkillVFX : MonoBehaviour, IPoolable
 {
     public float LifeTime = 2f;
+    private IPool _pool;
 
     private void OnEnable()
     {
         Invoke("ReturnPool", LifeTime);
     }
 
-    private void ReturnPool() 
+    public void SetPool(IPool pool) 
     {
-        PoolManager.Instance.ReturnPool(this);
+        _pool = pool;
+    }
+
+    public void ReturnPool() 
+    {
+        _pool.Enqueue(this);
     }
 }
