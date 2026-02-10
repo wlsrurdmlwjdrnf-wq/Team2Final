@@ -1,3 +1,6 @@
+#if UNITY_EDITOR
+
+
 using UnityEditor;
 using UnityEngine;
 using UnityEditor.Animations;
@@ -81,3 +84,5 @@ public class MonsterBatchAnimatorTool : EditorWindow
         AssetDatabase.Refresh();
     }
 }
+
+#endif

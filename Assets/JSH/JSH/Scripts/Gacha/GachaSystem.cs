@@ -1,6 +1,10 @@
+#if UNITY_EDITOR
+
+
 using System.Collections.Generic;
 using UnityEngine;
 
+/***
 //°¡Ã­°á°ú¹°
 public struct ItemCard 
 {
@@ -14,6 +18,8 @@ public struct ItemCard
         this.Tier = grade;
     }
 }
+
+***/
 
 public class GachaSystem : MonoBehaviour
 {
@@ -192,3 +198,4 @@ public class GachaSystem : MonoBehaviour
     }
 }
 
+#endif
