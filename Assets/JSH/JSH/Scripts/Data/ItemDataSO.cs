@@ -15,5 +15,4 @@ public class ItemDataSO : ScriptableObject
     public float CriticalRate;
     public float GoldPer;
     public DataSOType DataSO;
-
 }

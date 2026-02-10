@@ -2,20 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ResourceType
-{
-    EXP,
-    StatPoint,
-    Gold,
-    Emerald,
-    Diamond,
-    EnhancementCube,
-    FireStone,
-    WaterStone,
-    WindStone,
-    EarthStone,
-}
-
 public class PlayerResourceManager : Singleton<PlayerResourceManager>
 {
     private readonly Dictionary<ResourceType, BigNumber> _resources = new();

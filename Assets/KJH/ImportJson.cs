@@ -138,7 +138,7 @@ public class ImportJson : EditorWindow
     private void DBFromSO()
     {
         string dbPath = Path.Combine(Application.persistentDataPath, "LocalGameData.db");
-        string assetPath = "Assets/JSH/SO/GameDatabase.asset";
+        string assetPath = "Assets/KJH/SO/GameDatabase.asset";
 
         using (var db = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadOnly))
         {
@@ -178,5 +178,4 @@ public class ImportJson : EditorWindow
         }
     }
 }
-
 #endif

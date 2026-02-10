@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerHpMp : MonoBehaviour
 {
+    //임시 체력
+    [SerializeField] private TextMeshProUGUI hphp;
     public BigNumber CurrentHP { get; private set; }
     public float CurrentMana { get; private set; }
 
@@ -15,6 +18,7 @@ public class PlayerHpMp : MonoBehaviour
         CurrentHP = PlayerStatManager.Instance.MaxHP;
         CurrentMana = PlayerStatManager.Instance.MaxMana;
         _recoveryCo = StartCoroutine(RecoveryCo());
+        hphp.text = BigNumberFormatter.ToFormatted(CurrentHP);
     }
     private void OnDisable()
     {
@@ -57,6 +61,7 @@ public class PlayerHpMp : MonoBehaviour
         if (amount <= new BigNumber(0)) return;
 
         CurrentHP -= amount;
+        hphp.text = BigNumberFormatter.ToFormatted(CurrentHP);
         if (CurrentHP <= new BigNumber(0))
         {
             Die();
