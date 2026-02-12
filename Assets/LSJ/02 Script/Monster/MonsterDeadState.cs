@@ -12,7 +12,9 @@ public class MonsterDeadState : IEntityState
     {
         _monster.Animator.SetBool("IsAttacking",false);
         _monster.Animator.SetBool("IsDead",true);
-        _monster.StartCoroutine(ShowDeadCo());
+        
+        if(_monster.gameObject.activeSelf)
+            _monster.StartCoroutine(ShowDeadCo());
     }
     public void OnUpdate() { }
     public void OnFixedUpdate() { }

@@ -4,7 +4,8 @@ using UnityEngine;
 public class PlayerDeadState : IEntityState
 {
     private readonly Player _player;
-    private WaitForSeconds _deadDuration = new WaitForSeconds(1f);
+    private WaitForSeconds _deadDuration = new WaitForSeconds(0.8f);
+
     public PlayerDeadState(Player player) => _player = player;
     public void OnEnter() 
     {
@@ -25,7 +26,11 @@ public class PlayerDeadState : IEntityState
     private IEnumerator WaitResurrectionCo()
     {
         _player.Collider.enabled = false;
+        
         yield return _deadDuration;
+
+        Player.TriggerDead(); // ³Ë¹é ÈÄ Á×¾úÀ» ¶§ ¸ØÃãÀ¯Áö
+        StageManager.Instance.GameOver();
         _player.LockState(false);
         _player.gameObject.SetActive(false);
     }

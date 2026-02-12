@@ -38,11 +38,10 @@ public class Player : EntityStateMachine
     public static event Action OnAttack;
     public static event Action OnNoAttack;
     public static event Action OnDead;
+    public static event Action OnSkill;
 
     private void Awake()
     {
-        OnKnockBack += ChangeKnockBackState;
-
         _anim = GetComponent<Animator>();
         _sr = GetComponent<SpriteRenderer>();
         _col = GetComponent<Collider2D>();
@@ -56,9 +55,16 @@ public class Player : EntityStateMachine
     }
     private void OnEnable()
     {
+        OnKnockBack += ChangeKnockBackState;
+        OnSkill += ChangeSkillState;
         _col.enabled = true;
         _lastAttackTime = Time.time;
         ChangeState(IdleState);
+    }
+    private void OnDisable()
+    {
+        OnKnockBack -= ChangeKnockBackState;
+        OnSkill -= ChangeSkillState;
     }
     public bool CanAttack()
     {
@@ -67,6 +73,10 @@ public class Player : EntityStateMachine
     private void ChangeKnockBackState()
     {
         ChangeState(KnockBackState);
+    }
+    private void ChangeSkillState()
+    {
+        ChangeState(SkillState);
     }
     public static void TriggerKnockBack()
     {
@@ -84,9 +94,9 @@ public class Player : EntityStateMachine
     {
         OnDead?.Invoke();
     }
-    private void OnDisable()
+    public static void TriggerSkill()
     {
-        OnKnockBack -= ChangeKnockBackState;
+        OnSkill?.Invoke();
     }
 
     // Animation Event가 부를 함수

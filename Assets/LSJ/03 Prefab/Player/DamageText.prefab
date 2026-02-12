@@ -263,6 +263,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tmpText: {fileID: 4183246753043710730}
-  moveUpDistance: 1
+  moveUpDistance: 0.25
   duration: 0.5
   fadeStartDelay: 0.3

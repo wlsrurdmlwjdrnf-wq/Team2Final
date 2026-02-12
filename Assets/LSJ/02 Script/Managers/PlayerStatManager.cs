@@ -116,7 +116,6 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         }
         return false;
     }
-    // 모디파이어 객체 비교 쉽게 하는 거 추가하기
 
     public void ClearModifiers()
     {
