@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8536966708326086144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6472251993071531530}
+  - component: {fileID: 5961746110584746081}
+  - component: {fileID: 8328550912362642291}
+  m_Layer: 0
+  m_Name: TitleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6472251993071531530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8536966708326086144}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 340, y: 563.4472, z: -5.6275535}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5961746110584746081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8536966708326086144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7afbf795b7299ec4f94e6038f3e04ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverButton: {fileID: 0}
+  authPanel: {fileID: 0}
+  loginPage: {fileID: 0}
+  signUpPage: {fileID: 0}
+  signalText: {fileID: 0}
+  loginButton: {fileID: 0}
+  signUpButton: {fileID: 0}
+  callLoginBtn: {fileID: 0}
+  callSignUpBtn: {fileID: 0}
+  loadingBar: {fileID: 0}
+  fillImage: {fileID: 0}
+  perText: {fileID: 0}
+  checkText: {fileID: 0}
+  loadingPanel: {fileID: 0}
+  loadingText: {fileID: 0}
+  successColor: {r: 0.20784314, g: 0.25882354, b: 1, a: 1}
+  failColor: {r: 1, g: 0.17254902, b: 0.17254902, a: 1}
+--- !u!114 &8328550912362642291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8536966708326086144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470ba598a30113948846e0c50080f599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emailInput: {fileID: 0}
+  passwordInput: {fileID: 0}
+  nicknameInput: {fileID: 0}
+  signup: {fileID: 0}
+  login: {fileID: 0}
+  titleManager: {fileID: 5961746110584746081}

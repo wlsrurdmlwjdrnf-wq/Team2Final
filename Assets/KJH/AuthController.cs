@@ -38,7 +38,7 @@ public class AuthController : MonoBehaviour
             
             //아래부터는 성공 Response 에서 받아온 데이터로 UI 오픈
 
-            // Debug.Log($"{res.nickname}님 회원가입완료");
+             Debug.Log($"{res.nickname}님 회원가입완료");
 
             ServerManager.instance.UpdateToken(res.token); //인증 토큰발행
         });
@@ -59,12 +59,12 @@ public class AuthController : MonoBehaviour
 
             //아래부터는 성공 Response 에서 받아온 데이터로 UI 오픈
 
-            /*
+            
             Debug.Log($"성공여부 : {res.isSuccess}");
             Debug.Log($"환영합니다 {res.nickname}님");
             Debug.Log($"서버 메세지 : {res.msg}");
             Debug.Log($"플레이어 인증토큰 : {res.token}님");
-            */
+            
 
             ServerManager.instance.UpdateToken(res.token); //인증 토큰발행
         });
