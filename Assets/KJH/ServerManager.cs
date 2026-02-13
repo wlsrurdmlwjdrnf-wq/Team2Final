@@ -25,7 +25,7 @@ public enum HttpMethod
 
 public class ServerManager : Singleton<ServerManager>
 {
-    private string baseURL = "http://localhost:5016/api";
+    private string baseURL = "https://janett-blanketlike-unusefully.ngrok-free.dev/api";
     private string token = "";
 
     private Dictionary<HttpPath, string> pathMap = new Dictionary<HttpPath, string>()
