@@ -71,8 +71,10 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
             Die();
         }
     }
-    protected void Die()
+    protected virtual void Die()
     {
+        StageManager.Instance.OnMonsterDeath();
+        PlayerResourceDropSystem.Instance.TriggerDrop(transform.position);
         ChangeState(DeadState);
     }
 
@@ -80,10 +82,10 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
     protected BigNumber MonsterStatCorrection(float stats)
     {
         BigNumber bn = new BigNumber(stats) *
-            new BigNumber(Mathf.Pow(StageManager.Instance.CurrentMainNumber, 10)) *
-            new BigNumber((StageManager.Instance.CurrentSubNumber - 1) * 2);
+            new BigNumber(Mathf.Pow(StageManager.Instance.CurrentMainNumber, 5)) *
+            new BigNumber((StageManager.Instance.CurrentSubNumber + StageManager.Instance.CurrentMainNumber - 2) * 2);
 
-        if (bn == new BigNumber(0)) return new BigNumber(stats);
+        if (bn <= new BigNumber(0)) return new BigNumber(stats);
         else return bn;
     }
 }

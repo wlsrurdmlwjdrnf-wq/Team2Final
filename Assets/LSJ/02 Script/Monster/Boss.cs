@@ -23,7 +23,6 @@ public class Boss : MonsterBase
     protected override void Awake()
     {
         base.Awake();
-
         AttackState = new BossAttackState(this);
         _lastAttackTime = Time.time;
     }

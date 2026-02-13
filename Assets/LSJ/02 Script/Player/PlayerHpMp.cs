@@ -61,7 +61,7 @@ public class PlayerHpMp : MonoBehaviour
         if (amount <= new BigNumber(0)) return;
 
         CurrentHP -= amount;
-        hphp.text = BigNumberFormatter.ToFormatted(CurrentHP);
+        hphp.text = BigNumberFormatter.ToFormatted(CurrentHP); // Å×½ºÆ®
         if (CurrentHP <= new BigNumber(0))
         {
             Die();

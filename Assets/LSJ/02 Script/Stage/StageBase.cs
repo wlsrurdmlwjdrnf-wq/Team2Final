@@ -14,7 +14,16 @@ public class StageBase : MonoBehaviour
         _leftBound = _mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
         _rightBound = _leftBound + _resetPositionX;
     }
-
+    private void OnEnable()
+    {
+        if (StageManager.Instance == null) return;
+        StageManager.Instance.OnStageChanged += ChangeAllChildSprites;
+    }
+    private void OnDisable()
+    {
+        if (StageManager.Instance == null) return;
+        StageManager.Instance.OnStageChanged -= ChangeAllChildSprites;
+    }
     private void Update()
     {
         // Àç¹èÄ¡
@@ -27,4 +36,18 @@ public class StageBase : MonoBehaviour
             transform.position -= Vector3.right * _resetPositionX;
         }
     }
+
+    private void ChangeAllChildSprites()
+    {
+        Sprite newSprite = StageManager.Instance.CurrentStageData.backgroundSprite;
+        foreach (Transform child in transform)
+        {
+            SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.sprite = newSprite;
+            }
+        }
+    }
+
 }

@@ -31,11 +31,16 @@ public class DamageText : MonoBehaviour, IPoolable2
 
     public void OnSpawn()
     {
-        transform.DOKill();
+        transform.DOKill(true);  // true = children 포함 모두 kill
+
+        canvasGroup.alpha = 1f;
+        transform.localScale = Vector3.one * 0.8f;
+        transform.localPosition = Vector3.zero;  
 
         Sequence seq = DOTween.Sequence();
 
-        seq.Append(transform.DOMoveY(transform.position.y + moveUpDistance, duration)
+        // local 기준 상대 이동으로 변경
+        seq.Append(transform.DOLocalMoveY(moveUpDistance, duration)
             .SetEase(Ease.OutQuad));
 
         seq.Join(transform.DOScale(Vector3.one * 1.3f, duration * 0.5f)

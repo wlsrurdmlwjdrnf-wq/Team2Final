@@ -3,8 +3,6 @@ using System.Collections;
 
 public class StageRoot : MonoBehaviour
 {
-    [SerializeField] private StageSO _stageData;
-
     private Coroutine _knockBackCo;
     private StatModifier _knockBackModifier;
     private WaitForSeconds _knockBackDuration = new WaitForSeconds(0.6f); // 넉백애니메이션 길이
@@ -12,20 +10,19 @@ public class StageRoot : MonoBehaviour
     private StatModifier _stopMoveModifier;
     private bool _isStop = false; // 멈춤 상태인지
 
-    public int MainNumber { get; private set; }
-    public int SubNumber { get; private set; }
+    private Vector2 _initPosition;
 
     private void OnEnable()
     {
+        _initPosition = transform.position;
         Player.OnAttack += HandleStopMove;
         Player.OnKnockBack += HandleKnockBack;
         Player.OnNoAttack += HandleResumeMove;
         Player.OnDead += HandleStopMove;
 
-        MainNumber = _stageData.mainNumber;
-        SubNumber = _stageData.subNumber;
-
-        StageManager.Instance.SetStage(this);
+        if (StageManager.Instance == null) return;
+        StageManager.Instance.OnStageChanged += HandleResumeMove;
+        StageManager.Instance.OnStageChanged += InitPos;
     }
     private void OnDisable()
     {
@@ -34,7 +31,9 @@ public class StageRoot : MonoBehaviour
         Player.OnNoAttack -= HandleResumeMove;
         Player.OnDead -= HandleStopMove;
 
-        HandleResumeMove();
+        if (StageManager.Instance == null) return;
+        StageManager.Instance.OnStageChanged -= HandleResumeMove;
+        StageManager.Instance.OnStageChanged -= InitPos;
     }
 
     private void Update()
@@ -74,5 +73,11 @@ public class StageRoot : MonoBehaviour
         if (_stopMoveModifier == null) return;
         PlayerStatManager.Instance.RemoveModifier(_stopMoveModifier);
         _isStop = false;
+    }
+    // 위치 초기화
+    private void InitPos()
+    {
+        if(_initPosition == null) return;
+        transform.position = _initPosition;
     }
 }

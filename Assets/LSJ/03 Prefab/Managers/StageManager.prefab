@@ -45,3 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestroyOnLoad: 0
+  allStages:
+  - mainNumber: 1
+    subNumber: 1
+    isBoss: 0
+    stageData: {fileID: 11400000, guid: 8d432dc3bd48ee74b9d5f625ddc6bfd5, type: 2}
+  allTierStages: []
+  _player: {fileID: 0}

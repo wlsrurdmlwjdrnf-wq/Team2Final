@@ -1,27 +1,170 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class StageInfo
+{
+    public int mainNumber;
+    public int subNumber;
+    public bool isBoss;
+    public StageSO stageData;
+}
+[System.Serializable]
+public class TierStageInfo
+{
+    public Tier tier;
+    public StageSO stageData;
+}
 public class StageManager : Singleton<StageManager>
 {
-    private StageRoot _currentStage;
+    [SerializeField] private List<StageInfo> allStages;
+    [SerializeField] private List<TierStageInfo> allTierStages;
+    [SerializeField] private Player _player;
+
+    private const int MAX_SUBNUMBER = 20; // 최대 보조 스테이지 수
     public int CurrentMainNumber { get; private set; }
     public int CurrentSubNumber { get; private set; }
-    public int MonsterCount { get; set; }
+    public StageSO CurrentStageData => _currentStageData;
 
+    private WaitForSeconds _waitFadeOut = new WaitForSeconds(1f);
+    private WaitForSeconds _delayClear = new WaitForSeconds(0.5f);
 
-    // 현재 스테이지 문자열 리턴
-    public string CurrentStageToString()
+    // 최고 기록
+    private int _bestMainNumber;
+    private int _bestSubNumber;
+
+    // 상태
+    private int _currentMonsterCount = 0;
+    private StageSO _currentStageData;
+    private StageSO _tmpStageData;
+
+    // 이벤트
+    public event Action OnStageChanged;   // 스테이지 변경 시
+    public event Action OnBossStageChanged;
+    public event Action OnTierStageChanged;
+    public event Action OnAllMonstersCleared; // 전부 처치 시
+    public event Action OnGameOver;     // 게임 오버 시 (플레이어가 죽거나 시간 초과)
+    public event Action OnNeedMonsterClear;
+    public event Action OnNeedScreenFader;
+
+    protected override void Init()
     {
-        string curStage = $"{CurrentMainNumber} - {CurrentSubNumber}";
-        return curStage;
+        base.Init();
+        _currentStageData = allStages[0].stageData; // 임시 테스트
     }
-    public void SetStage(StageRoot stage)
+    private void Start()
     {
-        _currentStage = stage;
-        CurrentMainNumber = stage.MainNumber;
-        CurrentSubNumber = stage.SubNumber;
-
-        //PoolManager2.Instance.Get(stage.gameObject);
+        ApplyStage(_currentStageData);  // 게임 시작 시 스테이지 적용
     }
+
+    // 스테이지 적용 메인 로직
+    public void ApplyStage(StageSO targetStage)
+    {
+        if (targetStage == null) return;
+        if (targetStage.isTierStage)
+        {
+            _tmpStageData = _currentStageData;
+        }
+
+        OnNeedMonsterClear?.Invoke(); // 남아 있는 몬스터가 있으면 정리
+
+        BestStageRecord(targetStage);
+
+        CurrentMainNumber = targetStage.mainNumber;
+        CurrentSubNumber = targetStage.subNumber;
+
+        // 현재 스테이지 저장
+        _currentStageData = targetStage;
+        _currentMonsterCount = _currentStageData.spawnCount;
+
+        StartCoroutine(FadeOutInEventCo());
+    }
+    private IEnumerator FadeOutInEventCo()
+    {
+        // 화면이 잠시 어두워졌다 원래대로 되는 연출
+        OnNeedScreenFader?.Invoke();
+        _player.gameObject.SetActive(false);
+
+        yield return _waitFadeOut;
+
+        _player.gameObject.SetActive(true);
+
+        // 이벤트 실행
+        OnStageChanged?.Invoke();
+        if (_currentStageData.isBossStage) OnBossStageChanged?.Invoke();
+        if (_currentStageData.isTierStage) OnTierStageChanged?.Invoke();
+    }
+
+    // 몬스터 사망 시 호출 (MonsterBase.cs에서)
+    public void OnMonsterDeath()
+    {
+        _currentMonsterCount--;
+
+        if (_currentMonsterCount <= 0) // 스테이지 클리어
+        {
+            OnAllMonstersCleared?.Invoke();
+
+            StartCoroutine(DelayClearCo());
+        }
+    }
+    private IEnumerator DelayClearCo()
+    {
+        yield return _delayClear;
+        if (_currentStageData.isBossStage)
+            ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber + 1)); // 다음 스테이지
+        else if (_currentStageData.isTierStage)
+            ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber)); // 승급 스테이지 전 스테이지 적용
+        else ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber)); // 현재 스테이지 반복
+    }
+
+    // 게임 오버 시 (플레이어가 죽거나 시간 초과)
+    public void GameOver()
+    {
+        OnGameOver?.Invoke();
+
+        if (_currentStageData.isTierStage)
+            ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber)); // 승급 스테이지 전 스테이지 적용
+        else ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber)); // 현재 스테이지 반복
+    }
+
+    // 매개변수에 맞는 StageSO 가져오기
+    public StageSO GetStageData(int mainNumber, int subNumber, bool isBoss = false)
+    {
+        if(subNumber > MAX_SUBNUMBER)
+        {
+            subNumber -= MAX_SUBNUMBER;
+            mainNumber += 1;
+        }
+
+        foreach (var stage in allStages)
+        {
+            if (stage.mainNumber == mainNumber &&
+                stage.subNumber == subNumber &&
+                stage.isBoss == isBoss)
+            {
+                return stage.stageData;
+            }
+        }
+        return null; // 조건에 맞는 StageInfo가 없을 경우
+    }
+    public StageSO GetStageData(Tier tier)
+    {
+        foreach (var stage in allTierStages)
+        {
+            if(stage.tier == tier) return stage.stageData;
+        }
+        return null;
+    }
+
+    // 최고 스테이지 기록
+    public void BestStageRecord(StageSO stage)
+    {
+        if (stage.isTierStage) return;
+        _bestMainNumber = stage.mainNumber;
+        _bestSubNumber = stage.subNumber;
+    }
+
+    // 최고 기록 저장
 }
