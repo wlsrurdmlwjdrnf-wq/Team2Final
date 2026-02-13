@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public interface IUpgradable 
 {
     int Level { get; }
@@ -7,7 +9,7 @@ public interface IUpgradable
 }
 public interface ISkillEffect 
 {
-    void Apply();
+    void Apply(Collider2D[] enemies, float damageDuplicator);
 }
 public interface IPoolable 
 {

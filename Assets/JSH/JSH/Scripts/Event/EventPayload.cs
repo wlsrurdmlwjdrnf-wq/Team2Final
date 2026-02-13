@@ -26,3 +26,19 @@ public class GachaRequestPayload
         Count = count;
     }
 }
+
+public class GachaProgressPayload 
+{
+    public EDataType Type;
+    public int CurrCount;
+    public int LevelUpCount;
+    public int Level;
+
+    public GachaProgressPayload(EDataType type, int currCount, int levelUpCount, int level)
+    {
+        Type = type;
+        CurrCount = currCount;
+        LevelUpCount = levelUpCount;
+        Level = level;
+    }
+}

@@ -7,11 +7,14 @@ public class SkillInstance : IUpgradable
     public ISkillEffect effect;
     private float _lastCastTime;
     private float _currAttackCount;
-    public SkillInstance(SkillDataSO data, ISkillEffect skillEffect)
+    private Collider2D[] _enemyColliders;
+    public SkillInstance(InventorySlot slot, ISkillEffect effect)
     {
-        baseData = data;
-        currentLevel = data.Level;
-        effect = skillEffect;
+        baseData = slot.BaseData as SkillDataSO;
+        currentLevel = slot.Level;
+        this.effect = effect;
+        _lastCastTime = Time.time;
+        _currAttackCount = 0;
     }
     public int Level => currentLevel;
     public void Upgrade()
@@ -22,21 +25,28 @@ public class SkillInstance : IUpgradable
     {
         _currAttackCount++;
     }
-    //나중에 매개변수 수정 필요할 수 있음
-    public bool CanCast(float mana) 
+    public bool CanCast(PlayerHpMp playerHpMp) 
     {
-        if (Time.time < _lastCastTime + baseData.CoolTime) return false;  //쿨타임체크 
-        if (mana < baseData.ManaCost) return false;  //마나체크
-        if (_currAttackCount < baseData.TriggerCount) return false;  //평타횟수체크
+        if (baseData.TriggerCount > 0)
+        {
+            if (_currAttackCount < baseData.TriggerCount) return false;
+        }
+        else 
+        {
+            if (Time.time < _lastCastTime + baseData.CoolTime) return false;
+        }
+        _enemyColliders = SkillManager.Instance.CheckEnemy(baseData.Range);
+        if ( _enemyColliders == null || _enemyColliders.Length <= 0) return false;                       //범위내 적 체크
+        if (!playerHpMp.UseMana(baseData.ManaCost)) return false;         //UseMana에서 마나 감소랑 마나 체크 둘 다 해줌
         return true;
     }
-    public void Cast(PlayerStatManager player) 
+    public void Cast() 
     {
-        //현재마나로 수정필요
-        if (!CanCast(player.MaxMana)) return;
-        //마나감소
+        Debug.Log($"CoolTime : {baseData.CoolTime}");
+        Debug.Log($"TriggerCount : {baseData.TriggerCount}");
+        Debug.Log($"AttackCount : {_currAttackCount}");
         _lastCastTime = Time.time;
         _currAttackCount = 0;
-        effect.Apply();
+        effect.Apply(_enemyColliders, baseData.Damage);
     }
 }

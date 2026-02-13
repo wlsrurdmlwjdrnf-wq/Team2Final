@@ -27,7 +27,11 @@ public class TestSlotUI : MonoBehaviour, IPoolable
     {
         if (type == EGameEventType.SlotUpdated && payload is InventorySlot updatedSlot)
         {
-            if (Slot.Id == updatedSlot.Id)
+            if (Slot == null) 
+            { 
+                Slot = updatedSlot; 
+            }
+            else if (Slot.Id == updatedSlot.Id)
             {
                 SetUp(updatedSlot);
             }
@@ -36,6 +40,15 @@ public class TestSlotUI : MonoBehaviour, IPoolable
     public void OnClick() 
     {
         _eventChannel.RaiseEvent(EGameEventType.SlotClicked, Slot);
+    }
+    public void SetEmpty() 
+    {
+        Slot = null;
+        Image.color = Color.gray;
+        NameTxt.text = "Empty";
+        LevelTxt.text = "+0";
+        TierTxt.text = "0";
+        StackTxt.text = $"0/{PublicConst.UpgradeStack}";
     }
     public void SetUp(InventorySlot slot)
     {
@@ -81,19 +94,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         NameTxt.text = name;
         LevelTxt.text = $"+{level}";
         TierTxt.text = $"{tier}";
-        StackTxt.text = $"{stack}";
-    }
-
-    public void Equip() 
-    {
-        if (Slot.BaseData is ItemDataSO item)
-        {
-            InventorySystem.Instance.Equip(Slot);
-        }
-        else if (Slot.BaseData is SkillDataSO skill) 
-        {
-            InventorySystem.Instance.Equip(Slot);
-        }
+        StackTxt.text = $"{stack}/{PublicConst.UpgradeStack}";
     }
 
     public void SetPool(IPool pool) { _pool = pool; }

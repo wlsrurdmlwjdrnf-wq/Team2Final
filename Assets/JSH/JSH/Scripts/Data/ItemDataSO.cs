@@ -14,5 +14,11 @@ public class ItemDataSO : ScriptableObject
     public float CriticalDMG;
     public float CriticalRate;
     public float GoldPer;
+
+    public float EquipATKbyLv;
+    public float PassiveATKbyLv;
+    public float CriticalDMGbyLv;
+    public float GoldPerbyLv;
+
     public DataSOType DataSO;
 }

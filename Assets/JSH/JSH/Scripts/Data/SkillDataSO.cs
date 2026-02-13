@@ -15,6 +15,7 @@ public class SkillDataSO : ScriptableObject
     public float CoolTime;
     public float ManaCost;
     public int TriggerCount;
+
     public float Range;
     public float Damage;
     public float CriticalRate;
