@@ -29,6 +29,7 @@ public class StageManager : Singleton<StageManager>
     public StageSO CurrentStageData => _currentStageData;
 
     private WaitForSeconds _waitFadeOut = new WaitForSeconds(1f);
+    private WaitForSeconds _delayClear = new WaitForSeconds(0.5f);
 
     // 최고 기록
     private int _bestMainNumber;
@@ -100,16 +101,22 @@ public class StageManager : Singleton<StageManager>
     public void OnMonsterDeath()
     {
         _currentMonsterCount--;
-        if (_currentMonsterCount <= 0)
+
+        if (_currentMonsterCount <= 0) // 스테이지 클리어
         {
             OnAllMonstersCleared?.Invoke();
 
-            if (_currentStageData.isBossStage)
-                ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber + 1)); // 다음 스테이지
-            else if (_currentStageData.isTierStage)
-                ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber)); // 승급 스테이지 전 스테이지 적용
-            else ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber)); // 현재 스테이지 반복
+            StartCoroutine(DelayClearCo());
         }
+    }
+    private IEnumerator DelayClearCo()
+    {
+        yield return _delayClear;
+        if (_currentStageData.isBossStage)
+            ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber + 1)); // 다음 스테이지
+        else if (_currentStageData.isTierStage)
+            ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber)); // 승급 스테이지 전 스테이지 적용
+        else ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber)); // 현재 스테이지 반복
     }
 
     // 게임 오버 시 (플레이어가 죽거나 시간 초과)
