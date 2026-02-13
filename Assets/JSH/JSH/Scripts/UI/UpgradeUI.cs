@@ -10,6 +10,7 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _costTxt;
     [SerializeField] private Button _upgradeButton;
     [SerializeField] private Button _equipButton;
+    [SerializeField] private TextMeshProUGUI _equipButtonTxt;
 
     private InventorySlot _currSlot;
 
@@ -61,8 +62,18 @@ public class UpgradeUI : MonoBehaviour
         _upgradeButton.onClick.AddListener(() => 
             _eventChannel.RaiseEvent(EGameEventType.UpgradeRequest, _currSlot));
 
-        _equipButton.onClick.AddListener(() => 
-            _eventChannel.RaiseEvent(EGameEventType.EquipRequest, _currSlot));
+        if (_currSlot.IsEquipped)
+        {
+            _equipButtonTxt.text = "Unequip";
+            _equipButton.onClick.AddListener(() =>
+                _eventChannel.RaiseEvent(EGameEventType.UnEquipRequest, _currSlot));
+        }
+        else 
+        {
+            _equipButtonTxt.text = "Equip";
+            _equipButton.onClick.AddListener(() =>
+                _eventChannel.RaiseEvent(EGameEventType.EquipRequest, _currSlot));
+        }
     }
     private void RefreshUI(InventorySlot slot)
     {

@@ -15,7 +15,7 @@ public struct ItemCard
     }
 }
 
-public class GachaSystem : MonoBehaviour
+public class GachaSystem : Singleton<GachaSystem> 
 {
     public int GachaCost = 50;
     private int _weaponGachaLvl = 0;
@@ -69,21 +69,10 @@ public class GachaSystem : MonoBehaviour
     public void Initialize()
     {
         //테스트
-        DrawGacha(EDataType.Weapon,11);
-        foreach (var gachaResult in gachaResults) 
-        {
-            Debug.Log($"{gachaResult.Type}{gachaResult.Grade}{gachaResult.Tier}"); 
-        }
-        DrawGacha(EDataType.Accessories, 11);
-        foreach (var gachaResult in gachaResults)
-        {
-            Debug.Log($"{gachaResult.Type}{gachaResult.Grade}{gachaResult.Tier}");
-        }
+        DrawGacha(EDataType.Weapon, 11);
+        DrawGacha(EDataType.Accessories, 11);   
         DrawGacha(EDataType.Skill, 11);
-        foreach (var gachaResult in gachaResults)
-        {
-            Debug.Log($"{gachaResult.Type}{gachaResult.Grade}{gachaResult.Tier}");
-        }
+  
         InventorySystem.Instance.SortInventory(EDataType.Weapon);
         InventorySystem.Instance.SortInventory(EDataType.Accessories);
         InventorySystem.Instance.SortInventory(EDataType.Skill);
@@ -112,7 +101,7 @@ public class GachaSystem : MonoBehaviour
     public void DrawGacha(EDataType gachaType, int count = 1)
     {
         int totalCost = GachaCost * count;
-        //플레이어 재화랑 비교
+        if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Diamond, new BigNumber(totalCost))) return;
         Debug.Log($"{gachaType}:{count}, Cost:{GachaCost * count}");
         gachaResults.Clear();
         for (int i = 0; i < count; i++)
@@ -131,7 +120,14 @@ public class GachaSystem : MonoBehaviour
         {
             case EDataType.Weapon:
                 _weaponGachaCount++;
-                if (_weaponGachaCount >= _gachaLevelTable[_weaponGachaLvl]) { _weaponGachaLvl++; }
+                if ( _weaponGachaLvl < _gachaLevelTable.Length - 1 
+                    && _weaponGachaCount >= _gachaLevelTable[_weaponGachaLvl]) 
+                { 
+                    _weaponGachaLvl++; 
+                    _weaponGachaCount = 0; 
+                }
+                _eventChannel.RaiseEvent(EGameEventType.GachaProgressUpdate, new GachaProgressPayload(
+                    EDataType.Weapon, _weaponGachaCount, _gachaLevelTable[_weaponGachaLvl], _weaponGachaLvl));
                 return new ItemCard(
                     gachaType,
                     DrawRarity(_itemGradeChanceTable, _weaponGachaLvl),
@@ -139,7 +135,14 @@ public class GachaSystem : MonoBehaviour
                     );
             case EDataType.Accessories:
                 _accessoryGachaCount++;
-                if (_accessoryGachaCount >= _gachaLevelTable[_accessoryGachaLvl]) { _accessoryGachaLvl++; }
+                if ( _accessoryGachaLvl < _gachaLevelTable.Length - 1 
+                    && _accessoryGachaCount >= _gachaLevelTable[_accessoryGachaLvl]) 
+                { 
+                    _accessoryGachaLvl++; 
+                    _accessoryGachaCount = 0;
+                }
+                _eventChannel.RaiseEvent(EGameEventType.GachaProgressUpdate, new GachaProgressPayload(
+                  EDataType.Accessories, _accessoryGachaCount, _gachaLevelTable[_accessoryGachaLvl], _accessoryGachaLvl));
                 return new ItemCard(
                   gachaType,
                   DrawRarity(_itemGradeChanceTable, _accessoryGachaLvl),

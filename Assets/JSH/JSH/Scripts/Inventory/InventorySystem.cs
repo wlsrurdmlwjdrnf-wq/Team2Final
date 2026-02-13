@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySystem : MonoBehaviour
+public class InventorySystem : Singleton<InventorySystem>
 {
-    public static InventorySystem Instance { get; private set; }
-
     private List<InventorySlot> _weaponInventory = new List<InventorySlot>();
     private List<InventorySlot> _accessoriesInventory = new List<InventorySlot>();
     private List<InventorySlot> _skillInventory = new List<InventorySlot>();
@@ -15,13 +13,8 @@ public class InventorySystem : MonoBehaviour
     private int _maxSkillSlot = 8;
     private int _currSkillSlot = 4;
 
-    private int testGold = 1000; //임시골드
-
     [SerializeField] private GameEventChannelSO _eventChannel;
-    private void Awake()
-    {
-        Instance = this;
-    }
+
     private void OnEnable()
     {
         _eventChannel.OnEventRaised += HandleEvent;
@@ -48,21 +41,11 @@ public class InventorySystem : MonoBehaviour
                 break;
             case EGameEventType.EquipRequest:
                 if (payload is InventorySlot equipSlot)
-                {
-                    if (equipSlot.BaseData is ItemDataSO item)
                         Equip(equipSlot);
-                    else if (equipSlot.BaseData is SkillDataSO skill)
-                        Equip(equipSlot);
-                }
                 break;
             case EGameEventType.UnEquipRequest:
                 if (payload is InventorySlot unEquipSlot)
-                {
-                    if (unEquipSlot.BaseData is ItemDataSO item)
                         UnEquip(unEquipSlot);
-                    else if (unEquipSlot.BaseData is SkillDataSO skill)
-                        UnEquip(unEquipSlot);
-                }
                 break;
             case EGameEventType.GachaPull:
                 if (payload is ItemCard card)
@@ -70,12 +53,9 @@ public class InventorySystem : MonoBehaviour
                     switch (card.Type)
                     {
                         case EDataType.Weapon:
-                            var weapon = ItemSkillDataManager.Instance.GetItemData(card);
-                            if (weapon != null) AddItem(weapon);
-                            break;
                         case EDataType.Accessories:
-                            var accessory = ItemSkillDataManager.Instance.GetItemData(card);
-                            if (accessory != null) AddItem(accessory);
+                            var item = ItemSkillDataManager.Instance.GetItemData(card);
+                            if (item != null) AddItem(item);
                             break;
                         case EDataType.Skill:
                             var skillData = ItemSkillDataManager.Instance.GetSkillData(card);
@@ -88,7 +68,6 @@ public class InventorySystem : MonoBehaviour
                 if (payload is EDataType combineType)
                     AutoCombine(combineType);
                 break;
-
         }
     }
     public void Initialize()
@@ -179,7 +158,8 @@ public class InventorySystem : MonoBehaviour
             else 
             {
                 slot.Stack++;
-                Debug.Log($"{slot.BaseData}{type} : {slot.Stack}");
+                if (slot.GetDataType() == EDataType.Weapon && _equippedWeapon == null) Equip(slot);
+                else if (slot.GetDataType() == EDataType.Accessories && _equippedAccessory == null) Equip(slot);
                 _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
             }
         }
@@ -189,7 +169,6 @@ public class InventorySystem : MonoBehaviour
             targetInventory.Add(newSlot);
             _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, newSlot);
         }
-
     }
     public void UnlockItem(EDataType type, int slotIndex) 
     {
@@ -239,25 +218,23 @@ public class InventorySystem : MonoBehaviour
     #region 강화
     public void UpgradeSlot(InventorySlot slot) 
     {
-        int cost = slot.GetUpgradeCost();
+        BigNumber amount = new BigNumber(slot.GetUpgradeCost());
         if (slot.GetDataType() == EDataType.Skill)
         {
-            //골드 소모부분 나중에 고쳐야함
-            if (slot.Stack >= PublicConst.UpgradeStack && testGold >= cost && slot.Unlocked) 
+            if (slot.Stack >= PublicConst.UpgradeStack && slot.Unlocked) 
             {
-                testGold -= cost;
+                //여기서 골드 소모 & 소모 가능여부 체크 둘 다 해줌 + 다른 재화 써야하면 나중에 수정
+                if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Gold, amount)) return;
                 slot.Stack -= PublicConst.UpgradeStack;
-
                 slot.Upgrade();
                 _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
             }
         }
-        else 
+        else
         {
-            //코스트를 받아올수 있게 되면 판단 로직을 슬롯 내부로 옮기는게 더 좋을듯
-            if (testGold >= cost && slot.Unlocked)
+            if (slot.Unlocked)
             {
-                testGold -= cost;
+                if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Gold, amount)) return;
                 slot.Upgrade();
                 _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
             }
@@ -298,6 +275,7 @@ public class InventorySystem : MonoBehaviour
                 }
                 break;
         }
+        slot.IsEquipped = true;
         _eventChannel.RaiseEvent(EGameEventType.EquipChanged, slot);
     }
     public void UnEquip(InventorySlot slot)
@@ -314,6 +292,7 @@ public class InventorySystem : MonoBehaviour
                 _equippedSkills.Remove(slot);
                 break;
         }
+        slot.IsEquipped = false;
         _eventChannel.RaiseEvent(EGameEventType.EquipChanged, slot);
     }
     public void AddSkillSlot()
@@ -357,7 +336,9 @@ public class InventorySystem : MonoBehaviour
             }
             else if (slot.BaseData is SkillDataSO skill) 
             {
-                break;
+                //스킬데이터의 크리 항목이 스킬 보정치면 이거 빼야함
+                totalStats.CriticalRate += skill.CriticalRate;
+                totalStats.CriticalDMG += skill.CriticalDMG;
             }
         }
     }

@@ -8,8 +8,11 @@ public class InventorySlot
     public int Stack;
     public int Level;
     public bool Unlocked;
+    public bool IsEquipped;
     public float ActiveEffectValue;
     public float PassiveEffectValue;
+    public float CriticalDMG;
+    public float GoldPer;
 
     public InventorySlot(ScriptableObject baseData, int stack, bool unlocked = false)
     {
@@ -40,6 +43,8 @@ public class InventorySlot
         Level++;
         ActiveEffectValue = CalculateEffect(0, Level);
         PassiveEffectValue = CalculateEffect(1, Level);
+        CriticalDMG = CalculateEffect(2, Level);
+        GoldPer = CalculateEffect(3, Level);
     }
 
     public float CalculateEffect(int type,int level) 
@@ -50,10 +55,16 @@ public class InventorySlot
             switch (type) 
             {
                 case 0:
-                    effectValue = item.EquipATK + level * 10f;
+                    effectValue = item.EquipATK + level * item.EquipATKbyLv;
                     break;
                 case 1:
-                    effectValue = item.PassiveATK + level * 10f;
+                    effectValue = item.PassiveATK + level * item.PassiveATKbyLv;
+                    break;
+                case 2:
+                    effectValue = item.CriticalDMG + level * item.CriticalDMGbyLv;
+                    break;
+                case 3:
+                    effectValue = item.GoldPer + level * item.GoldPerbyLv;
                     break;
             }
         }
@@ -127,8 +138,7 @@ public class InventorySlot
             return item.Type;
         else if (BaseData is SkillDataSO skill)
             return skill.Type;
-        EDataType type = EDataType.Weapon;
-        return type;
+        return EDataType.Weapon;
     }
     private GradeType GetNextRarity(GradeType rarity)
     {
