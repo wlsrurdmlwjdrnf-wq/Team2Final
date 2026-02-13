@@ -50,3 +50,15 @@ public class LoginResponse : BaseResponse
     public string nickname;
     public string token;
 }
+
+[Serializable]
+public class OfflineDataRequest { }
+
+[Serializable]
+public class OfflineDataResponse : BaseResponse
+{
+    public float time;
+    public float gold;
+    public float exp;
+    public float resultGold;
+}

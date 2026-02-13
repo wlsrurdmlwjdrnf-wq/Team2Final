@@ -74,7 +74,7 @@ namespace TeamProjectServer.Controllers
 
             _context.playerAccountData.Add(newAccount);
             await _context.SaveChangesAsync();
-            string newToken = _jwtService.CreateToken(newAccount.Email, newAccount.Name);
+            string newToken = _jwtService.CreateToken(newAccount.ID, newAccount.Email , newAccount.Name);
 
             return Ok(new { isSuccess = true, msg = "회원가입 성공", token = newToken });
         }
@@ -89,7 +89,7 @@ namespace TeamProjectServer.Controllers
                 return Unauthorized(new { isSuccess = false, msg = "이메일 또는 비밀번호를 확인해주세요." });
             }
 
-            string newToken = _jwtService.CreateToken(user.Email, user.Name);
+            string newToken = _jwtService.CreateToken(user.ID, user.Email, user.Name);
 
             user.LastLoginTime = DateTime.UtcNow;
             await _context.SaveChangesAsync();
