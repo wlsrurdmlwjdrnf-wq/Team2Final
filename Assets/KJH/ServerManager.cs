@@ -12,6 +12,7 @@ public enum HttpPath
     UpgradeItem,
     PickItem,
     GetPlayerInfo,
+    Offline,
 }
 
 public enum HttpMethod
@@ -25,31 +26,35 @@ public enum HttpMethod
 
 public class ServerManager : Singleton<ServerManager>
 {
-    private string baseURL = "http://localhost:5016/api";
-    private string token = "";
+    private string baseURL = "http://localhost:5016/api"; // api 주소
+    private string token = ""; // 서버로부터 응답받은 토큰
 
-    private Dictionary<HttpPath, string> pathMap = new Dictionary<HttpPath, string>()
+    private Dictionary<HttpPath, string> pathMap = new Dictionary<HttpPath, string>() // 편의성을 위한 enum키 딕셔너리
     {
         { HttpPath.SignUp, "/auth/signup" },
         { HttpPath.Login, "/auth/login" },
+        { HttpPath.Offline, "/offlinereward/offline" }
     };
         
 
-    public void UpdateToken(string tok)
+    public void UpdateToken(string tok) // 토큰 PlayerPrefs에 저장
     {
         token = tok;
         PlayerPrefs.SetString("PlayerToken", token);
         PlayerPrefs.Save();
-        Debug.Log("토큰 갱신");
+        //Debug.Log("토큰 갱신");
     }
 
-    public void ClearToken(string tok)
+    public void ClearToken() // 토큰 제거
     {
         token = "";
         PlayerPrefs.DeleteKey("PlayerToken");
         PlayerPrefs.Save();
-        Debug.Log("토큰 제거");
+        //Debug.Log("토큰 제거");
     }
+
+    // 서버 리퀘스트용 Post 함수
+    // <리퀘스트용 DTO, 리스폰스용 DTO>(api주소 enum, 리퀘스트 바디값(객체), 콜백액션(bool = 서버연결여부, 응답받은 DTO 객체))
 
     public void Post<TRequest, TResponse>(HttpPath path, TRequest body, Action<bool, TResponse> callback)
     {
@@ -66,6 +71,7 @@ public class ServerManager : Singleton<ServerManager>
 
         using (UnityWebRequest www = new UnityWebRequest(ApiURL, method)) //메모리 자동해제
         {
+            www.SetRequestHeader("ngrok-skip-browser-warning", "true");
             //POST
             if (meth == HttpMethod.POST && body != null)
             {
@@ -74,10 +80,7 @@ public class ServerManager : Singleton<ServerManager>
             }
 
             //GET
-            if (meth == HttpMethod.GET)
-            {
-
-            }
+            if (meth == HttpMethod.GET) { }
 
             //PUT
             if (meth == HttpMethod.PUT) { }
@@ -94,7 +97,7 @@ public class ServerManager : Singleton<ServerManager>
 
             yield return www.SendWebRequest();            
 
-            if (www.result != UnityWebRequest.Result.Success) // 물리적 통신오류
+            if (www.result == UnityWebRequest.Result.ConnectionError) // 물리적 통신오류
             {
                 Debug.LogError($"서버 통신 오류 : {www.error}");
                 callback?.Invoke(false, default);
@@ -102,27 +105,33 @@ public class ServerManager : Singleton<ServerManager>
             }
 
             var jsonRes = www.downloadHandler.text;
-            
+            TResponse resultRes;
+            if (www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                if (!string.IsNullOrEmpty(jsonRes))
+                {
+                    try
+                    {
+                        resultRes = JsonUtility.FromJson<TResponse>(jsonRes);
+                        callback?.Invoke(true, resultRes);
+                    }
+                    catch
+                    {
+                        Debug.LogError($"파싱 오류");
+                        callback?.Invoke(false, default);
+                        yield break;
+                    }
+                    yield break;
+                }
+            }
             if (string.IsNullOrEmpty(jsonRes))
             {
                 Debug.LogError("Response 데이터 오류");
                 callback?.Invoke(false, default);
                 yield break;
             }
-
-            TResponse result;
-            try
-            {
-                result = JsonUtility.FromJson<TResponse>(jsonRes);
-            }
-            catch
-            {
-                Debug.LogError($"파싱 오류");
-                callback?.Invoke(false, default);
-                yield break;
-            }
-
-            callback?.Invoke(true, result);
+            resultRes = JsonUtility.FromJson<TResponse>(jsonRes);
+            callback?.Invoke(true, resultRes);
         }
     }
 }
