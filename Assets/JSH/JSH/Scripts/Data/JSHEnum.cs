@@ -1,10 +1,10 @@
 
 public enum ESkillEffectType 
 {
-    S1 = 0,
-    S2 = 1,
-    S3 = 2,
-    S4 = 3,
+    FireExplosion = 0,
+    EarthGrow = 1,
+    WindGust = 2,
+    IceSlash = 3,
     Lightning = 4,
 }
 

@@ -244,8 +244,8 @@ MonoBehaviour:
   _monsterLayer:
     serializedVersion: 2
     m_Bits: 64
-  _positionOffset: {x: 0, y: 0.1, z: 0}
-  _IsProjectile: 0
+  _positionOffset: {x: 0, y: 0.3, z: 0}
+  _targetingType: 0
 --- !u!223 &2915089556737743707
 Canvas:
   m_ObjectHideFlags: 0

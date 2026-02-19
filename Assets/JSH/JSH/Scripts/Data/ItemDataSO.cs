@@ -9,8 +9,13 @@ public class ItemDataSO : ScriptableObject
     public GradeType Grade;
     public int Tier;
     public int Level;
-    public float EquipATK;
-    public float PassiveATK;
+    //장착효과
+    public StatType EquipStat;
+    public float EquipValue;
+    //보유효과
+    public StatType PassiveStat;
+    public float PassiveValue;
+
     public float CriticalDMG;
     public float CriticalRate;
     public float GoldPer;
