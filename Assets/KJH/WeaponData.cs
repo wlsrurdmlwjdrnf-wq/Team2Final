@@ -27,6 +27,8 @@ public class WeaponData : BaseData
     public int ID { get => id; set => id = value; }
     public string Name { get => name; set => name = value; }
     public EDataType Type { get => type; set => type = value; }
+    [Column("tier")]
+    public int Tier { get => tier; set => tier = value; }
     public GradeType Grade { get => grade; set => grade = value; }
     public int Level { get => level; set => level = value; }
     public float EquipATK { get => equipATK; set => equipATK = value; }

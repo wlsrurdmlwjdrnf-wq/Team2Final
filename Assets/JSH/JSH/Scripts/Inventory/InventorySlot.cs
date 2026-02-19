@@ -24,8 +24,8 @@ public class InventorySlot
         if (baseData is ItemDataSO item)
         {
             Level = item.Level;
-            ActiveEffectValue = item.EquipATK;
-            PassiveEffectValue = item.PassiveATK;
+            ActiveEffectValue = item.EquipValue;
+            PassiveEffectValue = item.PassiveValue;
         }
         else if (baseData is SkillDataSO skill) 
         {
@@ -55,10 +55,10 @@ public class InventorySlot
             switch (type) 
             {
                 case 0:
-                    effectValue = item.EquipATK + level * item.EquipATKbyLv;
+                    effectValue = item.EquipValue + level * item.EquipATKbyLv;
                     break;
                 case 1:
-                    effectValue = item.PassiveATK + level * item.PassiveATKbyLv;
+                    effectValue = item.PassiveValue + level * item.PassiveATKbyLv;
                     break;
                 case 2:
                     effectValue = item.CriticalDMG + level * item.CriticalDMGbyLv;
@@ -131,6 +131,19 @@ public class InventorySlot
         }
         Stack -= requireStack;
         return true;
+    }
+    public bool Matches(ScriptableObject other)
+    {
+        if (BaseData is ItemDataSO item && other is ItemDataSO newItem)
+        {
+            return item.Name == newItem.Name && item.Type == newItem.Type;
+        }
+        else if (BaseData is SkillDataSO skill && other is SkillDataSO newSkill)
+        {
+            return skill.Name == newSkill.Name && skill.Type == newSkill.Type;
+        }
+
+        return false;
     }
     public EDataType GetDataType() 
     {

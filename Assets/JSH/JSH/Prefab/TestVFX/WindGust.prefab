@@ -388,13 +388,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29dd17dabc2f1b047b685c89d0595b35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LifeTime: 3
+  LifeTime: 2
   _effectRange: 1
+  _projectileSpeed: 5
   _monsterLayer:
     serializedVersion: 2
     m_Bits: 64
   _positionOffset: {x: 0, y: 0, z: 0}
-  _IsProjectile: 1
+  _targetingType: 2
 --- !u!223 &5716920655770819551
 Canvas:
   m_ObjectHideFlags: 0
