@@ -72,7 +72,9 @@ public class GachaSystem : Singleton<GachaSystem>
         DrawGacha(EDataType.Weapon, 11);
         DrawGacha(EDataType.Accessories, 11);   
         DrawGacha(EDataType.Skill, 11);
-  
+
+#if UNITY_EDITOR
+
         InventorySystem.Instance.SortInventory(EDataType.Weapon);
         InventorySystem.Instance.SortInventory(EDataType.Accessories);
         InventorySystem.Instance.SortInventory(EDataType.Skill);
@@ -80,6 +82,8 @@ public class GachaSystem : Singleton<GachaSystem>
         InventorySystem.Instance.PrintInventory(EDataType.Weapon);
         InventorySystem.Instance.PrintInventory(EDataType.Accessories);
         InventorySystem.Instance.PrintInventory(EDataType.Skill);
+
+#endif
 
         TotalStats stat = InventorySystem.Instance.CalculateStats();
         Debug.Log($"TotalATK:{stat.ATK},HP{stat.HP}");
