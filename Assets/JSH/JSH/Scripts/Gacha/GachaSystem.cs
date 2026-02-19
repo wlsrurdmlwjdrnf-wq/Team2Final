@@ -189,4 +189,4 @@ public class GachaSystem : Singleton<GachaSystem>
         return _itemTierChanceTable.Length;
     }
 }
-
+#endif
