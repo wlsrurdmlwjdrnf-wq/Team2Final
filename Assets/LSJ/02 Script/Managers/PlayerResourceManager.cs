@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerResourceManager : Singleton<PlayerResourceManager>
 {
     private readonly Dictionary<ResourceType, BigNumber> _resources = new();
+    private BigNumber _tmpMultiplier;
 
     private void Awake()
     {
@@ -21,8 +22,23 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
     public void AddResource(ResourceType type, BigNumber amount)
     {
         if (amount.mantissa == 0) return;
-        _resources[type] = _resources[type] + amount;
-        Debug.Log($"[{type}] +{amount} (현재: {GetFormatted(type)})");
+
+        switch (type)
+        {
+            case ResourceType.Gold:
+                _tmpMultiplier = PlayerStatManager.Instance.GoldMultiplier;
+                break;
+            case ResourceType.EXP:
+                _tmpMultiplier = PlayerStatManager.Instance.ExpMultiplier;
+                break;
+            default:
+                _tmpMultiplier = new BigNumber(1);
+                break;
+        }
+
+        _resources[type] = _resources[type] + amount * _tmpMultiplier;
+
+        ResourcesModel.TriggerResourceChange(type, _resources[type]);
     }
 
     public bool SpendResource(ResourceType type, BigNumber amount)
@@ -36,7 +52,9 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
         }
 
         _resources[type] = current - amount;
-        Debug.Log($"[{type}] -{amount} (남은: {GetFormatted(type)})");
+
+        ResourcesModel.TriggerResourceChange(type, _resources[type]);
+
         return true;
     }
 

@@ -115,7 +115,23 @@ public class BigNumber : IComparable<BigNumber>
         if (a.sign == 0 || b.sign == 0) return new BigNumber(0);
         return new BigNumber(a.mantissa * b.mantissa, a.exponent + b.exponent, a.sign * b.sign);
     }
+    
+    // 나눗셈
+    public static BigNumber operator /(BigNumber a, BigNumber b)
+    {
+        if (b.sign == 0)
+            throw new DivideByZeroException("0으로 나눌 수 없습니다! (Divide by zero)");
 
+        if (a.sign == 0)
+            return new BigNumber(0);
+
+        double newMantissa = a.mantissa / b.mantissa;
+        long newExponent = a.exponent - b.exponent;
+        int newSign = a.sign * b.sign * -1;  // 나눗셈은 부호 반대
+
+        // Normalize()가 생성자에서 자동 호출되므로 안전
+        return new BigNumber(newMantissa, newExponent, newSign);
+    }
     // 비교
     public int CompareTo(BigNumber other)
     {
@@ -155,6 +171,24 @@ public class BigNumber : IComparable<BigNumber>
 
     public static bool operator !=(BigNumber a, BigNumber b) => !(a == b);
 
+    public double ToDoubleSafe()
+    {
+        if (sign == 0) return 0.0;
+
+        // double이 표현 가능한 범위 대략 체크
+        if (exponent > 308)
+        {
+            return double.PositiveInfinity * sign;  // 또는 그냥 double.MaxValue * sign 써도 됨
+        }
+        if (exponent < -308)
+        {
+            return 0.0;  // 아주 작은 값은 0으로 취급 (UI에선 보통 이렇게 처리)
+        }
+
+        // 정상 범위 → 안전하게 계산
+        double value = mantissa * Math.Pow(10.0, exponent);
+        return sign * value;
+    }
     public override bool Equals(object obj)
     {
         return obj is BigNumber other && this == other;

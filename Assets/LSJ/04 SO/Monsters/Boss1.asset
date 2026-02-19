@@ -17,3 +17,4 @@ MonoBehaviour:
   baseMaxHP: 200
   baseDefensivePower: 1
   baseAttackSpeed: 0.5
+  elementType: 4

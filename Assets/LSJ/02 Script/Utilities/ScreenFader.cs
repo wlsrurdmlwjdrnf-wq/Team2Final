@@ -9,8 +9,7 @@ public class ScreenFader : MonoBehaviour
 
     private void Awake()
     {
-        // 처음에 투명하게 시작
-        fadePanel.alpha = 0f;
+        fadePanel.alpha = 1f;
         fadePanel.gameObject.SetActive(true); // 필요 시
     }
     private void OnEnable()
