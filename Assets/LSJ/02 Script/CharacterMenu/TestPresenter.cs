@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class TestPresenter : MonoBehaviour
@@ -23,13 +22,11 @@ public class TestPresenter : MonoBehaviour
     {
         BigNumber amount = new BigNumber(12300000000000);
         PlayerResourceManager.Instance.AddResource(ResourceType.Gold, amount);
-        testView.UpdateView();
     }
     public void SpendGoldButtonClick()
     {
         BigNumber amount = new BigNumber(3210000000000);
         PlayerResourceManager.Instance.SpendResource(ResourceType.Gold, amount);
-        testView.UpdateView();
     }
     public void AtkPowerUpButtonClick()
     {
@@ -44,7 +41,6 @@ public class TestPresenter : MonoBehaviour
     public void LevelUpButtonClick()
     {
         PlayerLevelUpSystem.TryPlayerLevelUp();
-        testView.UpdateView();
     }
     public void BossStageButtonClick()
     {

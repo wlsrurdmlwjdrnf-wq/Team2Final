@@ -10,4 +10,5 @@ public enum ResourceType
     WaterStone,
     WindStone,
     EarthStone,
+    Feather
 }

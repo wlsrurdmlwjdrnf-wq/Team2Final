@@ -276,9 +276,14 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         MarkDirty();
     }
 
-    public void PromoteTier(Tier newTier)
+    public void PromoteTier()
     {
-        _currentTier = newTier;
+        Tier tier = _currentTier;
+        Tier[] values = (Tier[])Enum.GetValues(typeof(Tier));
+
+        int index = Array.IndexOf(values, tier);
+        _currentTier = values[index + 1];
+
         MarkDirty();
     }
 

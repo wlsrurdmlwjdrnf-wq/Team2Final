@@ -50,5 +50,20 @@ MonoBehaviour:
     subNumber: 1
     isBoss: 0
     stageData: {fileID: 11400000, guid: 8d432dc3bd48ee74b9d5f625ddc6bfd5, type: 2}
-  allTierStages: []
+  - mainNumber: 1
+    subNumber: 1
+    isBoss: 1
+    stageData: {fileID: 11400000, guid: c8446f85ef0aac746b0e3e8194c8794d, type: 2}
+  - mainNumber: 1
+    subNumber: 2
+    isBoss: 0
+    stageData: {fileID: 11400000, guid: 171b36ae01ef2fc40b9f0cad93a07d17, type: 2}
+  - mainNumber: 1
+    subNumber: 2
+    isBoss: 1
+    stageData: {fileID: 11400000, guid: e02145a613ddd6b419521330e9a2a2c6, type: 2}
+  allTierStages:
+  - tier: 1
+    stageData: {fileID: 11400000, guid: d091adcc18d94bc4bb8754cf5919dc80, type: 2}
+  allAdventureStages: []
   _player: {fileID: 0}

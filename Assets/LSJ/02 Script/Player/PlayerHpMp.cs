@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerHpMp : MonoBehaviour
 {
-    //임시 체력
-    [SerializeField] private TextMeshProUGUI hphp;
+    [SerializeField] protected HpBar _hpBar;
+    [SerializeField] private MpBar _mpBar;
     public BigNumber CurrentHP { get; private set; }
     public float CurrentMana { get; private set; }
 
@@ -18,13 +18,16 @@ public class PlayerHpMp : MonoBehaviour
         CurrentHP = PlayerStatManager.Instance.MaxHP;
         CurrentMana = PlayerStatManager.Instance.MaxMana;
         _recoveryCo = StartCoroutine(RecoveryCo());
-        hphp.text = BigNumberFormatter.ToFormatted(CurrentHP);
+
+        if (_hpBar != null)
+            _hpBar.UpdateHP(CurrentHP, PlayerStatManager.Instance.MaxHP);
+        if (_mpBar != null)
+            _mpBar.UpdateMP(CurrentMana, PlayerStatManager.Instance.MaxMana);
     }
     private void OnDisable()
     {
         if (_recoveryCo != null)
         {
-            StopCoroutine(_recoveryCo);
             _recoveryCo = null;
         }
     }
@@ -53,6 +56,11 @@ public class PlayerHpMp : MonoBehaviour
 
             }
 
+            if (_hpBar != null)
+                _hpBar.UpdateHP(CurrentHP, PlayerStatManager.Instance.MaxHP);
+            if (_mpBar != null)
+                _mpBar.UpdateMP(CurrentMana, PlayerStatManager.Instance.MaxMana);
+
             yield return _recoveryInterval;
         }
     }
@@ -61,14 +69,19 @@ public class PlayerHpMp : MonoBehaviour
         if (amount <= new BigNumber(0)) return;
 
         CurrentHP -= amount;
-        hphp.text = BigNumberFormatter.ToFormatted(CurrentHP); // 테스트
+
         if (CurrentHP <= new BigNumber(0))
         {
+            CurrentHP = new BigNumber(0);
             Die();
         }
+
+        if (_hpBar != null)
+            _hpBar.UpdateHP(CurrentHP, PlayerStatManager.Instance.MaxHP);
     }
     private void Die()
     {
+        StopCoroutine(_recoveryCo);
         if (gameObject.TryGetComponent<Player>(out var player))
         {
             player.ChangeState(player.DeadState);
@@ -80,6 +93,8 @@ public class PlayerHpMp : MonoBehaviour
         if (CurrentMana >= amount)
         {
             CurrentMana -= amount;
+            if (_mpBar != null)
+                _mpBar.UpdateMP(CurrentMana, PlayerStatManager.Instance.MaxMana);
             return true;
         }
         return false;

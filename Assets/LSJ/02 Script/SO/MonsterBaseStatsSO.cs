@@ -10,4 +10,6 @@ public class MonsterBaseStatsSO : ScriptableObject
     public float baseMaxHP;
     public float baseDefensivePower;
     public float baseAttackSpeed;
+
+    public ElementType elementType;
 }

@@ -1,6 +1,10 @@
 public enum ElementType
 {
     Fire,
+    Water,
+    Wind,
+    Earth,
+    Normal
 }
 public enum GradeType
 {     

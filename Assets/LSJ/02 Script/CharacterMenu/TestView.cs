@@ -28,7 +28,6 @@ public class TestView : MonoBehaviour
 
     private void Awake()
     {
-        UpdateView();
         testButton.onClick.AddListener(() =>  OnAddGoldClicked?.Invoke());
         testButton2.onClick.AddListener(() =>  OnSpendGoldClicked?.Invoke());
         testButton3.onClick.AddListener(() =>  OnAtkPowerUpClicked?.Invoke());
@@ -37,13 +36,5 @@ public class TestView : MonoBehaviour
         testButton6.onClick.AddListener(() =>  OnBossStageClicked?.Invoke());
         testButton7.onClick.AddListener(() =>  OnTierStageClicked?.Invoke());
 
-    }
-
-    public void UpdateView()
-    {
-        expRequirementText.text = PlayerLevelUpSystem.GetExpRequirement();
-        expText.text = PlayerResourceManager.Instance.GetFormatted(ResourceType.EXP);
-        statPointText.text = "StatPoints : " + PlayerResourceManager.Instance.GetFormatted(ResourceType.StatPoint);
-        goldText.text = "Gold : " + PlayerResourceManager.Instance.GetFormatted(ResourceType.Gold);
     }
 }
