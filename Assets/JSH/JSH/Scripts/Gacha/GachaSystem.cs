@@ -53,11 +53,6 @@ public class GachaSystem : Singleton<GachaSystem>
     private int[] _itemTierChanceTable = { 40, 30, 20, 10 };
     //가챠레벨업테이블
     private int[] _gachaLevelTable = { 100, 250, 1000, 4000, 12000, 25000, 27500, 55000, 88000, 100000 };
-    private void Start()
-    {
-        InventorySystem.Instance.Initialize();
-        Initialize();
-    }
     private void OnEnable()
     {
         _eventChannel.OnEventRaised += HandleEvent;
@@ -81,8 +76,6 @@ public class GachaSystem : Singleton<GachaSystem>
         InventorySystem.Instance.PrintInventory(EDataType.Accessories);
         InventorySystem.Instance.PrintInventory(EDataType.Skill);
 
-        TotalStats stat = InventorySystem.Instance.CalculateStats();
-        Debug.Log($"TotalATK:{stat.ATK},HP{stat.HP}");
         SkillManager.Instance.RefreshSlots();
     }
     private void HandleEvent(EGameEventType type, object payload)

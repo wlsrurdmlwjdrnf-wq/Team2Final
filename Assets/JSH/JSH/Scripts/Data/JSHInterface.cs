@@ -9,7 +9,7 @@ public interface IUpgradable
 }
 public interface ISkillEffect 
 {
-    void Apply(Collider2D[] enemies, float damageDuplicator);
+    void Apply(Collider2D[] enemies, float damageMultiply);
 }
 public interface IPoolable 
 {

@@ -9,6 +9,7 @@ public class SkillVFX : MonoBehaviour, IPoolable
     private float _damageDuplicator = 0f;
     private IPool _pool;
     private GameObject _target;
+    private ElementType _elementType;
 
     [SerializeField] private float _effectRange;
     [SerializeField] private float _projectileSpeed = 5f;
@@ -21,16 +22,18 @@ public class SkillVFX : MonoBehaviour, IPoolable
         Invoke("ReturnPool", LifeTime);
     }
 
-    public void Setup(GameObject enemy, float damageDuplicator) 
+    public void Setup(ElementType element, GameObject enemy, float damageDuplicator) 
     {
         if (enemy == null) ReturnPool();
+        _elementType = element;
         _target = enemy;
         _damageDuplicator = damageDuplicator;
         transform.position = GameObject.FindGameObjectWithTag("Player").transform.position + _positionOffset;
     }
-    public void Setup(Vector3 position, float damageDuplicator)
+    public void Setup(ElementType element, Vector3 position, float damageDuplicator)
     {
         if (position == null) ReturnPool();
+        _elementType = element;
         _damageDuplicator = damageDuplicator;
         transform.position = position + _positionOffset;
     }
@@ -75,9 +78,9 @@ public class SkillVFX : MonoBehaviour, IPoolable
                 if (Random.value < PlayerStatManager.Instance.CritRate)
                 {
                     damage *= PlayerStatManager.Instance.CritDamage;
-                    target.TakeDamage(damage, true);
+                    target.TakeDamage(damage, /*_elementType,*/ true);
                 }
-                else target.TakeDamage(damage);
+                else target.TakeDamage(damage/*, _elementType*/);
                 // 이펙트나 사운드 넣으면 될 듯
             }
         }
