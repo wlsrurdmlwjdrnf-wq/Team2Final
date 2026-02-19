@@ -17,7 +17,7 @@ public class PlayerBaseStatsSO : ScriptableObject
     public float baseManaRegenPerSec = 1f;
     public float baseGoldMultiplier = 1f;       // 추가 골드 획득량 배율
     public float baseExpMultiplier = 1f;       // 추가 경험치 배율
-    public float baseAttackSpeed = 1f;       // 공격속도 ( 1 / 공속 )
+    public float baseAttackSpeed = 1f;       // 공격속도 ( 1 / 공속 = 공격쿨타임)
     public float baseMoveSpeed = 4f;       // 배경 스크롤과 몬스터 속도에 영향
 
 }

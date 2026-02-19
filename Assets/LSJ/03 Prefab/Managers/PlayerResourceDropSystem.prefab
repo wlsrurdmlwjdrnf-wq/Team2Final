@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1457389025339115425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2981304447729906472}
+  - component: {fileID: 2857417519848510530}
+  m_Layer: 0
+  m_Name: PlayerResourceDropSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2981304447729906472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457389025339115425}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.6229815, y: 0.28358343, z: -9.931537}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2857417519848510530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457389025339115425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9640b9e5b4d44f48b666ffe772a6434, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDestroyOnLoad: 0
+  stageRoot: {fileID: 0}
+  expPrefab: {fileID: 7508142057645811138, guid: d1e3b23d651df8949902d17d9a185779, type: 3}
+  goldPrefab: {fileID: 4355342836587152863, guid: 5d82a4b8995daed46a3e748f9e9ca761, type: 3}
+  cubePrefab: {fileID: 5520481218334075567, guid: dac1b2fddc0680040aa076bc9b53f4e0, type: 3}
+  fireStonePrefab: {fileID: 4355342836587152863, guid: 184ce1e6365c9474ca8ea2f4e04b0345, type: 3}
+  waterStonePrefab: {fileID: 4355342836587152863, guid: 12ec02310cc18104da90d69f74fddd63, type: 3}
+  windStonePrefab: {fileID: 4355342836587152863, guid: 9845882433c1f0148be2a38d80a8ba73, type: 3}
+  earthStonePrefab: {fileID: 4355342836587152863, guid: 0abed542b67dbd94b8a7536a62bfdf48, type: 3}
+  amountSO: {fileID: 11400000, guid: 3d46d88410b0e8346af6ac015f471d76, type: 2}

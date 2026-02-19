@@ -10,6 +10,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
     public TextMeshProUGUI LevelTxt;
     public TextMeshProUGUI TierTxt;
     public TextMeshProUGUI StackTxt;
+    public bool IsUnlocked = false;
 
     private IPool _pool;
     [SerializeField] private GameEventChannelSO _eventChannel;
@@ -67,6 +68,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
             tier = Item.Tier;
             level = Slot.Level;
             stack = Slot.Stack;
+            IsUnlocked = Slot.Unlocked;
         }
         else if (Slot.BaseData is SkillDataSO Skill) 
         {
@@ -74,6 +76,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
             grade = Skill.Grade;
             level = Slot.Level;
             stack = Slot.Stack;
+            IsUnlocked = Slot.Unlocked;
         }
         if (!Slot.Unlocked)
         {

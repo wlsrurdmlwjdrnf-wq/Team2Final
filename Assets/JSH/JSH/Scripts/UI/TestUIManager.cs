@@ -22,7 +22,6 @@ public class TestUIManager : Singleton<TestUIManager>
     private void Start()
     {
         PoolManager.Instance.CreatePool(_slotUIPrefab, 120, null);
-        Initialize();
     }
     private void OnEnable()
     {

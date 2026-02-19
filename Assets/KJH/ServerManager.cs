@@ -26,7 +26,7 @@ public enum HttpMethod
 
 public class ServerManager : Singleton<ServerManager>
 {
-    private string baseURL = "http://localhost:5016/api"; // api 주소
+    private string baseURL = "https://janett-blanketlike-unusefully.ngrok-free.dev/api"; // api 주소
     private string token = ""; // 서버로부터 응답받은 토큰
 
     private Dictionary<HttpPath, string> pathMap = new Dictionary<HttpPath, string>() // 편의성을 위한 enum키 딕셔너리
@@ -42,7 +42,7 @@ public class ServerManager : Singleton<ServerManager>
         token = tok;
         PlayerPrefs.SetString("PlayerToken", token);
         PlayerPrefs.Save();
-        //Debug.Log("토큰 갱신");
+        Debug.Log("토큰 갱신");
     }
 
     public void ClearToken() // 토큰 제거
@@ -50,7 +50,7 @@ public class ServerManager : Singleton<ServerManager>
         token = "";
         PlayerPrefs.DeleteKey("PlayerToken");
         PlayerPrefs.Save();
-        //Debug.Log("토큰 제거");
+        Debug.Log("토큰 제거");
     }
 
     // 서버 리퀘스트용 Post 함수

@@ -7,26 +7,28 @@ public class SkillManager : Singleton<SkillManager>
     private List<SkillInstance> _equippedSkills = new List<SkillInstance>();
     [SerializeField] private GameEventChannelSO _eventChannel;
     //나중에 수정 필요
-    private PlayerHpMp _playerHpMp;
-    private GameObject _player;
-   
-    private void Start()
-    {
-        _player = GameObject.FindGameObjectWithTag("Player");
-        if (_player.TryGetComponent(out PlayerHpMp playerHpMp)) 
-        {
-            _playerHpMp = playerHpMp;
-        }
-    }
+    [SerializeField] private PlayerHpMp _playerHpMp;
+    [SerializeField] private GameObject _player;
+
+    private bool _IsPlayerReady = true;
+    //죽음 이벤트 받아서 죽어도 스킬 시전되지 않게 하기
+    //넉백시에도 스킬 시전 금지
+    //속성 데미지
     private void OnEnable()
     {
         _eventChannel.OnEventRaised += HandleEvent;
-        Player.OnAttack += OnNormalAttack; 
+        Player.OnAttack += OnNormalAttack;
+        Player.OnAttack += PlayerReady;
+        Player.OnDead += PlayerDead;
+        Player.OnKnockBack += PlayerDead;
     }
     private void OnDisable()
     {
         _eventChannel.OnEventRaised -= HandleEvent;
         Player.OnAttack -= OnNormalAttack;
+        Player.OnAttack -= PlayerReady;
+        Player.OnDead -= PlayerDead;
+        Player.OnKnockBack -= PlayerDead;
     }
     private void HandleEvent(EGameEventType eventType, object payload) 
     {
@@ -62,6 +64,10 @@ public class SkillManager : Singleton<SkillManager>
             }
         }
     }
+
+    private void PlayerDead() { _IsPlayerReady = false; }
+    private void PlayerReady() { _IsPlayerReady = true; }
+
     public void OnNormalAttack() 
     {
         foreach (var skill in _equippedSkills) 
@@ -73,6 +79,7 @@ public class SkillManager : Singleton<SkillManager>
             }
         }
     }
+
     public Collider2D[] CheckEnemy(float range) 
     {
         Vector2 playerPos = _player.transform.position;
