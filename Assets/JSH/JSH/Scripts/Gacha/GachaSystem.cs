@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//°¡Ã­°á°ú¹°
+//ê°€ì± ê²°ê³¼ë¬¼
 public struct ItemCard 
 {
     public EDataType Type;
@@ -25,11 +25,11 @@ public class GachaSystem : Singleton<GachaSystem>
     private float _min = 0;
     private float _max = 100;
 
-    //°¡Ã­ °á°ú ¸®½ºÆ®
+    //ê°€ì±  ê²°ê³¼ ë¦¬ìŠ¤íŠ¸
     public List<ItemCard> gachaResults = new List<ItemCard>();
     [SerializeField] private GameEventChannelSO _eventChannel;
 
-    //¹«±â & ¾Ç¼¼ Grade È®·ü
+    //ë¬´ê¸° & ì•…ì„¸ Grade í™•ë¥ 
     private Dictionary<GradeType, float[]> _itemGradeChanceTable = new Dictionary<GradeType, float[]>
     {
         { GradeType.Normal,    new float[]{ 68.58f, 54.2f, 33.1f, 10.56f, 7.2f, 5.08f, 4.41f, 2.68f, 0.11f, 0.01f } },
@@ -39,7 +39,7 @@ public class GachaSystem : Singleton<GachaSystem>
         { GradeType.Legendary, new float[]{ 0.005f, 0.08f, 0.2f, 0.5f, 0.7f, 1.02f, 1.54f, 2.05f, 4.02f, 7f } },
         { GradeType.Mythical,  new float[]{ 0.0001f, 0.0003f, 0.0018f, 0.01f, 0.025f, 0.032f, 0.05f, 0.07f, 0.1f, 0.15f } }
     };
-    //½ºÅ³ È®·ü
+    //ìŠ¤í‚¬ í™•ë¥ 
     private Dictionary<GradeType, float[]> _skillGradeChanceTable = new Dictionary<GradeType, float[]>
     {
         { GradeType.Normal,    new float[]{ 40f } },
@@ -49,9 +49,9 @@ public class GachaSystem : Singleton<GachaSystem>
         { GradeType.Legendary, new float[]{ 1f } },
         { GradeType.Mythical,  new float[]{ 1f } }
     };
-    //¹«±â & ¾Ç¼¼ Tier È®·ü
+    //ë¬´ê¸° & ì•…ì„¸ Tier í™•ë¥ 
     private int[] _itemTierChanceTable = { 40, 30, 20, 10 };
-    //°¡Ã­·¹º§¾÷Å×ÀÌºí
+    //ê°€ì± ë ˆë²¨ì—…í…Œì´ë¸”
     private int[] _gachaLevelTable = { 100, 250, 1000, 4000, 12000, 25000, 27500, 55000, 88000, 100000 };
     private void OnEnable()
     {
@@ -63,11 +63,13 @@ public class GachaSystem : Singleton<GachaSystem>
     }
     public void Initialize()
     {
-        //Å×½ºÆ®
+        //í…ŒìŠ¤íŠ¸
         DrawGacha(EDataType.Weapon, 11);
         DrawGacha(EDataType.Accessories, 11);   
         DrawGacha(EDataType.Skill, 11);
-  
+
+#if UNITY_EDITOR
+
         InventorySystem.Instance.SortInventory(EDataType.Weapon);
         InventorySystem.Instance.SortInventory(EDataType.Accessories);
         InventorySystem.Instance.SortInventory(EDataType.Skill);
@@ -90,7 +92,7 @@ public class GachaSystem : Singleton<GachaSystem>
                 break;
         }
     }
-    //°¡Ã­½ÇÇà
+    //ê°€ì± ì‹¤í–‰
     public void DrawGacha(EDataType gachaType, int count = 1)
     {
         int totalCost = GachaCost * count;
@@ -108,7 +110,7 @@ public class GachaSystem : Singleton<GachaSystem>
     }
     private ItemCard DrawOnce(EDataType gachaType) 
     {
-        //°¡Ã­ºñ¿ë Â÷°¨
+        //ê°€ì± ë¹„ìš© ì°¨ê°
         switch (gachaType)
         {
             case EDataType.Weapon:
@@ -150,7 +152,7 @@ public class GachaSystem : Singleton<GachaSystem>
                 return new ItemCard(EDataType.Weapon, GradeType.Normal);
         } 
     }
-    //Èñ±Íµµ ÃßÃ· > ÀÏ¹İ, ·¹¾î, ½ÅÈ­ µîµî...
+    //í¬ê·€ë„ ì¶”ì²¨ > ì¼ë°˜, ë ˆì–´, ì‹ í™” ë“±ë“±...
     private GradeType DrawRarity( Dictionary<GradeType, float[]> gachaTable, int gachaLvl = 0) 
     {
         float randomValue = Random.Range(_min, _max);
@@ -170,7 +172,7 @@ public class GachaSystem : Singleton<GachaSystem>
         }
         return GradeType.Normal;
     }
-    //µî±Ş ÃßÃ· > 4, 3, 2, 1
+    //ë“±ê¸‰ ì¶”ì²¨ > 4, 3, 2, 1
     private int DrawGrade() 
     {
         float randomValue = Random.Range(_min, _max);
