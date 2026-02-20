@@ -1,5 +1,7 @@
 using System.Collections.Generic;
-// using UnityEditor;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
 public class ItemSkillDataManager : MonoBehaviour
@@ -17,8 +19,10 @@ public class ItemSkillDataManager : MonoBehaviour
     {
         Instance = this;
 
-        //ItemDatabaseSO = FindSOByType<ItemDatabaseSO>();
-        //ConvertData();
+#if UNITY_EDITOR
+        ItemDatabaseConverter.Convert(this);
+#endif
+        ConvertData();
     }
 
     private void Start()
@@ -35,116 +39,92 @@ public class ItemSkillDataManager : MonoBehaviour
         GachaSystem.Instance.Initialize();
     }
 
-    //private TSO FindSOByType<TSO>() where TSO : ScriptableObject
-    //{
-    //    string[] guids = AssetDatabase.FindAssets("t:" + typeof(TSO).Name);
-    //    foreach (string guid in guids)
-    //    {
-    //        string path = AssetDatabase.GUIDToAssetPath(guid);
-    //        if (path.StartsWith("Assets/AssetIgnore")) continue;
-    //        return AssetDatabase.LoadAssetAtPath<TSO>(path);
-    //    }
-    //    return null;
-    //}
+    private void ConvertData()
+    {
+        if (ItemDatabaseSO == null) return;
 
-    //private void ConvertData()
-    //{
-    //    if (ItemDatabaseSO == null) return;
+        if (WeaponDatabase != null) WeaponDatabase.items.Clear();
+        else WeaponDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
+        //Î¨¥Í∏∞ Îç∞Ïù¥ÌÑ∞
+        foreach (var weapon in ItemDatabaseSO.weapons)
+        {
+                ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
+                itemSO.Name = weapon.Name;
+                itemSO.Type = EDataType.Weapon;
+                itemSO.Grade = weapon.Grade;
+                itemSO.Tier = weapon.Tier;
+                itemSO.Level = weapon.Level;
+                itemSO.EquipStat = StatType.AttackPower;
+                itemSO.EquipValue = weapon.equipATK;
+                itemSO.PassiveStat = StatType.AttackPower;
+                itemSO.PassiveValue = weapon.passiveATK;
+                itemSO.CriticalDMG = weapon.CriticalDMG;
+                itemSO.CriticalRate = 0;
+                itemSO.GoldPer = weapon.GoldPer;
+                itemSO.EquipATKbyLv = weapon.EquipATKByLv;
+                itemSO.PassiveATKbyLv = weapon.passiveATKByLv;
+                itemSO.GoldPerbyLv = weapon.goldPerByLv;
+                itemSO.DataSO = DataSOType.Resource;
 
-    //    ItemDatabaseSO.items.Clear();
+                WeaponDatabase.items.Add(itemSO);
+        }
 
-    //    if (WeaponDatabase != null) WeaponDatabase.items.Clear();
-    //    else WeaponDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
-    //    //π´±‚ µ•¿Ã≈Õ
-    //    foreach (var weapon in ItemDatabaseSO.weapons)
-    //        {
-    //            ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
-    //            itemSO.Name = weapon.Name;
-    //            itemSO.Type = EDataType.Weapon;
-    //            itemSO.Grade = weapon.Grade;
-    //            itemSO.Tier = weapon.Tier;
-    //            itemSO.Level = weapon.Level;
-    //            itemSO.EquipStat = StatType.AttackPower;
-    //            itemSO.EquipValue = weapon.equipATK;
-    //            itemSO.PassiveStat = StatType.AttackPower;
-    //            itemSO.PassiveValue = weapon.passiveATK;
-    //            itemSO.CriticalDMG = weapon.CriticalDMG;
-    //            itemSO.CriticalRate = 0;
-    //            itemSO.GoldPer = weapon.GoldPer;
-    //            itemSO.EquipATKbyLv = weapon.EquipATKByLv;
-    //            itemSO.PassiveATKbyLv = weapon.passiveATKByLv;
-    //            itemSO.GoldPerbyLv = weapon.goldPerByLv;
-    //            itemSO.DataSO = DataSOType.Resource;
+        if (AccessoriesDatabase != null) AccessoriesDatabase.items.Clear();
+        else AccessoriesDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
+        //ÏïÖÏÑ∏ÏÑúÎ¶¨ Îç∞Ïù¥ÌÑ∞
+        foreach (var accessory in ItemDatabaseSO.accessories)
+        {
+                ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
+                itemSO.Name = accessory.Name;
+                itemSO.Type = EDataType.Accessories;
+                itemSO.Grade = accessory.grade;
+                itemSO.Tier = accessory.Tier;
+                itemSO.Level = accessory.Level;
+                itemSO.EquipStat = StatType.MaxHP;
+                itemSO.EquipValue = accessory.EquipHPPer;
+                itemSO.PassiveStat = StatType.MaxHP;
+                itemSO.PassiveValue = accessory.PassiveHPPer;
+                itemSO.DataSO = DataSOType.Resource;
+                itemSO.EquipATKbyLv = accessory.EquipHPPerByLv;
+                itemSO.PassiveATKbyLv = accessory.passiveHPPerByLv;
+                itemSO.CriticalDMG = accessory.MPPer;
+                itemSO.CriticalDMGbyLv = accessory.MPPerByLv;
+                itemSO.GoldPer = accessory.EXPPer;
+                itemSO.GoldPerbyLv = accessory.EXPPerByLv;
 
-    //            WeaponDatabase.items.Add(itemSO);
-    //            Debug.Log($"weapon : { itemSO.Tier}  {weapon.Tier}");
-    //        }
-    //    EditorUtility.SetDirty(WeaponDatabase);
+                AccessoriesDatabase.items.Add(itemSO);
+        }
 
-    //    if (AccessoriesDatabase != null) AccessoriesDatabase.items.Clear();
-    //    else AccessoriesDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
-    //    //æ«ººº≠∏Æ µ•¿Ã≈Õ
-    //    foreach (var accessory in ItemDatabaseSO.accessories)
-    //        {
-    //            ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
-    //            itemSO.Name = accessory.Name;
-    //            itemSO.Type = EDataType.Accessories;
-    //            itemSO.Grade = accessory.grade;
-    //            itemSO.Tier = accessory.Tier;
-    //            itemSO.Level = accessory.Level;
-    //            itemSO.EquipStat = StatType.MaxHP;
-    //            itemSO.EquipValue = accessory.EquipHPPer;
-    //            itemSO.PassiveStat = StatType.MaxHP;
-    //            itemSO.PassiveValue = accessory.PassiveHPPer;
-    //            itemSO.DataSO = DataSOType.Resource;
-    //            itemSO.EquipATKbyLv = accessory.EquipHPPerByLv;
-    //            itemSO.PassiveATKbyLv = accessory.passiveHPPerByLv;
-    //            itemSO.CriticalDMG = accessory.MPPer;
-    //            itemSO.CriticalDMGbyLv = accessory.MPPerByLv;
-    //            itemSO.GoldPer = accessory.EXPPer;
-    //            itemSO.GoldPerbyLv = accessory.EXPPerByLv;
+        if (ArtifactsDatabase != null) ArtifactsDatabase.items.Clear();
+        else ArtifactsDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
+        //Ïú†Î¨º Îç∞Ïù¥ÌÑ∞
+        foreach (var artifact in ItemDatabaseSO.artifacts)
+        {
+                ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
+                itemSO.Name = artifact.Name;
+            itemSO.Type = EDataType.Artifact;
+                itemSO.Element = artifact.Element;
+                itemSO.Grade = artifact.Grade;
+                itemSO.Level = artifact.Level;
+                itemSO.DataSO = DataSOType.Resource;
 
-    //            AccessoriesDatabase.items.Add(itemSO);
-    //            Debug.Log($"accessory : {itemSO.Tier}  {accessory.Tier}");
-    //    }
-    //    EditorUtility.SetDirty(AccessoriesDatabase);
+                ArtifactsDatabase.items.Add(itemSO);
+        }
 
-    //    if (ArtifactsDatabase != null) ArtifactsDatabase.items.Clear();
-    //    else ArtifactsDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
-    //    //¿Øπ∞ µ•¿Ã≈Õ
-    //    foreach (var artifact in ItemDatabaseSO.artifacts)
-    //        {
-    //            ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
-    //            itemSO.Name = artifact.Name;
-    //            itemSO.Type = EDataType.Accessories;//≥™¡ﬂø° ∞Ìƒ°±‚
-    //            itemSO.Element = artifact.Element;
-    //            itemSO.Grade = artifact.Grade;
-    //            itemSO.Level = artifact.Level;
-    //            itemSO.DataSO = DataSOType.Resource;
+        //if (SkillDatabase != null) SkillDatabase.skills.Clear();
+        //else SkillDatabase = ScriptableObject.CreateInstance<SkillDatabaseSO>();
+        //foreach (var skill in ItemDatabaseSO.skills)
+        //{
+        //        SkillDataSO skillSO = ScriptableObject.CreateInstance<SkillDataSO>();
+        //        skillSO.Name = skill.Name;
+        //        skillSO.Type = EDataType.Skill;
+        //        skillSO.Grade = skill.Grade;
+        //        skillSO.Level = skill.Level;
+        //        skillSO.DataSO = DataSOType.Resource;
 
-    //            ArtifactsDatabase.items.Add(itemSO);
-    //        }
-    //    EditorUtility.SetDirty(ArtifactsDatabase);
-
-    //    if (SkillDatabase != null) SkillDatabase.skills.Clear();
-    //    else SkillDatabase = ScriptableObject.CreateInstance<SkillDatabaseSO>();
-    //        foreach (var skill in ItemDatabaseSO.skills)
-    //        {
-    //            SkillDataSO skillSO = ScriptableObject.CreateInstance<SkillDataSO>();
-    //            skillSO.Name = skill.Name;
-    //            skillSO.Type = EDataType.Skill;
-    //            skillSO.Grade = skill.Grade;
-    //            skillSO.Level = skill.Level;
-    //            skillSO.DataSO = DataSOType.Resource;
-
-    //            SkillDatabase.skills.Add(skillSO);
-    //        }
-    //    EditorUtility.SetDirty(SkillDatabase);
-
-    //    EditorUtility.SetDirty(ItemDatabaseSO);
-    //    AssetDatabase.SaveAssets();
-    //    AssetDatabase.Refresh();
-    //}
+        //        SkillDatabase.skills.Add(skillSO);
+        //}
+    }
     public ItemDataSO GetItemData(ItemCard card) 
     {
         ItemDatabaseSO targetDB = null;
@@ -166,18 +146,14 @@ public class ItemSkillDataManager : MonoBehaviour
             {
                 if (card.Tier == 0 || item.Tier == card.Tier)
                 {
-                    Debug.Log($"GetItemData: Found {item.Name}");
                     return item;
                 }
             }
         }
-
-        Debug.LogWarning($"GetItemData: No match for {card.Type}, Grade={card.Grade}, Tier={card.Tier}");
         return null;
-
     }
 
-    //¿Ã¬ ¿∫ ¥ı ∫∏∞≠«“ « ø‰∞° ¿÷¿Ω
+    //Ïù¥Ï™ΩÏùÄ Îçî Î≥¥Í∞ïÌï† ÌïÑÏöîÍ∞Ä ÏûàÏùå
     public SkillDataSO GetSkillData(ItemCard card) 
     {
         List<SkillDataSO> dataLists = new List<SkillDataSO>();

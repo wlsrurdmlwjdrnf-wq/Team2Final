@@ -15,8 +15,9 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
         }
 
         // 시작 재화 테스트
-        _resources[ResourceType.Gold] = new BigNumber(1000);
+        //_resources[ResourceType.Gold] = new BigNumber(10000000);
         _resources[ResourceType.Diamond] = new BigNumber(123456789101112);
+        //_resources[ResourceType.EXP] = new BigNumber(7777777);
     }
 
     public void AddResource(ResourceType type, BigNumber amount)
@@ -47,7 +48,7 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
 
         if (current < amount)
         {
-            Debug.LogWarning($"[{type}] 부족! 필요: {amount}, 보유: {current}");
+            Debug.LogWarning($"[{type}] 부족!");
             return false;
         }
 
@@ -64,7 +65,7 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
     public string GetFormatted(ResourceType type)
     {
         BigNumber bn = GetResource(type);
-        return BigNumberFormatter.ToFormatted(bn);
+        return BigNumberFormatter.ToIntegerStyle(bn);
     }
 
     // JSON 저장용 직렬화 클래스

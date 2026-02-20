@@ -6,6 +6,7 @@ using UnityEngine;
 public class ResourcesView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI expText;
+    [SerializeField] private TextMeshProUGUI expRateText;
     [SerializeField] private TextMeshProUGUI statPointText;
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private TextMeshProUGUI emeraldText;
@@ -38,7 +39,12 @@ public class ResourcesView : MonoBehaviour
     {
         if (_textMap.TryGetValue(type, out var text))
         {
-            text.text = formattedValue;
+            if(type == ResourceType.StatPoint) text.text = "STAT POINT : " + formattedValue;
+            else text.text = formattedValue;
         }
+    }
+    public void UpdateExpRate()
+    {
+        expRateText.text = PlayerLevelUpSystem.GetExpRate();
     }
 }

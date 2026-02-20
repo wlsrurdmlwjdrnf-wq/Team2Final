@@ -4880,6 +4880,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1436103538854229973, guid: a430d2e41c7d60f468ebd104f4f21872, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436103538854229973, guid: a430d2e41c7d60f468ebd104f4f21872, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3882059221117516757, guid: a430d2e41c7d60f468ebd104f4f21872, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.52
@@ -4918,6 +4926,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3882059221117516757, guid: a430d2e41c7d60f468ebd104f4f21872, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021512584577225274, guid: a430d2e41c7d60f468ebd104f4f21872, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021512584577225274, guid: a430d2e41c7d60f468ebd104f4f21872, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8165833104710470051, guid: a430d2e41c7d60f468ebd104f4f21872, type: 3}
@@ -5079,7 +5095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _eventChannel: {fileID: 11400000, guid: 345cf9c9edc892f4d9c22c0384dc31f4, type: 2}
-  _gachaType: 2
+  _gachaType: 3
   _pullCount: 11
   _button: {fileID: 873025509}
 --- !u!1 &882008715
@@ -5649,6 +5665,10 @@ MonoBehaviour:
   expPrefab: {fileID: 7508142057645811138, guid: d1e3b23d651df8949902d17d9a185779, type: 3}
   goldPrefab: {fileID: 4355342836587152863, guid: 5d82a4b8995daed46a3e748f9e9ca761, type: 3}
   cubePrefab: {fileID: 5520481218334075567, guid: dac1b2fddc0680040aa076bc9b53f4e0, type: 3}
+  fireStonePrefab: {fileID: 0}
+  waterStonePrefab: {fileID: 0}
+  windStonePrefab: {fileID: 0}
+  earthStonePrefab: {fileID: 0}
   amountSO: {fileID: 11400000, guid: 3d46d88410b0e8346af6ac015f471d76, type: 2}
 --- !u!4 &959585571
 Transform:
@@ -8903,6 +8923,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlackFadeOutIn
       objectReference: {fileID: 0}
+    - target: {fileID: 3986567078360428892, guid: 86c773cc3002f6f4a809be90041a4f90, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6885691694211857408, guid: 86c773cc3002f6f4a809be90041a4f90, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -9824,7 +9848,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 720, y: 600}
+  m_SizeDelta: {x: 720, y: 560}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1521243326
 MonoBehaviour:
@@ -10065,8 +10089,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemDatabaseSO: {fileID: 11400000, guid: a1025629043ff0542a066b942b0d12cc, type: 2}
-  WeaponDatabase: {fileID: 11400000, guid: fe17a4e27ac781843ab7fa4526764d3b, type: 2}
-  AccessoriesDatabase: {fileID: 11400000, guid: cf2e98aba07ae034d9f1d2d165e0521f, type: 2}
+  WeaponDatabase: {fileID: 0}
+  AccessoriesDatabase: {fileID: 0}
   ArtifactsDatabase: {fileID: 0}
   SkillDatabase: {fileID: 11400000, guid: eee2424d85d620849b5070b246c05bc1, type: 2}
   SkillVFXDatabase: {fileID: 11400000, guid: b1b97b62bdd314840a5a69f2f10ab0c7, type: 2}

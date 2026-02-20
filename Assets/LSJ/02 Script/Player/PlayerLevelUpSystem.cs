@@ -20,6 +20,14 @@ public static class PlayerLevelUpSystem
     public static string GetExpRequirement()
     {
         _expRequirement = new BigNumber(Mathf.Pow(PlayerStatManager.Instance.PlayerLevel * 10, 2));
-        return BigNumberFormatter.ToFormatted(_expRequirement);
+        return BigNumberFormatter.ToIntegerStyle(_expRequirement);
+    }
+
+    // 경험치 % 보여주기
+    public static string GetExpRate()
+    {
+        BigNumber bn = PlayerResourceManager.Instance.GetResource(ResourceType.EXP) / _expRequirement * new BigNumber(100);
+        if (bn > new BigNumber(100)) bn = new BigNumber(100);
+        return BigNumberFormatter.ToFormatted(bn) + "%";
     }
 }
