@@ -62,8 +62,13 @@ MonoBehaviour:
     subNumber: 2
     isBoss: 1
     stageData: {fileID: 11400000, guid: e02145a613ddd6b419521330e9a2a2c6, type: 2}
+  - mainNumber: 1
+    subNumber: 3
+    isBoss: 0
+    stageData: {fileID: 11400000, guid: 7aa60546d878dbc44951749878d592c8, type: 2}
   allTierStages:
   - tier: 1
     stageData: {fileID: 11400000, guid: d091adcc18d94bc4bb8754cf5919dc80, type: 2}
   allAdventureStages: []
   _player: {fileID: 0}
+  _limitTimeBar: {fileID: 0}
