@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d83bc0b9aa7bbe948a11a16e1e855bd4, type: 3}
+  m_Name: SkillVFXDatabaseSO
+  m_EditorClassIdentifier: 
+  entries:
+  - effectType: 0
+    element: 0
+    vfxPrefab: {fileID: -5655668019623881250, guid: 1cdb0c2eaf638d74c806f8215a48fd1a, type: 3}
+  - effectType: 1
+    element: 0
+    vfxPrefab: {fileID: 4308056137883083401, guid: 419ad13ddec864c49a3ebe99b44c696f, type: 3}
+  - effectType: 2
+    element: 0
+    vfxPrefab: {fileID: 348112900897890908, guid: f27e94e5d8edde54988e7dc846b4971c, type: 3}
+  - effectType: 3
+    element: 0
+    vfxPrefab: {fileID: 9078447857713065992, guid: f3b973b76649a5348b5e53abfe4e2949, type: 3}
+  - effectType: 4
+    element: 0
+    vfxPrefab: {fileID: 291243767362143715, guid: d87e5248dcb72c643ad9dea4dea2eb5f, type: 3}
