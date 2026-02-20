@@ -6,6 +6,7 @@ public class InventorySystem : Singleton<InventorySystem>
 {
     private List<InventorySlot> _weaponInventory = new List<InventorySlot>();
     private List<InventorySlot> _accessoriesInventory = new List<InventorySlot>();
+    private List<InventorySlot> _artifactInventory = new List<InventorySlot>();
     private List<InventorySlot> _skillInventory = new List<InventorySlot>();
     private InventorySlot _equippedWeapon = null;
     private InventorySlot _equippedAccessory = null;
@@ -56,6 +57,7 @@ public class InventorySystem : Singleton<InventorySystem>
                         case EDataType.Skill:
                             var skillData = ItemSkillDataManager.Instance.GetSkillData(card);
                             if (skillData != null) AddSkill(skillData);
+                            else Debug.LogWarning("GetSkillDataFail");
                             break;
                     }
                 }
@@ -78,6 +80,10 @@ public class InventorySystem : Singleton<InventorySystem>
         foreach (var skill in ItemSkillDataManager.Instance.SkillDatabase.skills)
         {
             _skillInventory.Add(new InventorySlot(skill, 0, false));
+        }
+        foreach (StatType stat in Enum.GetValues(typeof(StatType))) 
+        {
+            if (!_totalStatDict.ContainsKey(stat)) _totalStatDict[stat] = 0;
         }
         Debug.Log($"Weapon:{_weaponInventory.Count}, Accessory:{_accessoriesInventory.Count}, Skill:{_skillInventory.Count}");
     }
@@ -128,12 +134,12 @@ public class InventorySystem : Singleton<InventorySystem>
     #region 획득
     public void AddItem(ItemDataSO itemDataSO) 
     {
-        Debug.Log($"{itemDataSO.Name}");
         if (itemDataSO == null) Debug.LogWarning($"ItemDataNull!!");
         AddToInventory(itemDataSO, itemDataSO.Type);
     }
     public void AddSkill(SkillDataSO skillDataSO)
     {
+        if (skillDataSO == null) Debug.LogWarning($"skillDataSONull!!");
         AddToInventory(skillDataSO, skillDataSO.Type);
     }
     private void AddToInventory(ScriptableObject data, EDataType type)
@@ -142,7 +148,6 @@ public class InventorySystem : Singleton<InventorySystem>
         if (targetInventory == null) return;
 
         int index = targetInventory.FindIndex(slot => slot.Matches(data));
-        Debug.Log(index);
         if (index >= 0)
         {
             var slot = targetInventory[index];
@@ -163,37 +168,12 @@ public class InventorySystem : Singleton<InventorySystem>
         }
         else
         {
-            Debug.Log("!UnlockFailed!");
             var newSlot = new InventorySlot(data, 0, true);
             targetInventory.Add(newSlot);
             _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, newSlot);
         }
+        StatModifyToPlayer();
     }
-    //public void AddCard(ItemCard card)
-    //{
-    //    var targetInventory = GetInventory(card.Type);
-    //    if (targetInventory == null) return;
-
-    //    //기존 슬롯 찾기
-    //    int index = targetInventory.FindIndex(slot =>
-    //    {
-    //        if (slot.BaseData is ItemDataSO item)
-    //            return item.Type == card.Type && item.Grade == card.Grade && item.Tier == card.Tier;
-    //        if (slot.BaseData is SkillDataSO skill)
-    //            return skill.Type == card.Type && skill.Grade == card.Grade;
-    //        return false;
-    //    });
-
-    //    if (index >= 0)
-    //    {
-    //        //기존 슬롯 스택 증가
-    //        var slot = targetInventory[index];
-    //        slot.Stack++;
-    //        Debug.Log($"Stack increased: {slot.BaseData.name}, new stack = {slot.Stack}");
-    //        _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
-    //    }
-    //}
-
     #endregion
     #region 합성
     public void AutoCombine(EDataType type)
@@ -224,6 +204,7 @@ public class InventorySystem : Singleton<InventorySystem>
                 _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, newSlot);
             }
         }
+        StatModifyToPlayer();
         //스택감소 반영
         _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
     }
@@ -240,6 +221,7 @@ public class InventorySystem : Singleton<InventorySystem>
                 if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Gold, amount)) return;
                 slot.Stack -= PublicConst.UpgradeStack;
                 slot.Upgrade();
+                StatModifyToPlayer();
                 _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
             }
         }
@@ -249,6 +231,7 @@ public class InventorySystem : Singleton<InventorySystem>
             {
                 if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Gold, amount)) return;
                 slot.Upgrade();
+                StatModifyToPlayer();
                 _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
             }
             else
@@ -289,6 +272,7 @@ public class InventorySystem : Singleton<InventorySystem>
                 break;
         }
         slot.IsEquipped = true;
+        StatModifyToPlayer();
         _eventChannel.RaiseEvent(EGameEventType.EquipChanged, slot);
     }
     public void UnEquip(InventorySlot slot)
@@ -300,6 +284,7 @@ public class InventorySystem : Singleton<InventorySystem>
             case EDataType.Skill: _equippedSkills.Remove(slot); break;
         }
         slot.IsEquipped = false;
+        StatModifyToPlayer();
         _eventChannel.RaiseEvent(EGameEventType.EquipChanged, slot);
     }
     public void AddSkillSlot()
@@ -310,6 +295,7 @@ public class InventorySystem : Singleton<InventorySystem>
     #region 스탯합산
     public void StatModifyToPlayer() 
     {
+        CalculateStats();
         if (_InventoryModifiers.Count > 0)
         {
             foreach (var modifier in _InventoryModifiers) 
@@ -320,12 +306,15 @@ public class InventorySystem : Singleton<InventorySystem>
         }
         foreach (StatType stat in Enum.GetValues(typeof(StatType)))
         {
-            StatModifier newModifier = new StatModifier(stat, Operation.Add, _totalStatDict[stat]);
+            float value;
+            if (_totalStatDict.ContainsKey(stat)) value = _totalStatDict[stat];
+            else value = 0;
+            StatModifier newModifier = new StatModifier(stat, Operation.Add, value);
             _InventoryModifiers.Add(newModifier);
             PlayerStatManager.Instance.AddModifier(newModifier);
         }
     }
-    public Dictionary<StatType, float> CalculateStats() 
+    public void CalculateStats() 
     {
         CleanStatDict();
         AddPassiveStats(EDataType.Weapon);
@@ -334,7 +323,6 @@ public class InventorySystem : Singleton<InventorySystem>
         AddEquipStats(_equippedWeapon);
         AddEquipStats(_equippedAccessory);
         foreach (var skillSlot in _equippedSkills) { AddEquipStats(skillSlot); }
-        return _totalStatDict;
     }
     private void AddPassiveStats(EDataType type) 
     {
@@ -345,9 +333,19 @@ public class InventorySystem : Singleton<InventorySystem>
             if (slot.BaseData is ItemDataSO item)
             {
                 AddStat(item.PassiveStat, item.PassiveValue);
-                AddStat(StatType.CritRate, item.CriticalRate);
-                AddStat(StatType.CritDamage, item.CriticalDMG);
-                AddStat(StatType.GoldMultiplier, item.GoldPer);
+
+                switch (item.Type) 
+                {
+                    case EDataType.Weapon:
+                        AddStat(StatType.CritRate, item.CriticalRate);
+                        AddStat(StatType.CritDamage, item.CriticalDMG);
+                        AddStat(StatType.GoldMultiplier, item.GoldPer);
+                        break;
+                    case EDataType.Accessories:
+                        AddStat(StatType.MaxMana, item.CriticalDMG);
+                        AddStat(StatType.ExpMultiplier, item.GoldPer);
+                        break;
+                }
             }
             else if (slot.BaseData is SkillDataSO skill) 
             {
@@ -363,7 +361,7 @@ public class InventorySystem : Singleton<InventorySystem>
 
         if (slot.BaseData is ItemDataSO item)
         {
-            AddStat(item.PassiveStat, item.EquipValue);
+            AddStat(item.EquipStat, item.EquipValue);
         }
         else if (slot.BaseData is SkillDataSO skill) 
         {

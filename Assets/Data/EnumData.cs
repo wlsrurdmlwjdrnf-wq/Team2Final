@@ -58,7 +58,8 @@ public enum Operation
 
 public enum EDataType
 {
-    Weapon,
-    Accessories,
-    Skill
+    Weapon = 0,
+    Accessories = 1,
+    Skill = 2,
+    Artifact = 3,
 }

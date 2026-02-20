@@ -64,21 +64,19 @@ public class GachaSystem : Singleton<GachaSystem>
     public void Initialize()
     {
         //테스트
-        DrawGacha(EDataType.Weapon, 11);
-        DrawGacha(EDataType.Accessories, 11);   
-        DrawGacha(EDataType.Skill, 11);
+        //DrawGacha(EDataType.Weapon, 11);
+        //DrawGacha(EDataType.Accessories, 11);   
+        //DrawGacha(EDataType.Skill, 11);
 
+        //InventorySystem.Instance.SortInventory(EDataType.Weapon);
+        //InventorySystem.Instance.SortInventory(EDataType.Accessories);
+        //InventorySystem.Instance.SortInventory(EDataType.Skill);
 #if UNITY_EDITOR
-
-        InventorySystem.Instance.SortInventory(EDataType.Weapon);
-        InventorySystem.Instance.SortInventory(EDataType.Accessories);
-        InventorySystem.Instance.SortInventory(EDataType.Skill);
-
-        InventorySystem.Instance.PrintInventory(EDataType.Weapon);
-        InventorySystem.Instance.PrintInventory(EDataType.Accessories);
-        InventorySystem.Instance.PrintInventory(EDataType.Skill);
-
-        SkillManager.Instance.RefreshSlots();
+        //InventorySystem.Instance.PrintInventory(EDataType.Weapon);
+        //InventorySystem.Instance.PrintInventory(EDataType.Accessories);
+        //InventorySystem.Instance.PrintInventory(EDataType.Skill);
+#endif
+        //SkillManager.Instance.RefreshSlots();
     }
     private void HandleEvent(EGameEventType type, object payload)
     {
@@ -107,6 +105,7 @@ public class GachaSystem : Singleton<GachaSystem>
         {
             _eventChannel.RaiseEvent(EGameEventType.GachaPull, card);
         }
+        _eventChannel.RaiseEvent(EGameEventType.GachaRequestEnd);
     }
     private ItemCard DrawOnce(EDataType gachaType) 
     {
@@ -189,4 +188,3 @@ public class GachaSystem : Singleton<GachaSystem>
         return _itemTierChanceTable.Length;
     }
 }
-#endif

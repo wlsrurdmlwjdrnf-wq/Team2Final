@@ -15,7 +15,8 @@ public enum EGameEventType
     ButtonClicked,
     GachaRequest,
     EquipChanged,
-    GachaProgressUpdate
+    GachaProgressUpdate,
+    GachaRequestEnd,
 }
 
 [CreateAssetMenu(fileName = "GameEventChannel", menuName = "Scriptable Objects/GameEventChannel")]
