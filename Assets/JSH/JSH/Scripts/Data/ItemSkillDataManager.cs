@@ -45,7 +45,7 @@ public class ItemSkillDataManager : MonoBehaviour
 
         if (WeaponDatabase != null) WeaponDatabase.items.Clear();
         else WeaponDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
-        //¹«±â µ¥ÀÌÅÍ
+        //ë¬´ê¸° ë°ì´í„°
         foreach (var weapon in ItemDatabaseSO.weapons)
         {
                 ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
@@ -71,7 +71,7 @@ public class ItemSkillDataManager : MonoBehaviour
 
         if (AccessoriesDatabase != null) AccessoriesDatabase.items.Clear();
         else AccessoriesDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
-        //¾Ç¼¼¼­¸® µ¥ÀÌÅÍ
+        //ì•…ì„¸ì„œë¦¬ ë°ì´í„°
         foreach (var accessory in ItemDatabaseSO.accessories)
         {
                 ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
@@ -97,7 +97,7 @@ public class ItemSkillDataManager : MonoBehaviour
 
         if (ArtifactsDatabase != null) ArtifactsDatabase.items.Clear();
         else ArtifactsDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
-        //À¯¹° µ¥ÀÌÅÍ
+        //ìœ ë¬¼ ë°ì´í„°
         foreach (var artifact in ItemDatabaseSO.artifacts)
         {
                 ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
@@ -153,7 +153,7 @@ public class ItemSkillDataManager : MonoBehaviour
         return null;
     }
 
-    //ÀÌÂÊÀº ´õ º¸°­ÇÒ ÇÊ¿ä°¡ ÀÖÀ½
+    //ì´ìª½ì€ ë” ë³´ê°•í•  í•„ìš”ê°€ ìˆìŒ
     public SkillDataSO GetSkillData(ItemCard card) 
     {
         List<SkillDataSO> dataLists = new List<SkillDataSO>();
