@@ -21203,7 +21203,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1312504108520035783, guid: 362e6f9bdb3c1424f85ecdd2debfdd9f, type: 3}
       propertyPath: _poolConfigs.Array.size
-      value: 13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1312504108520035783, guid: 362e6f9bdb3c1424f85ecdd2debfdd9f, type: 3}
       propertyPath: _poolConfigs.Array.data[11].prefab
@@ -43784,26 +43784,6 @@ PrefabInstance:
       propertyPath: _limitTimeBar
       value: 
       objectReference: {fileID: 1701111412}
-    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
-      propertyPath: allStages.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
-      propertyPath: allStages.Array.data[4].isBoss
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
-      propertyPath: allStages.Array.data[4].stageData
-      value: 
-      objectReference: {fileID: 11400000, guid: 7aa60546d878dbc44951749878d592c8, type: 2}
-    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
-      propertyPath: allStages.Array.data[4].subNumber
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
-      propertyPath: allStages.Array.data[4].mainNumber
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8375527271503555666, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.39907482

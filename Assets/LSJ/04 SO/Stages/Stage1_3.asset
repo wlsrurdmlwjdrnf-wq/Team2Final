@@ -19,6 +19,7 @@ MonoBehaviour:
   subNumber: 3
   monsterPrefabs:
   - {fileID: 345202284924123219, guid: 9b50232c77fb09b4f9140454955e59a2, type: 3}
+  - {fileID: 9021709795335874315, guid: ab5f00943427d884f88594242ad8788d, type: 3}
   spawnCount: 11
   spawnAreaWidth: 40
   minDistance: 2
