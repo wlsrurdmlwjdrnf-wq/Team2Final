@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 public class ItemSkillDataManager : MonoBehaviour
@@ -17,7 +19,9 @@ public class ItemSkillDataManager : MonoBehaviour
     {
         Instance = this;
 
-        ItemDatabaseSO = FindSOByType<ItemDatabaseSO>();
+#if UNITY_EDITOR
+        ItemDatabaseConverter.Convert(this);
+#endif
         ConvertData();
     }
 
@@ -35,29 +39,15 @@ public class ItemSkillDataManager : MonoBehaviour
         GachaSystem.Instance.Initialize();
     }
 
-    private TSO FindSOByType<TSO>() where TSO : ScriptableObject
-    {
-        string[] guids = AssetDatabase.FindAssets("t:" + typeof(TSO).Name);
-        foreach (string guid in guids)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            if (path.StartsWith("Assets/AssetIgnore")) continue;
-            return AssetDatabase.LoadAssetAtPath<TSO>(path);
-        }
-        return null;
-    }
-
     private void ConvertData()
     {
         if (ItemDatabaseSO == null) return;
-
-        ItemDatabaseSO.items.Clear();
 
         if (WeaponDatabase != null) WeaponDatabase.items.Clear();
         else WeaponDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
         //무기 데이터
         foreach (var weapon in ItemDatabaseSO.weapons)
-            {
+        {
                 ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
                 itemSO.Name = weapon.Name;
                 itemSO.Type = EDataType.Weapon;
@@ -77,15 +67,13 @@ public class ItemSkillDataManager : MonoBehaviour
                 itemSO.DataSO = DataSOType.Resource;
 
                 WeaponDatabase.items.Add(itemSO);
-                Debug.Log($"weapon : { itemSO.Tier}  {weapon.Tier}");
-            }
-        EditorUtility.SetDirty(WeaponDatabase);
+        }
 
         if (AccessoriesDatabase != null) AccessoriesDatabase.items.Clear();
         else AccessoriesDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
         //악세서리 데이터
         foreach (var accessory in ItemDatabaseSO.accessories)
-            {
+        {
                 ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
                 itemSO.Name = accessory.Name;
                 itemSO.Type = EDataType.Accessories;
@@ -105,45 +93,37 @@ public class ItemSkillDataManager : MonoBehaviour
                 itemSO.GoldPerbyLv = accessory.EXPPerByLv;
 
                 AccessoriesDatabase.items.Add(itemSO);
-                Debug.Log($"accessory : {itemSO.Tier}  {accessory.Tier}");
         }
-        EditorUtility.SetDirty(AccessoriesDatabase);
 
         if (ArtifactsDatabase != null) ArtifactsDatabase.items.Clear();
         else ArtifactsDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
         //유물 데이터
         foreach (var artifact in ItemDatabaseSO.artifacts)
-            {
+        {
                 ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
                 itemSO.Name = artifact.Name;
-                itemSO.Type = EDataType.Accessories;//나중에 고치기
+            itemSO.Type = EDataType.Artifact;
                 itemSO.Element = artifact.Element;
                 itemSO.Grade = artifact.Grade;
                 itemSO.Level = artifact.Level;
                 itemSO.DataSO = DataSOType.Resource;
 
                 ArtifactsDatabase.items.Add(itemSO);
-            }
-        EditorUtility.SetDirty(ArtifactsDatabase);
+        }
 
-        if (SkillDatabase != null) SkillDatabase.skills.Clear();
-        else SkillDatabase = ScriptableObject.CreateInstance<SkillDatabaseSO>();
-            foreach (var skill in ItemDatabaseSO.skills)
-            {
-                SkillDataSO skillSO = ScriptableObject.CreateInstance<SkillDataSO>();
-                skillSO.Name = skill.Name;
-                skillSO.Type = EDataType.Skill;
-                skillSO.Grade = skill.Grade;
-                skillSO.Level = skill.Level;
-                skillSO.DataSO = DataSOType.Resource;
+        //if (SkillDatabase != null) SkillDatabase.skills.Clear();
+        //else SkillDatabase = ScriptableObject.CreateInstance<SkillDatabaseSO>();
+        //foreach (var skill in ItemDatabaseSO.skills)
+        //{
+        //        SkillDataSO skillSO = ScriptableObject.CreateInstance<SkillDataSO>();
+        //        skillSO.Name = skill.Name;
+        //        skillSO.Type = EDataType.Skill;
+        //        skillSO.Grade = skill.Grade;
+        //        skillSO.Level = skill.Level;
+        //        skillSO.DataSO = DataSOType.Resource;
 
-                SkillDatabase.skills.Add(skillSO);
-            }
-        EditorUtility.SetDirty(SkillDatabase);
-
-        EditorUtility.SetDirty(ItemDatabaseSO);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
+        //        SkillDatabase.skills.Add(skillSO);
+        //}
     }
     public ItemDataSO GetItemData(ItemCard card) 
     {
@@ -166,15 +146,11 @@ public class ItemSkillDataManager : MonoBehaviour
             {
                 if (card.Tier == 0 || item.Tier == card.Tier)
                 {
-                    Debug.Log($"GetItemData: Found {item.Name}");
                     return item;
                 }
             }
         }
-
-        Debug.LogWarning($"GetItemData: No match for {card.Type}, Grade={card.Grade}, Tier={card.Tier}");
         return null;
-
     }
 
     //이쪽은 더 보강할 필요가 있음
