@@ -12,9 +12,14 @@ public class TestUIManager : Singleton<TestUIManager>
     [SerializeField] private Transform _equippedSkillContent;
     [SerializeField] private TestSlotUI _equippedWeaponSlot;
     [SerializeField] private TestSlotUI _equippedAccessorySlot;
-    [SerializeField] private TextMeshProUGUI _weaponGachaText;
-    [SerializeField] private TextMeshProUGUI _accessoryGachaText;
-    private List<TestSlotUI> _skillSlots = new List<TestSlotUI>();
+    [SerializeField] private TextMeshProUGUI _weaponGachaLevelText;
+    [SerializeField] private TextMeshProUGUI _weaponGachaProgressText;
+    [SerializeField] private TextMeshProUGUI _accessoryGachaLevelText;
+    [SerializeField] private TextMeshProUGUI _accessoryGachaProgressText;
+
+//[SerializeField] private TextMeshProUGUI _weaponGachaText;
+// [SerializeField] private TextMeshProUGUI _accessoryGachaText;
+private List<TestSlotUI> _skillSlots = new List<TestSlotUI>();
 
     [SerializeField] private GameEventChannelSO _eventChannel;
     //끄고키는용
@@ -72,11 +77,13 @@ public class TestUIManager : Singleton<TestUIManager>
                 {
                     if (gachaData.Type == EDataType.Weapon)
                     {
-                        _weaponGachaText.text = $"Lv.{gachaData.Level} {gachaData.CurrCount}/{gachaData.LevelUpCount}";
+                        _weaponGachaLevelText.text = $"소환레벨 {gachaData.Level}";
+                        _weaponGachaProgressText.text = $"{gachaData.CurrCount}/{gachaData.LevelUpCount}";
                     }
-                    else if (gachaData.Type == EDataType.Accessories) 
+                    else if (gachaData.Type == EDataType.Accessories)
                     {
-                        _accessoryGachaText.text = $"Lv.{gachaData.Level} {gachaData.CurrCount}/{gachaData.LevelUpCount}";
+                        _accessoryGachaLevelText.text = $"소환레벨 {gachaData.Level}";
+                        _accessoryGachaProgressText.text = $"{gachaData.CurrCount}/{gachaData.LevelUpCount}";
                     }
                 }
                 break ;
