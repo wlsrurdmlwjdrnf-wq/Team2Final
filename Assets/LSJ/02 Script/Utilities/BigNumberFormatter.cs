@@ -43,7 +43,7 @@ public static class BigNumberFormatter
         if (bn.exponent >= 0 && bn.exponent <= 3)
         {
             double value = absMantissa * Math.Pow(10, bn.exponent);
-            string formatted = value.ToString("N2");
+            string formatted = value.ToString("N0");
             formatted = CleanDecimal(formatted);
             return isNegative ? "-" + formatted : formatted;
         }
@@ -74,7 +74,7 @@ public static class BigNumberFormatter
         // 1000 미만 -> 일반 숫자
         if (absValue < 1000)
         {
-            string formatted = absValue.ToString("N2");
+            string formatted = absValue.ToString("N0");
             formatted = CleanDecimal(formatted);
             return isNegative ? "-" + formatted : formatted;
         }
@@ -92,6 +92,24 @@ public static class BigNumberFormatter
 
         string result = numberPart + suffix;
         return isNegative ? "-" + result : result;
+    }
+    /// <summary>
+    /// 스탯 포인트, 재화 등 정수처럼 보여야 하는 값 표시용
+    /// 소수점 절대 안 보이게 + 부동소수점 오차 무시
+    /// </summary>
+    public static string ToIntegerStyle(BigNumber bn)
+    {
+        if (bn.sign == 0) return "0";
+
+        BigNumber floored = bn.Floor();
+        long value = floored.ToLongClamped();
+
+        if (value == 0) return "0";
+        if (value < 1000)
+            return value.ToString("N0");
+
+        // 1000 이상은 기존 ToFormatted 로직 재사용 가능
+        return ToFormatted((float)value);  // 또는 BigNumber 버전 호출
     }
 
     // 소수점 정리 헬퍼

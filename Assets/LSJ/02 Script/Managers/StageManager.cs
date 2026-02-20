@@ -128,8 +128,6 @@ public class StageManager : Singleton<StageManager>
 
         if (_currentMonsterCount <= 0) // 스테이지 클리어
         {
-            OnAllMonstersCleared?.Invoke();
-
             StartCoroutine(DelayClearCo());
         }
     }
@@ -154,6 +152,8 @@ public class StageManager : Singleton<StageManager>
             AdventureStageClear();
         else 
             ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber)); // 현재 스테이지 반복
+
+        OnAllMonstersCleared?.Invoke();
     }
     private void TierStageClear()
     {

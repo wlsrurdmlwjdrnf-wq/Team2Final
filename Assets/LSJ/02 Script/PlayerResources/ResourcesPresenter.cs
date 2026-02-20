@@ -24,6 +24,7 @@ public class ResourcesPresenter : MonoBehaviour
     {
         string formatted = PlayerResourceManager.Instance.GetFormatted(type);
         view.UpdateResourceDisplay(type, formatted);
+        if(type == ResourceType.EXP) view.UpdateExpRate();
     }
 
     private void RefreshAllDisplays()
@@ -33,6 +34,7 @@ public class ResourcesPresenter : MonoBehaviour
             string formatted = PlayerResourceManager.Instance.GetFormatted(type);
             view.UpdateResourceDisplay(type, formatted);
         }
+        view.UpdateExpRate();
     }
 
     private void OnDestroy()
