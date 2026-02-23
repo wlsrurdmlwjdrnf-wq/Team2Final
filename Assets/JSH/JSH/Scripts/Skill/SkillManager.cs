@@ -6,9 +6,12 @@ public class SkillManager : Singleton<SkillManager>
 {
     private List<SkillInstance> _equippedSkills = new List<SkillInstance>();
     [SerializeField] private GameEventChannelSO _eventChannel;
-    //나중에 수정 필요
+    
     [SerializeField] private PlayerHpMp _playerHpMp;
     [SerializeField] private GameObject _player;
+
+    private bool _isEnemyLoaded = false;
+    private List<IDamageable> _enemies = new List<IDamageable>();
 
     private bool _IsPlayerReady = true;
     //죽음 이벤트 받아서 죽어도 스킬 시전되지 않게 하기
@@ -21,6 +24,7 @@ public class SkillManager : Singleton<SkillManager>
         Player.OnAttack += PlayerReady;
         Player.OnDead += PlayerDead;
         Player.OnKnockBack += PlayerDead;
+        StageManager.Instance.OnStageChanged += GetNewEnemy;
     }
     private void OnDisable()
     {
@@ -29,6 +33,7 @@ public class SkillManager : Singleton<SkillManager>
         Player.OnAttack -= PlayerReady;
         Player.OnDead -= PlayerDead;
         Player.OnKnockBack -= PlayerDead;
+        StageManager.Instance.OnStageChanged -= GetNewEnemy;
     }
     private void HandleEvent(EGameEventType eventType, object payload) 
     {
@@ -80,30 +85,60 @@ public class SkillManager : Singleton<SkillManager>
         }
     }
 
-    public Collider2D[] CheckEnemy(float range) 
+    public void GetNewEnemy() 
     {
+        Debug.Log("NewEnemy");
+        _enemies.Clear();
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
+        foreach (var monster in monsters) 
+        {
+            if (monster.TryGetComponent(out IDamageable damageable)) { _enemies.Add(damageable); }
+        }
+    }
+
+    public List<IDamageable> CheckEnemy(float range) 
+    {
+        List<IDamageable> enemiesInRange = new List<IDamageable>();
         Vector2 playerPos = _player.transform.position;
         Vector2 boxCenter = playerPos + Vector2.right * (range/2);
         Vector2 boxSize = new Vector2(range, 2f);
-        Collider2D[] hit = Physics2D.OverlapBoxAll(boxCenter, boxSize, 0f, LayerMask.GetMask("Monster"));
-        if (hit != null) return hit;
-        else return null;
+
+        foreach (var enemy in _enemies) 
+        {
+            if (enemy is MonoBehaviour mono && mono.gameObject.activeSelf)
+            {
+                Vector2 enemyPos = mono.transform.position;
+
+                //AABB공식 |posA.x - posB.x| <= sizeA.x/2 + sizeB.x/2, |posA.y - posB.y| <= sizeA.y/2 + sizeB.y/2
+                bool overlapX = Mathf.Abs(playerPos.x - enemyPos.x) <= boxSize.x / 2f;
+                bool overlapY = Mathf.Abs(playerPos.y - enemyPos.y) <= boxSize.y / 2f;
+
+                if (overlapX && overlapY) { enemiesInRange.Add(enemy); }
+            }
+        }
+        return enemiesInRange;
     }
 
-    public GameObject GetClosestEnemy(Collider2D[] enemies) 
+    public GameObject GetClosestEnemy(List<IDamageable> enemies) 
     {
         if (_player == null || !_player.activeSelf) return null;
         float closestDist = float.MaxValue;
-        Collider2D closestEnemy = null;
+        GameObject closestEnemy = null;
+
         foreach (var enemy in enemies)
         {
-            float dist = Vector2.Distance(_player.transform.position, enemy.transform.position);
-            if (dist < closestDist)
+            if (enemy is MonoBehaviour mono && mono.gameObject.activeSelf) 
             {
-                closestDist = dist;
-                closestEnemy = enemy;
+                float dist = (_player.transform.position - mono.transform.position).sqrMagnitude;
+                if (dist < closestDist) 
+                {
+                    closestDist = dist;
+                    closestEnemy = mono.gameObject;
+                }
             }
         }
-        return closestEnemy.gameObject;
+        return closestEnemy;
     }
+
+    public GameObject GetPlayer() { return _player; }
 }

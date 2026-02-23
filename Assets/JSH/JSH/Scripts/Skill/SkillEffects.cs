@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FireExplosion : ISkillEffect
@@ -11,9 +12,9 @@ public class FireExplosion : ISkillEffect
         _vfx = vfx;
         _skillEffectType = effectType;
     }
-    public void Apply(Collider2D[] enemies, float damageDuplicator)
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
     {
-        if (enemies == null || enemies.Length <= 0)
+        if (enemies == null || enemies.Count <= 0)
         {
             Debug.Log("EnemyNull");
             return;
@@ -33,9 +34,9 @@ public class EarthGrow : ISkillEffect
         _vfx = vfx;
         _skillEffectType = effectType;
     }
-    public void Apply(Collider2D[] enemies, float damageDuplicator)
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
     {
-        if (enemies == null || enemies.Length <= 0)
+        if (enemies == null || enemies.Count <= 0)
         {
             Debug.Log("EnemyNull");
             return;
@@ -55,9 +56,9 @@ public class WindGust : ISkillEffect
         _vfx = vfx;
         _skillEffectType = effectType;
     }
-    public void Apply(Collider2D[] enemies, float damageDuplicator)
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
     {
-        if (enemies == null || enemies.Length <= 0)
+        if (enemies == null || enemies.Count <= 0)
         {
             Debug.Log("EnemyNull");
             return;
@@ -77,9 +78,9 @@ public class IceSlash : ISkillEffect
         _vfx = vfx;
         _skillEffectType = effectType;
     }
-    public void Apply(Collider2D[] enemies, float damageDuplicator)
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
     {
-        if (enemies == null || enemies.Length <= 0)
+        if (enemies == null || enemies.Count <= 0)
         {
             Debug.Log("EnemyNull");
             return;
@@ -102,9 +103,9 @@ public class Lightning : ISkillEffect
         _vfx = vfx;
         _skillEffectType = effectType;
     }
-    public void Apply(Collider2D[] enemies, float damageDuplicator)
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
     {
-        if (enemies == null || enemies.Length <= 0)
+        if (enemies == null || enemies.Count <= 0)
         {
             Debug.Log("EnemyNull");
             return;
@@ -112,7 +113,7 @@ public class Lightning : ISkillEffect
         SkillManager.Instance.StartCoroutine(SpawnLightning(enemies, damageDuplicator));
         Debug.Log("Lightning");
     }
-    private IEnumerator SpawnLightning(Collider2D[] enemies, float damageDuplicator) 
+    private IEnumerator SpawnLightning(List<IDamageable> enemies, float damageDuplicator) 
     {
         Vector3 spawnPos = SkillManager.Instance.GetClosestEnemy(enemies).transform.position;
         for (int i = 0; i < 5; i++)

@@ -8,6 +8,7 @@ public class TestUIManager : Singleton<TestUIManager>
     [SerializeField] private TestSlotUI _slotUIPrefab;
     [SerializeField] private Transform _weaponContent;
     [SerializeField] private Transform _accessoryContent;
+    [SerializeField] private Transform _artifactContent;
     [SerializeField] private Transform _skillContent;
     [SerializeField] private Transform _equippedSkillContent;
     [SerializeField] private TestSlotUI _equippedWeaponSlot;
@@ -48,6 +49,7 @@ private List<TestSlotUI> _skillSlots = new List<TestSlotUI>();
                 {
                     var slotUIs = _weaponContent.GetComponentsInChildren<TestSlotUI>(true);
                     slotUIs = slotUIs.Concat(_accessoryContent.GetComponentsInChildren<TestSlotUI>(true)).ToArray();
+                    slotUIs = slotUIs.Concat(_artifactContent.GetComponentsInChildren<TestSlotUI>(true)).ToArray();
                     slotUIs = slotUIs.Concat(_skillContent.GetComponentsInChildren<TestSlotUI>(true)).ToArray();
 
                     foreach (var ui in slotUIs)
@@ -104,6 +106,13 @@ private List<TestSlotUI> _skillSlots = new List<TestSlotUI>();
         {
             TestSlotUI slotUI = PoolManager.Instance.GetFromPool(_slotUIPrefab);
             slotUI.transform.SetParent(_accessoryContent, false);
+            slotUI.SetUp(slot);
+        }
+        var artifactInventory = InventorySystem.Instance.GetInventory(EDataType.Artifact);
+        foreach (var slot in artifactInventory)
+        {
+            TestSlotUI slotUI = PoolManager.Instance.GetFromPool(_slotUIPrefab);
+            slotUI.transform.SetParent(_artifactContent, false);
             slotUI.SetUp(slot);
         }
         var skillInventory = InventorySystem.Instance.GetInventory(EDataType.Skill);

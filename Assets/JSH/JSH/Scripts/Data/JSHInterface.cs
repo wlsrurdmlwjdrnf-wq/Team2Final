@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IUpgradable 
@@ -9,7 +10,7 @@ public interface IUpgradable
 }
 public interface ISkillEffect 
 {
-    void Apply(Collider2D[] enemies, float damageMultiply);
+    void Apply(List<IDamageable> enemies, float damageMultiply);
 }
 public interface IPoolable 
 {

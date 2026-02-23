@@ -41,6 +41,8 @@ public class UpgradeUI : MonoBehaviour
     }
     private void OpenPopUp(InventorySlot slot) 
     {
+        if (!slot.Unlocked) return;
+
         _currSlot = slot;
         gameObject.SetActive(true);
 

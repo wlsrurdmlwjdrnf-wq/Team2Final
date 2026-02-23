@@ -44,6 +44,10 @@ public static class ItemDatabaseConverter
             itemSO.GoldPer = weapon.GoldPer;
             itemSO.GoldPerbyLv = weapon.goldPerByLv;
 
+            itemSO.IconKey = weapon.Icon;
+            itemSO.EffectKey = weapon.Effect;
+            itemSO.SoundKey = weapon.Sound;
+
             manager.WeaponDatabase.items.Add(itemSO);
         }
         EditorUtility.SetDirty(manager.WeaponDatabase);
@@ -72,6 +76,8 @@ public static class ItemDatabaseConverter
             itemSO.GoldPer = accessory.EXPPer;
             itemSO.GoldPerbyLv = accessory.EXPPerByLv;
 
+            itemSO.IconKey = accessory.Name;
+
             manager.AccessoriesDatabase.items.Add(itemSO);
         }
         EditorUtility.SetDirty(manager.AccessoriesDatabase);
@@ -88,6 +94,8 @@ public static class ItemDatabaseConverter
             itemSO.Grade = artifact.Grade;
             itemSO.Level = artifact.Level;
             itemSO.DataSO = DataSOType.Resource;
+
+            itemSO.IconKey = artifact.Icon;
 
             manager.ArtifactsDatabase.items.Add(itemSO);
         }

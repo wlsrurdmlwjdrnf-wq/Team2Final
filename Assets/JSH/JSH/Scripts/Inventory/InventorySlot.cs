@@ -9,6 +9,7 @@ public class InventorySlot
     public int Level;
     public bool Unlocked;
     public bool IsEquipped;
+    //이건 베이스데이터 효과 * 레벨 계산해서 담아놓는 용도
     public float ActiveEffectValue;
     public float PassiveEffectValue;
     public float CriticalDMG;
