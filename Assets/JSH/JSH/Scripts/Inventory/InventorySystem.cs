@@ -50,6 +50,7 @@ public class InventorySystem : Singleton<InventorySystem>
                     {
                         case EDataType.Weapon:
                         case EDataType.Accessories:
+                        case EDataType.Artifact:
                             var item = ItemSkillDataManager.Instance.GetItemData(card);
                             if (item != null) AddItem(item);
                             else Debug.LogWarning("GetItemDataFail");
@@ -77,6 +78,10 @@ public class InventorySystem : Singleton<InventorySystem>
         {
             _accessoriesInventory.Add(new InventorySlot(item, 0, false));
         }
+        foreach (var item in ItemSkillDataManager.Instance.ArtifactsDatabase.items)
+        {
+            _artifactInventory.Add(new InventorySlot(item, 0, false));
+        }
         foreach (var skill in ItemSkillDataManager.Instance.SkillDatabase.skills)
         {
             _skillInventory.Add(new InventorySlot(skill, 0, false));
@@ -85,6 +90,9 @@ public class InventorySystem : Singleton<InventorySystem>
         {
             if (!_totalStatDict.ContainsKey(stat)) _totalStatDict[stat] = 0;
         }
+        SortInventory(EDataType.Weapon);
+        SortInventory(EDataType.Accessories);
+        SortInventory(EDataType.Skill);
         Debug.Log($"Weapon:{_weaponInventory.Count}, Accessory:{_accessoriesInventory.Count}, Skill:{_skillInventory.Count}");
     }
     #region 정렬
@@ -209,8 +217,8 @@ public class InventorySystem : Singleton<InventorySystem>
         _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
     }
     #endregion
-    #region 강화
-    public void UpgradeSlot(InventorySlot slot) 
+    #region 강화  
+    public void UpgradeSlot(InventorySlot slot) //유물강화도 추가해야함
     {
         BigNumber amount = new BigNumber(slot.GetUpgradeCost());
         if (slot.GetDataType() == EDataType.Skill)
@@ -318,7 +326,7 @@ public class InventorySystem : Singleton<InventorySystem>
     {
         CleanStatDict();
         AddPassiveStats(EDataType.Weapon);
-        AddPassiveStats(EDataType.Accessories);
+        AddPassiveStats(EDataType.Accessories); //유물도 나중에 추가해야함
         AddPassiveStats(EDataType.Skill);
         AddEquipStats(_equippedWeapon);
         AddEquipStats(_equippedAccessory);
@@ -427,6 +435,7 @@ public class InventorySystem : Singleton<InventorySystem>
         {
             case EDataType.Weapon: return _weaponInventory;
             case EDataType.Accessories: return _accessoriesInventory;       
+            case EDataType.Artifact: return _artifactInventory;
             case EDataType.Skill: return _skillInventory;
             default: return null;
         }

@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ItemDataSO", menuName = "GameData/Item/ItemDataSO")]
 public class ItemDataSO : ScriptableObject
 {
+    //무기, 악세, 유물 전부 공통으로 받아옴
     public string Name;
     public EDataType Type;
     public ElementType Element;
@@ -26,4 +27,8 @@ public class ItemDataSO : ScriptableObject
     public float GoldPerbyLv;
 
     public DataSOType DataSO;
+
+    public string IconKey;
+    public string SoundKey;
+    public string EffectKey;
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillInstance : IUpgradable
@@ -7,7 +8,7 @@ public class SkillInstance : IUpgradable
     public ISkillEffect effect;
     private float _lastCastTime;
     private float _currAttackCount;
-    private Collider2D[] _enemyColliders;
+    private List<IDamageable> _enemyDamageables;
     public SkillInstance(InventorySlot slot, ISkillEffect effect)
     {
         baseData = slot.BaseData as SkillDataSO;
@@ -35,8 +36,8 @@ public class SkillInstance : IUpgradable
         {
             if (Time.time < _lastCastTime + baseData.CoolTime) return false;
         }
-        _enemyColliders = SkillManager.Instance.CheckEnemy(baseData.Range);
-        if ( _enemyColliders == null || _enemyColliders.Length <= 0) return false;                       //범위내 적 체크
+        _enemyDamageables = SkillManager.Instance.CheckEnemy(baseData.Range);
+        if (_enemyDamageables == null || _enemyDamageables.Count <= 0) return false;                       //범위내 적 체크
         if (!playerHpMp.UseMana(baseData.ManaCost)) return false;         //UseMana에서 마나 감소랑 마나 체크 둘 다 해줌
         return true;
     }
@@ -47,6 +48,6 @@ public class SkillInstance : IUpgradable
         Debug.Log($"AttackCount : {_currAttackCount}");
         _lastCastTime = Time.time;
         _currAttackCount = 0;
-        effect.Apply(_enemyColliders, baseData.Damage);
+        effect.Apply(_enemyDamageables, baseData.Damage);
     }
 }

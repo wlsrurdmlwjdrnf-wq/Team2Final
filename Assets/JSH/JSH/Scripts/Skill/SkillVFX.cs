@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -56,40 +57,85 @@ public class SkillVFX : MonoBehaviour, IPoolable
     // Animation Event가 부를 함수
     public void OnAttackHit()
     {
-        if (_targetingType == ETargetingType.Projectile) return; //투사체면 무시
-        GiveDamage();
+        //if (_targetingType == ETargetingType.Projectile) return; //투사체면 무시
+        EnemyFiltering();
     }
 
-    private void GiveDamage() 
+    private void EnemyFiltering(bool hitAll = true, int maxTargets = 1) 
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(
-            transform.position,
-            _effectRange,
-            _monsterLayer
-        );
-        if (hits.Length > 0)
+        //적당히 화면 내에 있는 적 가져오기
+        List<IDamageable> enemies = SkillManager.Instance.CheckEnemy(5f);
+        if (enemies.Count <= 0) return;
+        //실제 이펙트 원형 범위 체크
+        List<IDamageable> validEnemies = new List<IDamageable>();
+        Vector2 centerA = transform.position;
+        float radiusA = _effectRange;
+
+        foreach (var enemy in enemies) 
         {
-            IDamageable target = hits[0].GetComponent<IDamageable>();
-            if (target != null)
+            if (enemy is MonoBehaviour mono && mono.gameObject.activeSelf)
             {
-                //여기서 스킬 배율 곱하기
-                BigNumber damage = PlayerStatManager.Instance.AttackPower * new BigNumber(_damageDuplicator);
-                // 크리티컬
-                if (Random.value < PlayerStatManager.Instance.CritRate)
-                {
-                    damage *= PlayerStatManager.Instance.CritDamage;
-                    target.TakeDamage(damage, /*_elementType,*/ true);
-                }
-                else target.TakeDamage(damage/*, _elementType*/);
-                // 이펙트나 사운드 넣으면 될 듯
+                Vector2 centerB = mono.transform.position;
+                float radiusB = 0.5f;
+
+                if (IsCollisionCircle(centerA, radiusA, centerB, radiusB)) { validEnemies.Add(enemy); }
+            }
+        }
+
+        if (validEnemies.Count <= 0) return;
+        //범위 공격 or 가까운 적 N명
+        if (hitAll)
+        {
+            foreach (var enemy in validEnemies) { GiveDamage(enemy); }
+        }
+        else 
+        {
+            Vector2 playerPos = SkillManager.Instance.GetPlayer().transform.position;
+            validEnemies.Sort((a, b) =>
+            {
+                Vector2 posA = (a as MonoBehaviour).transform.position;
+                Vector2 posB = (b as MonoBehaviour).transform.position;
+                float distA = (playerPos - posA).sqrMagnitude;
+                float distB = (playerPos - posB).sqrMagnitude;
+                return distA.CompareTo(distB); //distA 가 distB 보다 크면 1, 작으면 -1, 같으면 0
+            });
+                                //둘 중 더 작은거 반환
+            for (int i = 0; i < Mathf.Min(maxTargets, validEnemies.Count); i++)  
+            {
+                GiveDamage(validEnemies[i]);
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void GiveDamage(IDamageable target) 
     {
-        if (_targetingType != ETargetingType.Projectile) return; //투사체 아니면 무시
-        GiveDamage();
+        if (target != null)
+        {
+            //여기서 스킬 배율 곱하기
+            BigNumber damage = PlayerStatManager.Instance.AttackPower * new BigNumber(_damageDuplicator);
+            // 크리티컬
+            if (Random.value < PlayerStatManager.Instance.CritRate)
+            {
+                damage *= PlayerStatManager.Instance.CritDamage;
+                target.TakeDamage(damage, true, _elementType);
+            }
+            else target.TakeDamage(damage, false, _elementType);
+            // 이펙트나 사운드 넣으면 될 듯
+        }
+    }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (_targetingType != ETargetingType.Projectile) return; //투사체 아니면 무시
+    //    EnemyFiltering();
+    //}
+
+    private bool IsCollisionCircle(Vector2 centerA, float radiusA, Vector2 centerB, float radiusB) 
+    {
+        //원 충돌 판정 = 센터A & 센터B 사이의 거리 <= 반지름A + 반지름B
+        float sqrDistance = (centerA - centerB).sqrMagnitude; //이게 Vector2.Distance보다 좋다고 함(제곱근연산 없어서)
+        float sqrRadius = (radiusA + radiusB) * (radiusA + radiusB); //위에가 두 센터 사이 거리 제곱이라 얘도 제곱
+        return sqrDistance <= sqrRadius;
     }
 
     private void OnDrawGizmos()
