@@ -31,7 +31,7 @@ public class DropItem : MonoBehaviour, IPoolable2
         // 랜덤 방향 & 거리
         Vector2 randomDir = Random.insideUnitCircle.normalized;
         float randomDist = Random.Range(spreadRadius * 0.4f, spreadRadius);
-        Vector3 targetPos = startPosition + (Vector3)(randomDir * randomDist) + new Vector3(2f,-1f,0);
+        Vector3 targetPos = startPosition + (Vector3)(randomDir * randomDist) + new Vector3(0,-10f,0);
 
         // 약간의 지연 (몇 개 동시에 떨어지면 더 자연스러움)
         float randomDelay = Random.Range(staggerMin, staggerMax);
@@ -66,7 +66,7 @@ public class DropItem : MonoBehaviour, IPoolable2
             });
         }
 
-        // 연출 모두 끝난 후 → 풀에 반납
+        // 연출 모두 끝난 후 풀에 반납
         seq.AppendInterval(autoReturnDelayAfterLanding);
         seq.AppendCallback(() =>
         {

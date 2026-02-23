@@ -45,8 +45,9 @@ public class StageManager : Singleton<StageManager>
     private WaitForSeconds _delayClear = new WaitForSeconds(0.5f);
 
     // 최고 기록
-    private int _bestMainNumber;
-    private int _bestSubNumber;
+    private int _bestMainNumber = 1;
+    private int _bestSubNumber = 1;
+    private int _bestAdventureNumber = 0;
 
     // 상태
     private int _currentMonsterCount = 0;
@@ -66,8 +67,8 @@ public class StageManager : Singleton<StageManager>
     protected override void Init()
     {
         base.Init();
-        _currentStageData = allStages[0].stageData; // 임시 테스트
-        // TODO : 최고스테이지 기록을 _currentStageData에 불러오기
+        SetRecord(); // 최고 기록 불러오기
+        _currentStageData = GetStageData(_bestMainNumber, _bestSubNumber);
     }
     private void Start()
     {
@@ -164,6 +165,7 @@ public class StageManager : Singleton<StageManager>
     {
         ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber));
         // 에메랄드와 다이아를 얻을 로직 필요
+        // 다음 모험 스테이지가 열려야 함
     }
 
     // 게임 오버 시 (플레이어가 죽거나 시간 초과)
@@ -214,7 +216,10 @@ public class StageManager : Singleton<StageManager>
     {
         foreach(var stage in allAdventureStages)
         {
-            if(stage.number == number) return stage.stageData;
+            if (stage.number == number)
+            {
+                return stage.stageData;
+            }
         }
         return null;
     }
@@ -227,5 +232,21 @@ public class StageManager : Singleton<StageManager>
         _bestSubNumber = stage.subNumber;
     }
 
-    // TODO : 최고 기록 저장
+    // 최고 기록 내보내기
+    public BestStageData GetRecord()
+    {
+        return new BestStageData
+        {
+            bestMainNumber = _bestMainNumber,
+            bestSubNumber = _bestSubNumber,
+            bestAdventureNumber = _bestAdventureNumber,
+        };
+    }
+    // 최고 기록 불러오기
+    public void SetRecord()
+    {
+        _bestMainNumber = StageRecordDataManager.Instance.MainNumber;
+        _bestSubNumber = StageRecordDataManager.Instance.SubNumber;
+        _bestAdventureNumber = StageRecordDataManager.Instance.AdventureNumber;
+    }
 }

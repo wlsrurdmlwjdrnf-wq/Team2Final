@@ -9,10 +9,9 @@ public class GrowUpModel
     public int VitLevel { get; private set; }
     public int CriLevel { get; private set; }
     public int LukLevel { get; private set; }
+
     public GrowUpModel()
     {
-        // TODO : CharacterUpgradeSaveManager에서 데이터 불러오기
-        // 데이터 없으면 초기화
         Initialize();
     }
     private void Initialize()
@@ -22,6 +21,22 @@ public class GrowUpModel
         VitLevel = 0;
         CriLevel = 0;
         LukLevel = 0;
+    }
+    public GrowUpModel(GrowUpModel model)
+    {
+        StrLevel = model.StrLevel;
+        HpLevel = model.HpLevel;
+        VitLevel = model.VitLevel;
+        CriLevel = model.CriLevel;
+        LukLevel = model.LukLevel;
+    }
+    public GrowUpModel(int a, int b, int c, int d, int e)
+    {
+        StrLevel = a;
+        HpLevel = b;
+        VitLevel = c;
+        CriLevel = d;
+        LukLevel = e;
     }
     public void AddStrLevel()
     {

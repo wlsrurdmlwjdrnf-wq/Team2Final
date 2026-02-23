@@ -97,7 +97,7 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
             });
         }
 
-        return JsonUtility.ToJson(saveData, true);
+        return JsonUtility.ToJson(saveData);
     }
 
     public bool LoadFromJson(string json)

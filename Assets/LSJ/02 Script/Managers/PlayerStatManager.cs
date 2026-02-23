@@ -325,7 +325,7 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
             saveData.modifiers.Add(new SerializableModifier(mod));
         }
 
-        return JsonUtility.ToJson(saveData, true);
+        return JsonUtility.ToJson(saveData);
     }
 
     public bool LoadFromJson(string json)

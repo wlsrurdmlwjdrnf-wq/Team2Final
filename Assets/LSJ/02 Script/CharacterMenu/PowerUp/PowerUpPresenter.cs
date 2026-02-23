@@ -6,7 +6,7 @@ public class PowerUpPresenter : MonoBehaviour
 {
     [SerializeField] private PowerUpView view;
 
-    private PowerUpModel _model;
+    private static PowerUpModel _model;
 
     private string _tmpText; // 강화 수치 표기 ( 현재 -> 다음)
     private BigNumber _tmpCost;
@@ -22,6 +22,7 @@ public class PowerUpPresenter : MonoBehaviour
     private void Start()
     {
         _model = new PowerUpModel();
+        //_model = new PowerUpModel(CharacterUpgradeSaveManager.Instance.PowerUpModel);
         UpdateView();
     }
     public void AtkUpButtonClick()
@@ -203,4 +204,8 @@ public class PowerUpPresenter : MonoBehaviour
     }
 
     // TODO : 로그아웃 시 _model의 프로퍼티를 CharacterUpgradeSaveManager에 넘겨서 저장
+    public static PowerUpModel GetModel()
+    {
+        return _model;
+    }
 }

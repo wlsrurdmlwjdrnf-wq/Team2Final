@@ -13,6 +13,8 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
     protected SpriteRenderer _sr;
     protected Collider2D _col;
     protected BigNumber _maxHp;
+
+    public Transform Transform {  get; private set; }
     public string Name { get; protected set; }
     public BigNumber CurrentHP {  get; protected set; }
     public BigNumber CurrentAtk { get; protected set; }

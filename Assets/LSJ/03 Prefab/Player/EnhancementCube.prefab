@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spreadRadius: 1.4
-  jumpPower: 1.2
+  jumpPower: 5
   duration: 0.5
   staggerMin: 0
   staggerMax: 0.12

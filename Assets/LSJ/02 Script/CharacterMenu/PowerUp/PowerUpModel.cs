@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class PowerUpModel
@@ -11,8 +12,6 @@ public class PowerUpModel
     public int CriRateLevel { get; private set; }
     public PowerUpModel()
     {
-        // TODO : CharacterUpgradeSaveManager에서 데이터 불러오기
-        // 데이터 없으면 초기화
         Initialize();
     }
     private void Initialize()
@@ -22,6 +21,22 @@ public class PowerUpModel
         HpRegenLevel = 0;
         CriDmgLevel = 0;
         CriRateLevel = 0;
+    }
+    public PowerUpModel(PowerUpModel model)
+    {
+        AtkLevel = model.AtkLevel;
+        HpLevel = model.HpLevel;
+        HpRegenLevel= model.HpRegenLevel;
+        CriDmgLevel = model.CriDmgLevel;
+        CriRateLevel= model.CriRateLevel;
+    }
+    public PowerUpModel(int a, int b, int c, int d, int e)
+    {
+        AtkLevel= a;
+        HpLevel= b;
+        HpRegenLevel= c;
+        CriDmgLevel= d;
+        CriRateLevel= e;
     }
     public void AddAtkLevel()
     {
