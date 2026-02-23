@@ -6,7 +6,7 @@ public class GrowUpPresenter : MonoBehaviour
 {
     [SerializeField] private GrowUpView view;
 
-    private GrowUpModel _model;
+    private static GrowUpModel _model;
 
     private string _tmpText; // 성장 수치 표기 ( 현재 -> 다음)
 
@@ -22,6 +22,7 @@ public class GrowUpPresenter : MonoBehaviour
     private void Start()
     {
         _model = new GrowUpModel();
+        //_model = new GrowUpModel(CharacterUpgradeSaveManager.Instance.GrowUpModel);
         UpdateView();
     }
     public void LevelUpButtonClick()
@@ -166,4 +167,9 @@ public class GrowUpPresenter : MonoBehaviour
     }
 
     // TODO : 로그아웃 시 _model의 프로퍼티를 CharacterUpgradeSaveManager에 넘겨서 저장
+    public static GrowUpModel GetModel()
+    {
+        return _model;
+    }
+
 }
