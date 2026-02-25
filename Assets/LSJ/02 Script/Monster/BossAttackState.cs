@@ -30,7 +30,7 @@ public class BossAttackState : IEntityState
         //        _boss.ChangeState(_boss.AttackState); // 재진입
         //}
 
-        // 보스 공격애니메이션이 끝나고 다른 상태로 안넘어가서 애니메이션이벤트로 공격애니메이션 끝날때 이벤트 추가해서 강제로 Idle상태로 복귀
+        // 애니메이션이벤트로 공격애니메이션 끝날때 이벤트 추가해서 강제로 Idle상태로 복귀
 
     }
 

@@ -25,5 +25,6 @@ public class StageUIPresenter : MonoBehaviour
     private void OnDestroy()
     {
         if (view == null) return;
+        view.OnBossStageButtonClicked -= BossStageButtonClick;
     }
 }

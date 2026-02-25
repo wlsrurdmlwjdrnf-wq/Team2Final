@@ -21,8 +21,7 @@ public class GrowUpPresenter : MonoBehaviour
     }
     private void Start()
     {
-        _model = new GrowUpModel();
-        //_model = new GrowUpModel(CharacterUpgradeSaveManager.Instance.GrowUpModel);
+        _model = new GrowUpModel(CharacterUpgradeSaveManager.Instance.GrowUpModel);
         UpdateView();
     }
     public void LevelUpButtonClick()
@@ -166,7 +165,7 @@ public class GrowUpPresenter : MonoBehaviour
         view.OnLukUpButtonClicked -= LukUpButtonClick;
     }
 
-    // TODO : 로그아웃 시 _model의 프로퍼티를 CharacterUpgradeSaveManager에 넘겨서 저장
+    // CharacterUpgradeSaveManager에 넘겨서 저장
     public static GrowUpModel GetModel()
     {
         return _model;

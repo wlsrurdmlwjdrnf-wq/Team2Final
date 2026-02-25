@@ -37,6 +37,8 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private LimitTimeBar _limitTimeBar;
 
     private const int MAX_SUBNUMBER = 20; // 최대 보조 스테이지 수
+    private const int ADVENTURE_BASE_DIAMOND_AMOUNT = 1000;
+    private const int ADVENTURE_BASE_EMERALD_AMOUNT = 200;
     public int CurrentMainNumber { get; private set; }
     public int CurrentSubNumber { get; private set; }
     public StageSO CurrentStageData => _currentStageData;
@@ -51,6 +53,7 @@ public class StageManager : Singleton<StageManager>
 
     // 상태
     private int _currentMonsterCount = 0;
+    private int _currentAdventureNumber;
     private StageSO _currentStageData;
     private StageSO _tmpStageData;
 
@@ -87,7 +90,7 @@ public class StageManager : Singleton<StageManager>
 
         OnNeedMonsterClear?.Invoke(); // 남아 있는 몬스터가 있으면 정리
 
-        BestStageRecord(targetStage);
+        BestStageRecord(targetStage); // 일반 스테이지 최고 기록이면 저장
 
         CurrentMainNumber = targetStage.mainNumber;
         CurrentSubNumber = targetStage.subNumber;
@@ -154,18 +157,24 @@ public class StageManager : Singleton<StageManager>
         else 
             ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber)); // 현재 스테이지 반복
 
-        OnAllMonstersCleared?.Invoke();
+        OnAllMonstersCleared?.Invoke(); // 스테이지 클리어 이벤트 발송
     }
+    // 티어 스테이지 클리어
     private void TierStageClear()
     {
         ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber));
         PlayerStatManager.Instance.PromoteTier();
     }
+    // 모험 스테이지 클리어
     private void AdventureStageClear()
     {
         ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber));
-        // 에메랄드와 다이아를 얻을 로직 필요
-        // 다음 모험 스테이지가 열려야 함
+        PlayerResourceManager.Instance.AddResource(ResourceType.Diamond, new BigNumber(_currentAdventureNumber * ADVENTURE_BASE_DIAMOND_AMOUNT));
+        PlayerResourceManager.Instance.AddResource(ResourceType.Emerald, new BigNumber(_currentAdventureNumber * ADVENTURE_BASE_EMERALD_AMOUNT));
+
+        // TODO : 확률적으로 유물 얻기, 보상 팝업 띄우기
+
+        if(_bestAdventureNumber < _currentAdventureNumber) _bestAdventureNumber = _currentAdventureNumber;
     }
 
     // 게임 오버 시 (플레이어가 죽거나 시간 초과)
@@ -218,6 +227,7 @@ public class StageManager : Singleton<StageManager>
         {
             if (stage.number == number)
             {
+                _currentAdventureNumber = number;
                 return stage.stageData;
             }
         }

@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a9ac0bfcbb6814ebf67240eff44bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spreadRadius: 1.4
-  jumpPower: 5
+  spreadRadius: 1.1
+  jumpPower: 1.1
   duration: 0.5
   staggerMin: 0
   staggerMax: 0.12

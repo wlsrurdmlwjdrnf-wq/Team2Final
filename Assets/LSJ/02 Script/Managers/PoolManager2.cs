@@ -93,11 +93,7 @@ public class PoolManager2 : Singleton<PoolManager2>
         }
 
         obj.SetActive(false);
-        obj.transform.SetParent(transform);
-
-        // 트랜스폼 초기화
-        obj.transform.localPosition = Vector3.zero;
-        obj.transform.localRotation = Quaternion.identity;
+        obj.transform.SetParent(transform, worldPositionStays: true);
     }
 
     private void OnDestroyPoolObject(GameObject obj)
@@ -111,13 +107,20 @@ public class PoolManager2 : Singleton<PoolManager2>
         Quaternion rotation = default,
         Transform parent = null)
     {
-        var pool = CreateOrGetPool(prefab, 20, 100, collectionCheck: true);
+        var pool = CreateOrGetPool(prefab, 20, 100, collectionCheck: false);
 
         var obj = pool.Get();
 
         obj.transform.SetPositionAndRotation(position, rotation);
+
         if (parent != null)
-            obj.transform.SetParent(parent);
+        {
+            obj.transform.SetParent(parent, worldPositionStays: true);
+        }
+        else
+        {
+            obj.transform.SetParent(transform, worldPositionStays: true);
+        }
 
         _activeObjectsToPool[obj] = pool; 
 

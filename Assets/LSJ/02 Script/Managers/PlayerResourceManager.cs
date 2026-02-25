@@ -15,8 +15,8 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
         }
 
         // 시작 재화 테스트
-        //_resources[ResourceType.Gold] = new BigNumber(10000000);
-        _resources[ResourceType.Diamond] = new BigNumber(123456789101112);
+        _resources[ResourceType.Gold] = new BigNumber(1000);
+        _resources[ResourceType.Diamond] = new BigNumber(10000);
         //_resources[ResourceType.EXP] = new BigNumber(7777777);
     }
 
@@ -65,7 +65,7 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
     public string GetFormatted(ResourceType type)
     {
         BigNumber bn = GetResource(type);
-        return BigNumberFormatter.ToIntegerStyle(bn);
+        return BigNumberFormatter.ToFormatted(bn);
     }
 
     // JSON 저장용 직렬화 클래스
