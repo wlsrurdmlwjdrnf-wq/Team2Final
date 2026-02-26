@@ -22,7 +22,7 @@ public class AdventureView : MonoBehaviour
     }
     private void Start()
     {
-        UpdateEnableStage();
+        UpdateEnableStage();  // 데이터를 받아와 가능한 모험 스테이지 오픈
     }
 
     private void ButtonsAddListener()

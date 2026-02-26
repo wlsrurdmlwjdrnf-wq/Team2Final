@@ -10,6 +10,12 @@ public class PowerUpModel
     public int HpRegenLevel { get; private set; }
     public int CriDmgLevel { get; private set; }
     public int CriRateLevel { get; private set; }
+    public int MaxAtkLevel { get; private set; } = 2000000;
+    public int MaxHpLevel { get; private set; } = 2000000;
+    public int MaxHpRegenLevel { get; private set; } = 2000000;
+    public int MaxCriDmgLevel { get; private set; } = 10000;
+    public int MaxCriRateLevel { get; private set; } = 950;
+
     public PowerUpModel()
     {
         Initialize();

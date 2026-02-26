@@ -76,7 +76,7 @@ public class PowerUpPresenter : MonoBehaviour
     {
         _tmpCost = CalculateCost(_model.CriRateLevel);
 
-        if (!TryLevelUp(_tmpCost)) return;
+        if (!TryLevelUp(_tmpCost) || _model.MaxCriRateLevel == _model.CriRateLevel) return;
 
         _model.AddCriRateLevel();
         _tmpCost = CalculateCost(_model.CriRateLevel);

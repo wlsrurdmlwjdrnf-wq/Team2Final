@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expText: {fileID: 0}
+  expRateText: {fileID: 0}
   statPointText: {fileID: 0}
   goldText: {fileID: 0}
   emeraldText: {fileID: 0}
@@ -162,7 +163,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tierText: {fileID: 0}
-  bronzeStageButton: {fileID: 0}
+  stageButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6024562781278645360
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +179,7 @@ GameObject:
   - component: {fileID: 5595695629333650035}
   - component: {fileID: 5034790255650392634}
   m_Layer: 0
-  m_Name: StagreUIView
+  m_Name: StageUIView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,7 +215,11 @@ MonoBehaviour:
   stageNumberText: {fileID: 0}
   stageNameText: {fileID: 0}
   bossStageButton: {fileID: 0}
-  stageBar: {fileID: 0}
+  exitStageButton: {fileID: 0}
+  needHideObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6253562237778171938
 GameObject:
   m_ObjectHideFlags: 0

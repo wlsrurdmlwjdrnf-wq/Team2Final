@@ -21,6 +21,7 @@ public enum Tier
 {
     Stone,
     Bronze,
+    Iron,
     Silver, 
     Gold, 
     Platinum, 

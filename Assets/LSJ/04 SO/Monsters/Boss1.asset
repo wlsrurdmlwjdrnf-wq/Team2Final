@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49953ac1fe9b9e94fae85472c0517af2, type: 3}
   m_Name: Boss1
   m_EditorClassIdentifier: 
-  monsterName: "\uC655\uC2AC\uB77C\uC784"
-  baseAttackPower: 10
+  monsterName: "\uC655\uB78C\uBB34\uC2A4"
+  baseAttackPower: 15
   baseMaxHP: 200
-  baseDefensivePower: 1
+  baseDefensivePower: 3
   baseAttackSpeed: 0.5
-  elementType: 4
+  elementType: 3

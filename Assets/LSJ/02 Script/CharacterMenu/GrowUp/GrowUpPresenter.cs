@@ -31,7 +31,7 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void StrUpButtonClick()
     {
-        if (!TryLevelUp()) return;
+        if (!TryLevelUp() || _model.MaxStrLevel == _model.StrLevel) return;
 
         _model.AddStrLevel();
         _tmpText = ShowNumber(StatType.AttackPower, _model.StrLevel);
@@ -40,7 +40,7 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void HpUpButtonClick()
     {
-        if (!TryLevelUp()) return;
+        if (!TryLevelUp() || _model.MaxHpLevel == _model.HpLevel) return;
 
         _model.AddHpLevel();
         _tmpText = ShowNumber(StatType.MaxHP, _model.HpLevel);
@@ -49,7 +49,7 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void VitUpButtonClick()
     {
-        if (!TryLevelUp()) return;
+        if (!TryLevelUp() || _model.MaxVitLevel == _model.VitLevel) return;
 
         _model.AddVitLevel();
         _tmpText = ShowNumber(StatType.HPRegenPerSec, _model.VitLevel);
@@ -58,7 +58,7 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void CriUpButtonClick()
     {
-        if (!TryLevelUp()) return;
+        if (!TryLevelUp() || _model.MaxCriLevel == _model.CriLevel) return;
 
         _model.AddCriLevel();
         _tmpText = ShowNumber(StatType.CritDamage, _model.CriLevel);
@@ -67,7 +67,7 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void LukUpButtonClick()
     {
-        if (!TryLevelUp()) return;
+        if (!TryLevelUp() || _model.MaxLukLevel == _model.LukLevel) return;
 
         _model.AddLukLevel();
         _tmpText = ShowNumber(StatType.GoldMultiplier, _model.LukLevel);
@@ -107,7 +107,7 @@ public class GrowUpPresenter : MonoBehaviour
     // 업그레이드 가능 여부 반환 및 스탯포인트 소모
     private bool TryLevelUp()
     {
-        return PlayerResourceManager.Instance.SpendResource(ResourceType.StatPoint, new BigNumber(1));
+        return PlayerResourceManager.Instance.SpendResource(ResourceType.StatPoint, new BigNumber(1.0));
     }
     // 성장 수치 표기 반환
     private string ShowNumber(StatType type, int level)

@@ -33,8 +33,9 @@ public class StageManager : Singleton<StageManager>
     [Header("씬에 있는 플레이어 연결")]
     [SerializeField] private Player _player;
 
-    [Header("씬에 있는 제한시간캔버스 연결")]
+    [Header("씬에 있는 제한시간캔버스/스테이지진행도캔버스 연결")]
     [SerializeField] private LimitTimeBar _limitTimeBar;
+    [SerializeField] private StageProgressBar _stageProgressBar;
 
     private const int MAX_SUBNUMBER = 20; // 최대 보조 스테이지 수
     private const int ADVENTURE_BASE_DIAMOND_AMOUNT = 1000;
@@ -64,8 +65,8 @@ public class StageManager : Singleton<StageManager>
     public event Action OnAdventureStageChanged;
     public event Action OnAllMonstersCleared; // 전부 처치 시
     public event Action OnGameOver;     // 게임 오버 시 (플레이어가 죽거나 시간 초과)
-    public event Action OnNeedMonsterClear;
-    public event Action OnNeedScreenFader;
+    public event Action OnNeedMonsterClear; // 몬스터 정리
+    public event Action OnNeedScreenFader;  // 화면 페이드아웃 인
 
     protected override void Init()
     {
@@ -129,6 +130,7 @@ public class StageManager : Singleton<StageManager>
     public void OnMonsterDeath()
     {
         _currentMonsterCount--;
+        _stageProgressBar.UpdateBar();
 
         if (_currentMonsterCount <= 0) // 스테이지 클리어
         {
@@ -177,7 +179,7 @@ public class StageManager : Singleton<StageManager>
         if(_bestAdventureNumber < _currentAdventureNumber) _bestAdventureNumber = _currentAdventureNumber;
     }
 
-    // 게임 오버 시 (플레이어가 죽거나 시간 초과)
+    // 게임 오버 시 (플레이어가 죽거나 시간 초과나 나가기버튼 클릭 시)
     public void GameOver()
     {
         OnGameOver?.Invoke();

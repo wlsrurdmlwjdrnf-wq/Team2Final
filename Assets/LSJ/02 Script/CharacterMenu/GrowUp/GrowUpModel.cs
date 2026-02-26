@@ -10,6 +10,11 @@ public class GrowUpModel
     public int CriLevel { get; private set; }
     public int LukLevel { get; private set; }
 
+    public int MaxStrLevel { get; private set; } = 1000;
+    public int MaxHpLevel { get; private set; } = 1000;
+    public int MaxVitLevel { get; private set; } = 1000;
+    public int MaxCriLevel { get; private set; } = 200;
+    public int MaxLukLevel { get; private set; } = 1000;
     public GrowUpModel()
     {
         Initialize();

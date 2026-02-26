@@ -17,6 +17,7 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
         // 시작 재화 테스트
         _resources[ResourceType.Gold] = new BigNumber(1000);
         _resources[ResourceType.Diamond] = new BigNumber(10000);
+        _resources[ResourceType.Feather] = new BigNumber(10);
         //_resources[ResourceType.EXP] = new BigNumber(7777777);
     }
 
@@ -33,7 +34,7 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
                 _tmpMultiplier = PlayerStatManager.Instance.ExpMultiplier;
                 break;
             default:
-                _tmpMultiplier = new BigNumber(1);
+                _tmpMultiplier = new BigNumber(1.0);
                 break;
         }
 
