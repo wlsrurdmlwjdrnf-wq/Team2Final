@@ -94,6 +94,7 @@ public class GachaSystem : Singleton<GachaSystem>
     public void DrawGacha(EDataType gachaType, int count = 1)
     {
         int totalCost = GachaCost * count;
+        //가챠비용 체크&차감
         if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Diamond, new BigNumber(totalCost))) return;
         Debug.Log($"{gachaType}:{count}, Cost:{GachaCost * count}");
         gachaResults.Clear();
@@ -109,7 +110,6 @@ public class GachaSystem : Singleton<GachaSystem>
     }
     private ItemCard DrawOnce(EDataType gachaType) 
     {
-        //가챠비용 차감
         switch (gachaType)
         {
             case EDataType.Weapon:

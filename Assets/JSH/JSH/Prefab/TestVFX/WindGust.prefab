@@ -396,6 +396,7 @@ MonoBehaviour:
     m_Bits: 64
   _positionOffset: {x: 0, y: 0, z: 0}
   _targetingType: 2
+  _tickInterval: 0.04
 --- !u!223 &5716920655770819551
 Canvas:
   m_ObjectHideFlags: 0

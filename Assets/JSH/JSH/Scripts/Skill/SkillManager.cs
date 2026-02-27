@@ -10,13 +10,10 @@ public class SkillManager : Singleton<SkillManager>
     [SerializeField] private PlayerHpMp _playerHpMp;
     [SerializeField] private GameObject _player;
 
-    private bool _isEnemyLoaded = false;
     private List<IDamageable> _enemies = new List<IDamageable>();
 
     private bool _IsPlayerReady = true;
-    //죽음 이벤트 받아서 죽어도 스킬 시전되지 않게 하기
-    //넉백시에도 스킬 시전 금지
-    //속성 데미지
+
     private void OnEnable()
     {
         _eventChannel.OnEventRaised += HandleEvent;
@@ -24,7 +21,7 @@ public class SkillManager : Singleton<SkillManager>
         Player.OnAttack += PlayerReady;
         Player.OnDead += PlayerDead;
         Player.OnKnockBack += PlayerDead;
-        StageManager.Instance.OnStageChanged += GetNewEnemy;
+        if (StageManager.Instance != null) StageManager.Instance.OnStageChanged += GetNewEnemy;
     }
     private void OnDisable()
     {
@@ -33,7 +30,7 @@ public class SkillManager : Singleton<SkillManager>
         Player.OnAttack -= PlayerReady;
         Player.OnDead -= PlayerDead;
         Player.OnKnockBack -= PlayerDead;
-        StageManager.Instance.OnStageChanged -= GetNewEnemy;
+        if (StageManager.Instance != null) StageManager.Instance.OnStageChanged -= GetNewEnemy;
     }
     private void HandleEvent(EGameEventType eventType, object payload) 
     {
@@ -63,7 +60,7 @@ public class SkillManager : Singleton<SkillManager>
     {
         foreach (var skill in _equippedSkills) 
         {
-            if (skill.baseData.TriggerCount <= 0) 
+            if (skill.baseData.TriggerCount <= 0 && _IsPlayerReady) 
             {
                 if (skill.CanCast(_playerHpMp)) skill.Cast();                
             }
@@ -77,7 +74,7 @@ public class SkillManager : Singleton<SkillManager>
     {
         foreach (var skill in _equippedSkills) 
         {
-            if (skill.baseData.TriggerCount > 0) 
+            if (skill.baseData.TriggerCount > 0 && _IsPlayerReady) 
             {
                 skill.OnNormalAttack();
                 if (skill.CanCast(_playerHpMp)) skill.Cast(); 
@@ -110,13 +107,32 @@ public class SkillManager : Singleton<SkillManager>
                 Vector2 enemyPos = mono.transform.position;
 
                 //AABB공식 |posA.x - posB.x| <= sizeA.x/2 + sizeB.x/2, |posA.y - posB.y| <= sizeA.y/2 + sizeB.y/2
-                bool overlapX = Mathf.Abs(playerPos.x - enemyPos.x) <= boxSize.x / 2f;
-                bool overlapY = Mathf.Abs(playerPos.y - enemyPos.y) <= boxSize.y / 2f;
+                bool overlapX = Mathf.Abs(boxCenter.x - enemyPos.x) <= boxSize.x / 2f;
+                bool overlapY = Mathf.Abs(boxCenter.y - enemyPos.y) <= boxSize.y / 2f;
 
                 if (overlapX && overlapY) { enemiesInRange.Add(enemy); }
             }
         }
         return enemiesInRange;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector2 playerPos = _player.transform.position;
+        Vector2 boxCenter = playerPos + Vector2.right * (PublicConst.SkillDetectRange / 2);
+        Vector2 boxSize = new Vector2(PublicConst.SkillDetectRange, 2f);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(boxCenter, boxSize);
+
+        List<IDamageable> damageables = CheckEnemy(PublicConst.SkillDetectRange);
+        if (damageables.Count > 0) 
+        {
+            foreach (var enemy in damageables)
+            {
+                Gizmos.DrawWireSphere((enemy as MonoBehaviour).transform.position, PublicConst.NormalEnemyRadius);
+            }
+        }
     }
 
     public GameObject GetClosestEnemy(List<IDamageable> enemies) 

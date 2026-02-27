@@ -10,6 +10,9 @@ public class TestUIManager : Singleton<TestUIManager>
     [SerializeField] private Transform _accessoryContent;
     [SerializeField] private Transform _artifactContent;
     [SerializeField] private Transform _skillContent;
+
+    [SerializeField] private Transform _equipSkillContent;
+
     [SerializeField] private Transform _equippedSkillContent;
     [SerializeField] private TestSlotUI _equippedWeaponSlot;
     [SerializeField] private TestSlotUI _equippedAccessorySlot;
@@ -18,9 +21,7 @@ public class TestUIManager : Singleton<TestUIManager>
     [SerializeField] private TextMeshProUGUI _accessoryGachaLevelText;
     [SerializeField] private TextMeshProUGUI _accessoryGachaProgressText;
 
-//[SerializeField] private TextMeshProUGUI _weaponGachaText;
-// [SerializeField] private TextMeshProUGUI _accessoryGachaText;
-private List<TestSlotUI> _skillSlots = new List<TestSlotUI>();
+    private List<TestSlotUI> _skillSlots = new List<TestSlotUI>();
 
     [SerializeField] private GameEventChannelSO _eventChannel;
     //끄고키는용
@@ -122,6 +123,14 @@ private List<TestSlotUI> _skillSlots = new List<TestSlotUI>();
             slotUI.transform.SetParent(_skillContent, false);
             slotUI.SetUp(slot);
         }
+        for (int i = 0; i < InventorySystem.instance.MaxSkillSlot; i++) 
+        {
+            TestSlotUI slotUI = PoolManager.Instance.GetFromPool(_slotUIPrefab);
+            slotUI.transform.SetParent(_equippedSkillContent, false);
+            slotUI.SetEmpty();
+            slotUI.SetEquipSlot(EDataType.Skill);
+            _skillSlots.Add(slotUI);
+        }
         PopUp(Inventories[0]);
     }
     public void PopUp(GameObject popUp)
@@ -132,18 +141,16 @@ private List<TestSlotUI> _skillSlots = new List<TestSlotUI>();
         }
         popUp.SetActive(true);
     }
+    //수정할 부분
     private void RefreshEquippedSkills() 
     {
-        foreach (TestSlotUI slotUI in _skillSlots) slotUI.ReturnPool();
+        foreach (TestSlotUI slotUI in _skillSlots) slotUI.SetEmpty();
 
         var equippedSkills = InventorySystem.Instance.GetEquippedSkills();
 
-        foreach (var slot in equippedSkills) 
+        for (int i = 0; i < equippedSkills.Count; i++) 
         {
-            TestSlotUI slotUI = PoolManager.Instance.GetFromPool(_slotUIPrefab);
-            slotUI.transform.SetParent(_equippedSkillContent, false);
-            slotUI.SetUp(slot);
-            _skillSlots.Add(slotUI);
+            _skillSlots[i].SetUp(equippedSkills[i]);
         }
     }
 }
