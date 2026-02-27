@@ -755,6 +755,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4546241890896038925, guid: 74e09925b10331c49bc383a9ae7daaf7, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5312350082089181391, guid: 74e09925b10331c49bc383a9ae7daaf7, type: 3}
       propertyPath: m_Name
       value: LimitTimeCanvas

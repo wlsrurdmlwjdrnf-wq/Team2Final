@@ -4205,6 +4205,12 @@ MonoBehaviour:
   _upgradeButton: {fileID: 994804229}
   _equipButton: {fileID: 1050882460}
   _equipButtonTxt: {fileID: 0}
+  _combinePanelButton: {fileID: 0}
+  _combineButton: {fileID: 0}
+  _combinePanel: {fileID: 0}
+  _beforeSlotUI: {fileID: 0}
+  _afterSlotUI: {fileID: 0}
+  _combineSlider: {fileID: 0}
 --- !u!114 &103200586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12436,6 +12442,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7944224111978629890, guid: 0b81874ecdb66364fa6534594f412564, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9154438870082256132, guid: 0b81874ecdb66364fa6534594f412564, type: 3}
       propertyPath: m_Maskable
       value: 0
@@ -15396,6 +15406,7 @@ MonoBehaviour:
   _accessoryContent: {fileID: 791684149}
   _artifactContent: {fileID: 0}
   _skillContent: {fileID: 773806425}
+  _equipSkillContent: {fileID: 0}
   _equippedSkillContent: {fileID: 786179701}
   _equippedWeaponSlot: {fileID: 1176722569}
   _equippedAccessorySlot: {fileID: 319679464}
@@ -16670,81 +16681,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &440078105
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 440078106}
-  - component: {fileID: 440078108}
-  - component: {fileID: 440078107}
-  m_Layer: 5
-  m_Name: stagePer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &440078106
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440078105}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1907654827}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -74}
-  m_SizeDelta: {x: 400, y: 15}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &440078107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440078105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.34469622, g: 0.7433963, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &440078108
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440078105}
-  m_CullTransparentMesh: 1
 --- !u!1 &442296393
 GameObject:
   m_ObjectHideFlags: 0
@@ -27764,6 +27700,7 @@ MonoBehaviour:
   _accessoryContent: {fileID: 1738589437}
   _artifactContent: {fileID: 0}
   _skillContent: {fileID: 2019513554}
+  _equipSkillContent: {fileID: 0}
   _equippedSkillContent: {fileID: 1779344512}
   _equippedWeaponSlot: {fileID: 1815948526}
   _equippedAccessorySlot: {fileID: 1204350121}
@@ -41439,6 +41376,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7944224111978629890, guid: 0b81874ecdb66364fa6534594f412564, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9154438870082256132, guid: 0b81874ecdb66364fa6534594f412564, type: 3}
       propertyPath: m_Maskable
       value: 0
@@ -41631,10 +41572,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 120959122}
     - target: {fileID: 5034790255650392634, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
-      propertyPath: stageBar
-      value: 
-      objectReference: {fileID: 1907654826}
-    - target: {fileID: 5034790255650392634, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: stageNameText
       value: 
       objectReference: {fileID: 1601426875}
@@ -41643,9 +41580,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1095933440}
     - target: {fileID: 5034790255650392634, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: exitStageButton
+      value: 
+      objectReference: {fileID: 1803591887}
+    - target: {fileID: 5034790255650392634, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: stageNumberText
       value: 
       objectReference: {fileID: 196339055}
+    - target: {fileID: 5034790255650392634, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: needHideObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 1538528395}
+    - target: {fileID: 5034790255650392634, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: needHideObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 1095933438}
+    - target: {fileID: 5034790255650392634, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: needHideObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 119662498}
+    - target: {fileID: 5034790255650392634, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: needHideObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 1938723898}
     - target: {fileID: 6149268033234773642, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.049999952
@@ -41767,9 +41724,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1294432046}
     - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
-      propertyPath: bronzeStageButton
+      propertyPath: stageButtons.Array.data[0]
       value: 
       objectReference: {fileID: 234340451}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 85994981}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[2]
+      value: 
+      objectReference: {fileID: 902578341}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[3]
+      value: 
+      objectReference: {fileID: 1631949293}
     - target: {fileID: 7627783605929742423, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: hpText
       value: 
@@ -58645,6 +58614,12 @@ MonoBehaviour:
   _upgradeButton: {fileID: 259702114}
   _equipButton: {fileID: 13471277}
   _equipButtonTxt: {fileID: 1516177164}
+  _combinePanelButton: {fileID: 0}
+  _combineButton: {fileID: 0}
+  _combinePanel: {fileID: 0}
+  _beforeSlotUI: {fileID: 0}
+  _afterSlotUI: {fileID: 0}
+  _combineSlider: {fileID: 0}
 --- !u!114 &1776604688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59032,31 +59007,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: LSJManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6387329795333362248, guid: b79f60699b6163947841a4288cb94599, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 6496393556195310218, guid: b79f60699b6163947841a4288cb94599, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496393556195310218, guid: b79f60699b6163947841a4288cb94599, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496393556195310218, guid: b79f60699b6163947841a4288cb94599, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8335723406803212485, guid: b79f60699b6163947841a4288cb94599, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 69718823}
-    - target: {fileID: 8350481786510907259, guid: b79f60699b6163947841a4288cb94599, type: 3}
+    - target: {fileID: 8648143273356104736, guid: b79f60699b6163947841a4288cb94599, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8350481786510907259, guid: b79f60699b6163947841a4288cb94599, type: 3}
+    - target: {fileID: 8648143273356104736, guid: b79f60699b6163947841a4288cb94599, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8350481786510907259, guid: b79f60699b6163947841a4288cb94599, type: 3}
+    - target: {fileID: 8648143273356104736, guid: b79f60699b6163947841a4288cb94599, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b79f60699b6163947841a4288cb94599, type: 3}
+--- !u!114 &1803591887 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8935607238685076554, guid: b79f60699b6163947841a4288cb94599, type: 3}
+  m_PrefabInstance: {fileID: 1803591886}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1803640280
 GameObject:
   m_ObjectHideFlags: 0
@@ -59919,6 +59913,12 @@ MonoBehaviour:
   _upgradeButton: {fileID: 785336132}
   _equipButton: {fileID: 890169259}
   _equipButtonTxt: {fileID: 572967599}
+  _combinePanelButton: {fileID: 0}
+  _combineButton: {fileID: 0}
+  _combinePanel: {fileID: 0}
+  _beforeSlotUI: {fileID: 0}
+  _afterSlotUI: {fileID: 0}
+  _combineSlider: {fileID: 0}
 --- !u!114 &1819339161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62639,7 +62639,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1663058647}
-  - {fileID: 440078106}
   - {fileID: 700887207}
   m_Father: {fileID: 1777605329}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

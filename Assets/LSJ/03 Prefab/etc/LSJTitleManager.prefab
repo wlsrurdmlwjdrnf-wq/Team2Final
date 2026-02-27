@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7785968454040419311}
+  - component: {fileID: 2356193310670962382}
   m_Layer: 0
   m_Name: LSJTitleManager
   m_TagString: Untagged
@@ -35,6 +36,19 @@ Transform:
   - {fileID: 8528501394118548570}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2356193310670962382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8891940628852842787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b4b0b9500fa3c40aa27a02ef494370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDestroyOnLoad: 0
 --- !u!1001 &2161036767992669949
 PrefabInstance:
   m_ObjectHideFlags: 0
