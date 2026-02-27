@@ -8,9 +8,13 @@ using UnityEngine.EventSystems;
 public class ScrollParent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 
-    public Scrollbar scrollbar;
-    public Transform contentTr;
-    public Slider tabSlider;
+    [Header("탭 전환")]
+    [SerializeField] private Scrollbar scrollbar;
+    [SerializeField] private Transform contentTr;
+    [SerializeField] private Slider tabSlider;
+
+    [Header("보상 상단 바")]
+    [SerializeField] private StandardBar standardBar;
 
     const int SIZE = 5;
     float[] pos = new float[SIZE];
@@ -27,6 +31,10 @@ public class ScrollParent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         // 거리에 따라 0~1인 pos 대입
         distance = 1f / (SIZE - 1);
         for (int i = 0; i < SIZE; i++) pos[i] = distance * i;
+
+        // 씬 시작 시 상단바 갱신
+        standardBar.UpdateTopBar(targetIndex);
+
     }
 
     void Update()
@@ -59,6 +67,16 @@ public class ScrollParent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         isDrag = false;
         targetPos = SetPos();
 
+        // targetIndex를 확실히 갱신할 것!!!
+        for (int i = 0; i < SIZE; i++)
+        {
+            if (Mathf.Approximately(targetPos, pos[i]))
+            {
+                targetIndex = i;
+                break;
+            }
+        }
+
         // 절반 거리를 넘지 않아도 마우스를 빠르게 이동하면
         if (curPos == targetPos)
         {
@@ -85,11 +103,18 @@ public class ScrollParent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 contentTr.GetChild(i).GetChild(1).GetComponent<Scrollbar>().value = 1;
             }
         }
+
+        // 현재 탭 인덱스 기준으로 상단 바 켜고 끄기
+        standardBar.UpdateTopBar(targetIndex);
+
     }
 
     public void TapClick(int n)
     {
         targetIndex = n;
         targetPos = pos[n];
+
+        // 탭 클릭시 동일하게 반영!!!
+        standardBar.UpdateTopBar(n);
     }
 }
