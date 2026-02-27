@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0f4d8687767d3244a6ea38078ed36e6, type: 3}
+  m_Name: StageViewSO
+  m_EditorClassIdentifier: 
+  stages:
+  - stageTurn: 1
+    stageName: "\uC2DC\uC791\uC758 \uC232"
+    stageImage: {fileID: 21300000, guid: 542e6583be84bda4381d9808252a03c9, type: 3}
+  - stageTurn: 2
+    stageName: "\uADF8\uB9BC\uC790 \uACC4\uACE1"
+    stageImage: {fileID: 21300000, guid: ce0849b9f86c45a4cbaa583ce5b5fafb, type: 3}
+  - stageTurn: 3
+    stageName: "\uD0D0\uC695\uC758 \uC5B8\uB355"
+    stageImage: {fileID: 21300000, guid: 1eb3f8f86323f3846aebf0454a05cda1, type: 3}
+  - stageTurn: 4
+    stageName: "\uAC80\uC740 \uC232"
+    stageImage: {fileID: 21300000, guid: 927f587ea6739394f8c12e6dff855588, type: 3}
+  - stageTurn: 5
+    stageName: "\uBD89\uC740 \uC0B0\uB9E5"
+    stageImage: {fileID: 21300000, guid: 9131656efc3c437418d5370725d2ec80, type: 3}
+  - stageTurn: 6
+    stageName: "\uAC08\uB9DD\uC758 \uB545"
+    stageImage: {fileID: 21300000, guid: d85187d1ae1ceac439e9ea61c6672604, type: 3}
+  - stageTurn: 7
+    stageName: "\uC78A\uD600\uC9C4 \uACE0\uC131"
+    stageImage: {fileID: 21300000, guid: b9bf05e64bc617f46ba563718e901613, type: 3}
+  - stageTurn: 8
+    stageName: "\uD504\uB85C\uC98C \uC6B0\uB4DC"
+    stageImage: {fileID: 21300000, guid: 6810504b394d75947880ece35e618368, type: 3}
+  - stageTurn: 9
+    stageName: "\uC99D\uC624\uC758 \uB545"
+    stageImage: {fileID: 21300000, guid: e2bf683d7d9f12b49af047a5bc9af489, type: 3}
+  - stageTurn: 10
+    stageName: "\uCD5C\uD6C4\uC758 \uC655\uAD6D"
+    stageImage: {fileID: 21300000, guid: 04d325434faae4f4d9c3b524b24efd41, type: 3}
