@@ -46,7 +46,8 @@ public class ItemCardView : MonoBehaviour, IPoolable
     public void SetPool(IPool pool) { _pool = pool; }
     public void ReturnPool() 
     {
-        gameObject.transform.SetParent(null);
+        if (_pool is MonoBehaviour mono)
+        gameObject.transform.SetParent(mono.transform);
         gameObject.transform.position = PoolManager.Instance.transform.position;
         _pool.Enqueue(this); 
     }

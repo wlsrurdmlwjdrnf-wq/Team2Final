@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: SkillVFXDatabaseSO
   m_EditorClassIdentifier: 
   entries:
+  - effectType: 1
+    element: 3
+    vfxPrefab: {fileID: -5655668019623881250, guid: 1cdb0c2eaf638d74c806f8215a48fd1a, type: 3}
   - effectType: 0
     element: 0
-    vfxPrefab: {fileID: -5655668019623881250, guid: 1cdb0c2eaf638d74c806f8215a48fd1a, type: 3}
-  - effectType: 1
-    element: 0
     vfxPrefab: {fileID: 4308056137883083401, guid: 419ad13ddec864c49a3ebe99b44c696f, type: 3}
-  - effectType: 2
-    element: 0
-    vfxPrefab: {fileID: 348112900897890908, guid: f27e94e5d8edde54988e7dc846b4971c, type: 3}
   - effectType: 3
-    element: 0
+    element: 1
+    vfxPrefab: {fileID: 348112900897890908, guid: f27e94e5d8edde54988e7dc846b4971c, type: 3}
+  - effectType: 2
+    element: 2
     vfxPrefab: {fileID: 9078447857713065992, guid: f3b973b76649a5348b5e53abfe4e2949, type: 3}
   - effectType: 4
-    element: 0
+    element: 4
     vfxPrefab: {fileID: 291243767362143715, guid: d87e5248dcb72c643ad9dea4dea2eb5f, type: 3}

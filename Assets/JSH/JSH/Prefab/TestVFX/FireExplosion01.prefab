@@ -540,11 +540,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LifeTime: 0.7
   _effectRange: 1
+  _projectileSpeed: 5
   _monsterLayer:
     serializedVersion: 2
     m_Bits: 64
   _positionOffset: {x: 0, y: 0, z: 0}
-  _IsProjectile: 0
+  _targetingType: 0
+  _tickInterval: 0.1
 --- !u!223 &2856437729687392062
 Canvas:
   m_ObjectHideFlags: 0
