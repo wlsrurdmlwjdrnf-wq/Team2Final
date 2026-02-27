@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MonsterContainer : MonoBehaviour
@@ -34,12 +35,26 @@ public class MonsterContainer : MonoBehaviour
 
             // 랜덤 프리팹 선택
             GameObject prefab = _stage.monsterPrefabs[Random.Range(0, _stage.monsterPrefabs.Count)];
-            
-            _monsters.Add(PoolManager2.Instance.Get
-                (prefab,
+
+            // 풀에서 꺼낸 실제 인스턴스 저장
+            GameObject monsterInstance = PoolManager2.Instance.Get(
+                prefab,
                 new Vector3(x, _stage.yFixedPosition, 0),
-                Quaternion.identity, transform)
-                );
+                Quaternion.identity,
+                transform 
+            );
+
+            _monsters.Add(monsterInstance);  // 인스턴스 추가
+
+            var damageable = monsterInstance.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                EnemyManager.Instance.enemies.Add(damageable);
+            }
+            else
+            {
+                Debug.LogWarning("IDamageable 컴포넌트 없음: " + monsterInstance.name);
+            }
         }
     }
 
@@ -70,5 +85,6 @@ public class MonsterContainer : MonoBehaviour
                 PoolManager2.Instance.Release(monster);
         }
         _monsters.Clear();
+        EnemyManager.Instance.enemies.Clear();
     }
 }

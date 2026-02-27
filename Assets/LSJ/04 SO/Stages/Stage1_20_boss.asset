@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949981c9c9f64de48a4bbb3c505bebc2, type: 3}
+  m_Name: Stage1_20_boss
+  m_EditorClassIdentifier: 
+  isTierStage: 0
+  isBossStage: 1
+  isAdventureStage: 0
+  mainNumber: 1
+  subNumber: 20
+  monsterPrefabs:
+  - {fileID: 4150010508088639910, guid: 87bd650d980dfc846a661f89f1d44899, type: 3}
+  spawnCount: 1
+  spawnAreaWidth: 5
+  minDistance: 0
+  yFixedPosition: 0.6
+  backgroundSprite: {fileID: 21300000, guid: c5e43e115e266a748972ccf2d27a2ef5, type: 3}

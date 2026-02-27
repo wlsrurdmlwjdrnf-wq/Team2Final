@@ -102,14 +102,15 @@ public class Player : EntityStateMachine
     // Animation Event가 부를 함수
     public void OnAttackHit()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(
-            AttackPoint.position,
-            AttackRange,
-            MonsterLayer
-        );
-        if (hits.Length > 0)
-        {
-            IDamageable target = hits[0].GetComponent<IDamageable>();
+        //Collider2D[] hits = Physics2D.OverlapCircleAll(
+        //    AttackPoint.position,
+        //    AttackRange,
+        //    MonsterLayer
+        //);
+        //if (hits.Length > 0)
+        //{
+            IDamageable target = EnemyManager.Instance.GetClosestEnemy(transform.position);
+
             if (target != null)
             {
                 BigNumber damage = PlayerStatManager.Instance.AttackPower;
@@ -123,7 +124,7 @@ public class Player : EntityStateMachine
 
                 // 이펙트나 사운드 넣으면 될 듯
             }
-        }
+        //}
     }
     public void OnChangeIdle()
     {

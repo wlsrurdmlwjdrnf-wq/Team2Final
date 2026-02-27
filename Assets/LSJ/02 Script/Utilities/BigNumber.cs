@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class BigNumber : IComparable<BigNumber>
 {
     public double mantissa; // 항상 양수 (1 <= m < 10)
@@ -66,45 +66,25 @@ public class BigNumber : IComparable<BigNumber>
             mantissa *= 10.0;
             exponent--;
         }
+        // mantissa가 거의 1.0 또는 10.0에 가까우면 스냅
+        if (Math.Abs(mantissa - 1.0) < 1e-10)
+        {
+            mantissa = 1.0;
+        }
+        else if (Math.Abs(mantissa - 10.0) < 1e-9)
+        {
+            mantissa = 1.0;
+            exponent++;
+        }
 
         // 극단적인 underflow 방지
-        if (exponent < -400)
+        if (exponent < -100)
         {
             mantissa = 0;
             exponent = 0;
             sign = 0;
         }
     }
-    /// <summary>
-    /// 정수 부분만 취함
-    /// 3.999 → 3, 0.9999 → 0, 1.0000001 → 1
-    /// </summary>
-    public BigNumber Floor()
-    {
-        if (sign == 0) return new BigNumber(0);
-
-        // 아주 작은 값은 0 처리
-        if (exponent < -8) return new BigNumber(0);
-
-        // double → long 변환 시 부호 고려
-        double v = ToDoubleSafe();
-        long integerPart = (long)Math.Floor(v);
-        return new BigNumber(integerPart);
-    }
-    /// <summary>
-    /// 정수 값으로 변환 (Floor 적용 후)
-    /// </summary>
-    public long ToLongClamped()
-    {
-        BigNumber f = Floor();
-        double v = f.ToDoubleSafe();
-
-        // double 범위 넘지 않게 clamp
-        if (v > long.MaxValue) return long.MaxValue;
-        if (v < long.MinValue) return long.MinValue;
-        return (long)v;
-    }
-
     // 덧셈
     public static BigNumber operator +(BigNumber a, BigNumber b)
     {

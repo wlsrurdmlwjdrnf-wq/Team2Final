@@ -21,8 +21,7 @@ public class PowerUpPresenter : MonoBehaviour
     }
     private void Start()
     {
-        _model = new PowerUpModel();
-        //_model = new PowerUpModel(CharacterUpgradeSaveManager.Instance.PowerUpModel);
+        _model = new PowerUpModel(CharacterUpgradeSaveManager.Instance.PowerUpModel);
         UpdateView();
     }
     public void AtkUpButtonClick()
@@ -77,7 +76,7 @@ public class PowerUpPresenter : MonoBehaviour
     {
         _tmpCost = CalculateCost(_model.CriRateLevel);
 
-        if (!TryLevelUp(_tmpCost)) return;
+        if (!TryLevelUp(_tmpCost) || _model.MaxCriRateLevel == _model.CriRateLevel) return;
 
         _model.AddCriRateLevel();
         _tmpCost = CalculateCost(_model.CriRateLevel);
@@ -203,7 +202,7 @@ public class PowerUpPresenter : MonoBehaviour
         view.OnCriRateUpButtonClicked -= CriRateUpButtonClick;
     }
 
-    // TODO : 로그아웃 시 _model의 프로퍼티를 CharacterUpgradeSaveManager에 넘겨서 저장
+    // CharacterUpgradeSaveManager에 넘겨서 저장
     public static PowerUpModel GetModel()
     {
         return _model;

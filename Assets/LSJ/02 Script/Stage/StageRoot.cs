@@ -15,6 +15,7 @@ public class StageRoot : MonoBehaviour
     private void OnEnable()
     {
         _initPosition = transform.position;
+
         Player.OnAttack += HandleStopMove;
         Player.OnKnockBack += HandleKnockBack;
         Player.OnNoAttack += HandleResumeMove;

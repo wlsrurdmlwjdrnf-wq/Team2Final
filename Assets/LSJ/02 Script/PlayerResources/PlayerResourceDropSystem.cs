@@ -19,7 +19,7 @@ public class PlayerResourceDropSystem : Singleton<PlayerResourceDropSystem>
     [SerializeField] private DropBaseAmountSO amountSO;
 
     private const int CUBE_PROBABILITY = 20;
-    private const int STONE_PROBABILITY = 5;
+    private const int STONE_PROBABILITY = 10;
 
     private int _tmpRandomNumber; // 랜덤 집어 넣을 임의의 변수
 

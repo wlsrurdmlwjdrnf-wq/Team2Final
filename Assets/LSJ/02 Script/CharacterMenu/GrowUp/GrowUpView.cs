@@ -48,7 +48,7 @@ public class GrowUpView : MonoBehaviour
     public void UpdateLevel(string level, string expRequirement)
     {
         playerLv.text = "Lv." + level;
-        expRequirementText.text = expRequirement;
+        expRequirementText.text = "/\t" + expRequirement;
     }
     public void UpdateStr(string str, string strLv)
     {

@@ -14,7 +14,7 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
     protected Collider2D _col;
     protected BigNumber _maxHp;
 
-    public Transform Transform {  get; private set; }
+    public Transform Transform => transform;
     public string Name { get; protected set; }
     public BigNumber CurrentHP {  get; protected set; }
     public BigNumber CurrentAtk { get; protected set; }
@@ -32,6 +32,7 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
         _sr = GetComponent<SpriteRenderer>();
         _col = GetComponent<Collider2D>();
 
+        
         Name = _baseStats.monsterName;
 
         IdleState = new MonsterIdleState(this);
@@ -105,6 +106,7 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
     {
         StageManager.Instance.OnMonsterDeath();
         PlayerResourceDropSystem.Instance.TriggerDrop(transform.position);
+        EnemyManager.Instance.enemies.Remove(this);
         ChangeState(DeadState);
     }
 

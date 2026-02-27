@@ -8,22 +8,22 @@ public class TierUpPresenter : MonoBehaviour
 
     private void Awake()
     {
-        view.OnBronzeStageButtonClicked += BronzeStageButtonClick;
+        view.OnTierStageButtonClicked += TierStageButtonClick;
     }
     private void Start()
     {
         view.UpdateTier();
     }
 
-    public void BronzeStageButtonClick()
+    public void TierStageButtonClick(Tier tier)
     {
         StageManager.Instance.ApplyStage(
-            StageManager.Instance.GetStageData(Tier.Bronze));
+            StageManager.Instance.GetStageData(tier));
     }
 
     private void OnDestroy()
     {
         if(view == null) return;
-        view.OnBronzeStageButtonClicked -= BronzeStageButtonClick;
+        view.OnTierStageButtonClicked -= TierStageButtonClick;
     }
 }

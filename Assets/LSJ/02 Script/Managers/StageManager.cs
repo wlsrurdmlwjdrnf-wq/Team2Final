@@ -33,10 +33,13 @@ public class StageManager : Singleton<StageManager>
     [Header("씬에 있는 플레이어 연결")]
     [SerializeField] private Player _player;
 
-    [Header("씬에 있는 제한시간캔버스 연결")]
+    [Header("씬에 있는 제한시간캔버스/스테이지진행도캔버스 연결")]
     [SerializeField] private LimitTimeBar _limitTimeBar;
+    [SerializeField] private StageProgressBar _stageProgressBar;
 
     private const int MAX_SUBNUMBER = 20; // 최대 보조 스테이지 수
+    private const int ADVENTURE_BASE_DIAMOND_AMOUNT = 1000;
+    private const int ADVENTURE_BASE_EMERALD_AMOUNT = 200;
     public int CurrentMainNumber { get; private set; }
     public int CurrentSubNumber { get; private set; }
     public StageSO CurrentStageData => _currentStageData;
@@ -51,6 +54,7 @@ public class StageManager : Singleton<StageManager>
 
     // 상태
     private int _currentMonsterCount = 0;
+    private int _currentAdventureNumber;
     private StageSO _currentStageData;
     private StageSO _tmpStageData;
 
@@ -61,8 +65,8 @@ public class StageManager : Singleton<StageManager>
     public event Action OnAdventureStageChanged;
     public event Action OnAllMonstersCleared; // 전부 처치 시
     public event Action OnGameOver;     // 게임 오버 시 (플레이어가 죽거나 시간 초과)
-    public event Action OnNeedMonsterClear;
-    public event Action OnNeedScreenFader;
+    public event Action OnNeedMonsterClear; // 몬스터 정리
+    public event Action OnNeedScreenFader;  // 화면 페이드아웃 인
 
     protected override void Init()
     {
@@ -87,7 +91,7 @@ public class StageManager : Singleton<StageManager>
 
         OnNeedMonsterClear?.Invoke(); // 남아 있는 몬스터가 있으면 정리
 
-        BestStageRecord(targetStage);
+        BestStageRecord(targetStage); // 일반 스테이지 최고 기록이면 저장
 
         CurrentMainNumber = targetStage.mainNumber;
         CurrentSubNumber = targetStage.subNumber;
@@ -126,6 +130,7 @@ public class StageManager : Singleton<StageManager>
     public void OnMonsterDeath()
     {
         _currentMonsterCount--;
+        _stageProgressBar.UpdateBar();
 
         if (_currentMonsterCount <= 0) // 스테이지 클리어
         {
@@ -154,21 +159,27 @@ public class StageManager : Singleton<StageManager>
         else 
             ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber)); // 현재 스테이지 반복
 
-        OnAllMonstersCleared?.Invoke();
+        OnAllMonstersCleared?.Invoke(); // 스테이지 클리어 이벤트 발송
     }
+    // 티어 스테이지 클리어
     private void TierStageClear()
     {
         ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber));
         PlayerStatManager.Instance.PromoteTier();
     }
+    // 모험 스테이지 클리어
     private void AdventureStageClear()
     {
         ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber));
-        // 에메랄드와 다이아를 얻을 로직 필요
-        // 다음 모험 스테이지가 열려야 함
+        PlayerResourceManager.Instance.AddResource(ResourceType.Diamond, new BigNumber(_currentAdventureNumber * ADVENTURE_BASE_DIAMOND_AMOUNT));
+        PlayerResourceManager.Instance.AddResource(ResourceType.Emerald, new BigNumber(_currentAdventureNumber * ADVENTURE_BASE_EMERALD_AMOUNT));
+
+        // TODO : 확률적으로 유물 얻기, 보상 팝업 띄우기
+
+        if(_bestAdventureNumber < _currentAdventureNumber) _bestAdventureNumber = _currentAdventureNumber;
     }
 
-    // 게임 오버 시 (플레이어가 죽거나 시간 초과)
+    // 게임 오버 시 (플레이어가 죽거나 시간 초과나 나가기버튼 클릭 시)
     public void GameOver()
     {
         OnGameOver?.Invoke();
@@ -218,6 +229,7 @@ public class StageManager : Singleton<StageManager>
         {
             if (stage.number == number)
             {
+                _currentAdventureNumber = number;
                 return stage.stageData;
             }
         }
