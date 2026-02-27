@@ -15,3 +15,4 @@ MonoBehaviour:
   baseExpAmount: 10
   baseGoldAmount: 10
   baseEnhancementCubeAmount: 10
+  baseElementalStone: 1

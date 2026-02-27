@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949981c9c9f64de48a4bbb3c505bebc2, type: 3}
+  m_Name: Stage1_7
+  m_EditorClassIdentifier: 
+  isTierStage: 0
+  isBossStage: 0
+  isAdventureStage: 0
+  mainNumber: 1
+  subNumber: 7
+  monsterPrefabs:
+  - {fileID: 4405787325716414631, guid: fdd80d084233fad4eb0c0f91e56e91c3, type: 3}
+  - {fileID: 9021709795335874315, guid: ab5f00943427d884f88594242ad8788d, type: 3}
+  - {fileID: 345202284924123219, guid: 9b50232c77fb09b4f9140454955e59a2, type: 3}
+  spawnCount: 12
+  spawnAreaWidth: 40
+  minDistance: 1.5
+  yFixedPosition: 0.3
+  backgroundSprite: {fileID: 21300000, guid: d017f0d3310775a4a8417e9e141ee7c9, type: 3}

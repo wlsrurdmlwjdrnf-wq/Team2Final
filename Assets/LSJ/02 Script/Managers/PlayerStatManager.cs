@@ -292,13 +292,14 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         switch (tier)
         {
             case Tier.Bronze: return 2f;
-            case Tier.Silver: return 5f;
-            case Tier.Gold: return 10f;
-            case Tier.Platinum: return 20f;
-            case Tier.Diamond: return 50f;
-            case Tier.Amethyst: return 100f;
-            case Tier.Ruby: return 300f;
-            case Tier.Brilliance: return 1000f;
+            case Tier.Iron: return 5f;
+            case Tier.Silver: return 18f;
+            case Tier.Gold: return 25f;
+            case Tier.Platinum: return 50f;
+            case Tier.Diamond: return 100f;
+            case Tier.Amethyst: return 300f;
+            case Tier.Ruby: return 1000f;
+            case Tier.Brilliance: return 5000f;
             default: return 1f;
         }
     }

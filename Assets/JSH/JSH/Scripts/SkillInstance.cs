@@ -36,7 +36,7 @@ public class SkillInstance : IUpgradable
         {
             if (Time.time < _lastCastTime + baseData.CoolTime) return false;
         }
-        _enemyDamageables = SkillManager.Instance.CheckEnemy(baseData.Range);
+        _enemyDamageables = SkillManager.Instance.CheckEnemy(PublicConst.SkillDetectRange);//스킬 시전 감지 사거리
         if (_enemyDamageables == null || _enemyDamageables.Count <= 0) return false;                       //범위내 적 체크
         if (!playerHpMp.UseMana(baseData.ManaCost)) return false;         //UseMana에서 마나 감소랑 마나 체크 둘 다 해줌
         return true;

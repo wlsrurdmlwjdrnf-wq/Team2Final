@@ -45,48 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestroyOnLoad: 0
-  _poolConfigs:
-  - prefab: {fileID: 345202284924123219, guid: 9b50232c77fb09b4f9140454955e59a2, type: 3}
-    defaultCapacity: 20
-    maxSize: 100
-    collectionCheck: 0
-  - prefab: {fileID: 8633994647888484425, guid: 9ca9ed2defbb6414ca32f56f108357e3, type: 3}
-    defaultCapacity: 20
-    maxSize: 100
-    collectionCheck: 0
-  - prefab: {fileID: 5744721325997502162, guid: 8dc8ed839d1d99e4ead5d0c4a27262ce, type: 3}
-    defaultCapacity: 20
-    maxSize: 100
-    collectionCheck: 0
-  - prefab: {fileID: 5744721325997502162, guid: d37e935060377c5468309050800bf7f5, type: 3}
-    defaultCapacity: 20
-    maxSize: 100
-    collectionCheck: 0
-  - prefab: {fileID: 7508142057645811138, guid: d1e3b23d651df8949902d17d9a185779, type: 3}
-    defaultCapacity: 20
-    maxSize: 100
-    collectionCheck: 0
-  - prefab: {fileID: 4355342836587152863, guid: 5d82a4b8995daed46a3e748f9e9ca761, type: 3}
-    defaultCapacity: 20
-    maxSize: 100
-    collectionCheck: 0
-  - prefab: {fileID: 5520481218334075567, guid: dac1b2fddc0680040aa076bc9b53f4e0, type: 3}
-    defaultCapacity: 20
-    maxSize: 100
-    collectionCheck: 0
-  - prefab: {fileID: 4355342836587152863, guid: 184ce1e6365c9474ca8ea2f4e04b0345, type: 3}
-    defaultCapacity: 5
-    maxSize: 10
-    collectionCheck: 0
-  - prefab: {fileID: 4355342836587152863, guid: 12ec02310cc18104da90d69f74fddd63, type: 3}
-    defaultCapacity: 5
-    maxSize: 10
-    collectionCheck: 0
-  - prefab: {fileID: 4355342836587152863, guid: 9845882433c1f0148be2a38d80a8ba73, type: 3}
-    defaultCapacity: 5
-    maxSize: 10
-    collectionCheck: 0
-  - prefab: {fileID: 4355342836587152863, guid: 0abed542b67dbd94b8a7536a62bfdf48, type: 3}
-    defaultCapacity: 5
-    maxSize: 10
-    collectionCheck: 0
+  _poolConfigs: []

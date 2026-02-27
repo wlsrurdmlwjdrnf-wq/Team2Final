@@ -18,6 +18,12 @@ public class SkillVFX : MonoBehaviour, IPoolable
     [SerializeField] private Vector3 _positionOffset;
     [SerializeField] private ETargetingType _targetingType;
 
+    private float _tickTimer = 0f;
+    [SerializeField] private float _tickInterval = 0.1f;
+
+    private List<IDamageable> _enemies = new List<IDamageable>();
+    private List<IDamageable> _enemiesHit = new List<IDamageable>();
+
     private void OnEnable()
     {
         Invoke("ReturnPool", LifeTime);
@@ -52,37 +58,46 @@ public class SkillVFX : MonoBehaviour, IPoolable
                 transform.Translate(Vector3.right * _projectileSpeed * Time.deltaTime);
                 break;
         }
+        _tickTimer += Time.deltaTime;
+        if (_tickTimer >= _tickInterval) 
+        {
+            _tickTimer = 0f;
+            EnemyFiltering();
+        }
     }
     // 플레이어 공격방식 준수
     // Animation Event가 부를 함수
     public void OnAttackHit()
     {
-        //if (_targetingType == ETargetingType.Projectile) return; //투사체면 무시
-        EnemyFiltering();
+        EnemyFiltering(true);
     }
 
     private void EnemyFiltering(bool hitAll = true, int maxTargets = 1) 
     {
         //적당히 화면 내에 있는 적 가져오기
-        List<IDamageable> enemies = SkillManager.Instance.CheckEnemy(5f);
-        if (enemies.Count <= 0) return;
+        _enemies.Clear();
+        _enemies = SkillManager.Instance.CheckEnemy(PublicConst.SkillDetectRange);
+        if (_enemies.Count <= 0) return;
         //실제 이펙트 원형 범위 체크
         List<IDamageable> validEnemies = new List<IDamageable>();
         Vector2 centerA = transform.position;
         float radiusA = _effectRange;
 
-        foreach (var enemy in enemies) 
+        foreach (var enemy in _enemies) 
         {
             if (enemy is MonoBehaviour mono && mono.gameObject.activeSelf)
             {
+                if (enemy is MonsterBase monster && monster.CurrentHP <= PublicConst.Bignumber_Zero) continue;
+
                 Vector2 centerB = mono.transform.position;
-                float radiusB = 0.5f;
+                float radiusB = PublicConst.NormalEnemyRadius;
 
                 if (IsCollisionCircle(centerA, radiusA, centerB, radiusB)) { validEnemies.Add(enemy); }
             }
         }
 
         if (validEnemies.Count <= 0) return;
+     
         //범위 공격 or 가까운 적 N명
         if (hitAll)
         {
@@ -109,6 +124,7 @@ public class SkillVFX : MonoBehaviour, IPoolable
 
     private void GiveDamage(IDamageable target) 
     {
+        if (_enemiesHit.Contains(target)) return;
         if (target != null)
         {
             //여기서 스킬 배율 곱하기
@@ -121,20 +137,15 @@ public class SkillVFX : MonoBehaviour, IPoolable
             }
             else target.TakeDamage(damage, false, _elementType);
             // 이펙트나 사운드 넣으면 될 듯
+            _enemiesHit.Add(target);
         }
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (_targetingType != ETargetingType.Projectile) return; //투사체 아니면 무시
-    //    EnemyFiltering();
-    //}
 
     private bool IsCollisionCircle(Vector2 centerA, float radiusA, Vector2 centerB, float radiusB) 
     {
         //원 충돌 판정 = 센터A & 센터B 사이의 거리 <= 반지름A + 반지름B
-        float sqrDistance = (centerA - centerB).sqrMagnitude; //이게 Vector2.Distance보다 좋다고 함(제곱근연산 없어서)
-        float sqrRadius = (radiusA + radiusB) * (radiusA + radiusB); //위에가 두 센터 사이 거리 제곱이라 얘도 제곱
+        float sqrDistance = (centerA - centerB).sqrMagnitude;                                                  //이게 Vector2.Distance보다 좋다고 함(제곱근연산 없어서)
+        float sqrRadius = (radiusA + radiusB) * (radiusA + radiusB);                                            //위에가 두 센터 사이 거리 제곱이라 얘도 제곱
         return sqrDistance <= sqrRadius;
     }
 
@@ -142,8 +153,13 @@ public class SkillVFX : MonoBehaviour, IPoolable
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _effectRange);
+        if (_enemies.Count <= 0) return;
     }
 
     public void SetPool(IPool pool) { _pool = pool; }
-    public void ReturnPool() { _pool.Enqueue(this); }
+    public void ReturnPool() 
+    {
+        _enemiesHit.Clear();
+        _pool.Enqueue(this); 
+    }
 }

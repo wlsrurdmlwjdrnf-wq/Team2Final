@@ -22,16 +22,12 @@ public class DropItem : MonoBehaviour, IPoolable2
     [Header("반납 타이밍")]
     [SerializeField] private float autoReturnDelayAfterLanding = 0.8f; // 착지 후 몇 초 뒤에 사라질지
 
-    private Vector3 startPosition;
-
     private void PlayDropAnimation()
     {
-        startPosition = transform.position;
-
         // 랜덤 방향 & 거리
         Vector2 randomDir = Random.insideUnitCircle.normalized;
         float randomDist = Random.Range(spreadRadius * 0.4f, spreadRadius);
-        Vector3 targetPos = startPosition + (Vector3)(randomDir * randomDist) + new Vector3(0,-10f,0);
+        Vector3 targetPos = (Vector3)(randomDir * randomDist);
 
         // 약간의 지연 (몇 개 동시에 떨어지면 더 자연스러움)
         float randomDelay = Random.Range(staggerMin, staggerMax);

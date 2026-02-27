@@ -17,11 +17,11 @@ public class EntityStateMachine : MonoBehaviour
     }
     public virtual void ChangeState(IEntityState newState)
     {
-        if (_isLocked) return;
+        if (_isLocked) return; // true : 상태전환잠금
 
-        if(currentState == newState)
+        if (currentState == newState)
         {
-            currentState?.OnEnter();
+            currentState?.OnEnter(); // 재진입시 OnEnter만 실행
             return;
         }
 

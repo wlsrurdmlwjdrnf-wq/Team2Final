@@ -5,12 +5,20 @@ using UnityEngine.UI;
 public class UpgradeUI : MonoBehaviour
 {
     [SerializeField] private GameEventChannelSO _eventChannel;
+    [Header("Upgrade")]
     [SerializeField] private TextMeshProUGUI _beforeStatsTxt;
     [SerializeField] private TextMeshProUGUI _afterStatsTxt;
     [SerializeField] private TextMeshProUGUI _costTxt;
     [SerializeField] private Button _upgradeButton;
     [SerializeField] private Button _equipButton;
     [SerializeField] private TextMeshProUGUI _equipButtonTxt;
+    [Header("Combine")]
+    [SerializeField] private Button _combinePanelButton;
+    [SerializeField] private Button _combineButton;
+    [SerializeField] private GameObject _combinePanel;
+    [SerializeField] private TestSlotUI _beforeSlotUI;
+    [SerializeField] private TestSlotUI _afterSlotUI;
+    [SerializeField] private Slider _combineSlider;
 
     private InventorySlot _currSlot;
 
@@ -22,7 +30,6 @@ public class UpgradeUI : MonoBehaviour
     private void OnDestroy()
     {
         _eventChannel.OnEventRaised -= HandleEvent;
-
     }
     private void HandleEvent(EGameEventType type, object payload) 
     {
@@ -36,13 +43,18 @@ public class UpgradeUI : MonoBehaviour
                 case EGameEventType.SlotUpdated:
                     RefreshUI(slot);
                     break;
+                case EGameEventType.EquipChanged:
+                    RefreshUI(slot);
+                    break;
             }
         }
     }
     private void OpenPopUp(InventorySlot slot) 
     {
         if (!slot.Unlocked) return;
-
+        CloseCombinePanel();
+        if (slot.GetDataType() == EDataType.Skill) { _combinePanelButton.gameObject.SetActive(false); }
+        else _combinePanelButton.gameObject.SetActive(true);
         _currSlot = slot;
         gameObject.SetActive(true);
 
@@ -64,33 +76,58 @@ public class UpgradeUI : MonoBehaviour
         _upgradeButton.onClick.AddListener(() => 
             _eventChannel.RaiseEvent(EGameEventType.UpgradeRequest, _currSlot));
 
-        if (_currSlot.IsEquipped)
+        EquipButtonText();
+    }
+    private void RefreshUI(InventorySlot slot)
+    {
+        if(_currSlot != null && slot.Id != _currSlot.Id) return;
+
+        float beforeActive = slot.CalculateEffect(0, slot.Level);
+        float beforePassive = slot.CalculateEffect(1, slot.Level);
+
+        float afterActive = slot.CalculateEffect(0, slot.Level + 1);
+        float afterPassive = slot.CalculateEffect(1, slot.Level + 1);
+
+        _beforeStatsTxt.text = $"active:{beforeActive}, passive:{beforePassive}";
+        _afterStatsTxt.text = $"active:{afterActive}, passive:{afterPassive}";
+
+        int cost = slot.GetUpgradeCost();
+        _costTxt.text = $"Cost:{cost}";
+
+        EquipButtonText();
+    }
+    private void EquipButtonText() 
+    {
+        if (_currSlot != null && _currSlot.IsEquipped)
         {
             _equipButtonTxt.text = "Unequip";
             _equipButton.onClick.AddListener(() =>
                 _eventChannel.RaiseEvent(EGameEventType.UnEquipRequest, _currSlot));
         }
-        else 
+        else
         {
             _equipButtonTxt.text = "Equip";
             _equipButton.onClick.AddListener(() =>
                 _eventChannel.RaiseEvent(EGameEventType.EquipRequest, _currSlot));
         }
     }
-    private void RefreshUI(InventorySlot slot)
-    {
-    float beforeActive = slot.CalculateEffect(0, slot.Level);
-    float beforePassive = slot.CalculateEffect(1, slot.Level);
+    public void OpenCombinePanel() 
+    { 
+        _combinePanel.SetActive(true);
+        
+        _beforeSlotUI.SetEmpty();
+        _beforeSlotUI.SetUp(_currSlot);
+        _afterSlotUI.SetEmpty();
+        _afterSlotUI.SetUp(InventorySystem.instance.GetNextSlot(_currSlot));
 
-    float afterActive = slot.CalculateEffect(0, slot.Level + 1);
-    float afterPassive = slot.CalculateEffect(1, slot.Level + 1);
-
-    _beforeStatsTxt.text = $"active:{beforeActive}, passive:{beforePassive}";
-    _afterStatsTxt.text = $"active:{afterActive}, passive:{afterPassive}";
-
-    int cost = slot.GetUpgradeCost();
-    _costTxt.text = $"Cost:{cost}";
+        _combineSlider.maxValue = _currSlot.Stack / PublicConst.UpgradeStack;
+        _combineSlider.value = 0f;
     }
-
+    public void DoCombine() 
+    { 
+        InventorySystem.Instance.CombineCount((int)_combineSlider.value, _currSlot);
+        OpenCombinePanel();
+    }
+    public void CloseCombinePanel() { _combinePanel.SetActive(false); }
     public void Close() { gameObject.SetActive(false); }
 }

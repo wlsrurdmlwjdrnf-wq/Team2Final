@@ -24,8 +24,8 @@ public class GrowUpData
 public class CharacterUpgradeSaveManager : Singleton<CharacterUpgradeSaveManager>
 {
     // 세이브나 로드할 데이터 담아둘 변수
-    private PowerUpModel _puModel;
-    private GrowUpModel _guModel;
+    private PowerUpModel _puModel = new();
+    private GrowUpModel _guModel = new();
 
     public PowerUpModel PowerUpModel 
     {

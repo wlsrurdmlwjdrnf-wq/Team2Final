@@ -9,6 +9,7 @@ public class StageUIPresenter : MonoBehaviour
     private void Awake()
     {
         view.OnBossStageButtonClicked += BossStageButtonClick;
+        view.OnExitStageButtonClicked += ExitStageButtonClick;
     }
 
     public void BossStageButtonClick()
@@ -21,9 +22,15 @@ public class StageUIPresenter : MonoBehaviour
             )
         );
     }
+    public void ExitStageButtonClick()
+    {
+        StageManager.Instance.GameOver();
+    }
 
     private void OnDestroy()
     {
         if (view == null) return;
+        view.OnBossStageButtonClicked -= BossStageButtonClick;
+        view.OnExitStageButtonClicked -= ExitStageButtonClick;
     }
 }

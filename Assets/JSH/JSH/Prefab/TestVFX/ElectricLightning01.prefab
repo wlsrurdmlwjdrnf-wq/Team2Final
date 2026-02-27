@@ -334,13 +334,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LifeTime: 0.7
-  _effectRange: 1
+  _effectRange: 0.8
   _projectileSpeed: 5
   _monsterLayer:
     serializedVersion: 2
     m_Bits: 64
-  _positionOffset: {x: 0, y: 0.8, z: 0}
+  _positionOffset: {x: 0, y: 0.5, z: 0}
   _targetingType: 1
+  _tickInterval: 0.04
 --- !u!1 &4951534356989817540
 GameObject:
   m_ObjectHideFlags: 0
