@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -87,6 +88,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         {
             name = Skill.Name;
             grade = Skill.Grade;
+            _ = LoadIcon(Enum.GetName(typeof(ESkillEffectType), Skill.SkillType));
             level = Slot.Level;
             stack = Slot.Stack;
             IsUnlocked = Slot.Unlocked;

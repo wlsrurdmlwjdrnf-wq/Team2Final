@@ -64,8 +64,16 @@ public class UpgradeUI : MonoBehaviour
         float afterActive = slot.CalculateEffect(0, slot.Level + 1);
         float afterPassive = slot.CalculateEffect(1, slot.Level + 1);
 
-        _beforeStatsTxt.text = $"active:{beforeActive}, passive:{beforePassive}";
-        _afterStatsTxt.text = $"active:{afterActive}, passive:{afterPassive}";
+        if (slot.BaseData is ItemDataSO item)
+        {
+            _beforeStatsTxt.text = $"장착효과:{item.EquipStat} - {beforeActive}\n보유효과:{item.PassiveStat} - {beforePassive}";
+            _afterStatsTxt.text = $"장착효과:{item.EquipStat} - {afterActive}\n보유효과:{item.PassiveStat} - {afterPassive}";
+        }
+        else if (slot.BaseData is SkillDataSO skill)
+        {
+            _beforeStatsTxt.text = $"데미지배율:{skill.Damage} - {beforeActive}\n패시브:{skill.Stat} - {beforePassive}";
+            _afterStatsTxt.text = $"데미지배율:{skill.Damage} - {afterActive}\n패시브:{skill.Stat} - {afterPassive}";
+        }
 
         int cost = slot.GetUpgradeCost();
         _costTxt.text = $"Cost:{cost}";
@@ -88,8 +96,16 @@ public class UpgradeUI : MonoBehaviour
         float afterActive = slot.CalculateEffect(0, slot.Level + 1);
         float afterPassive = slot.CalculateEffect(1, slot.Level + 1);
 
-        _beforeStatsTxt.text = $"active:{beforeActive}, passive:{beforePassive}";
-        _afterStatsTxt.text = $"active:{afterActive}, passive:{afterPassive}";
+        if (slot.BaseData is ItemDataSO item)
+        {
+            _beforeStatsTxt.text = $"장착효과:{item.EquipStat}{beforeActive}, 보유효과:{item.PassiveStat}{beforePassive}";
+            _afterStatsTxt.text = $"장착효과:{item.EquipStat}{afterActive}, 보유효과:{item.PassiveStat}{afterPassive}";
+        }
+        else  if (slot.BaseData is SkillDataSO skill)
+        {
+            _beforeStatsTxt.text = $"데미지배율:{skill.Damage}{beforeActive}, 패시브:{skill.Stat}{beforePassive}";
+            _afterStatsTxt.text = $"데미지배율:{skill.Damage}{afterActive}, 패시브:{skill.Stat}{afterPassive}";
+        }
 
         int cost = slot.GetUpgradeCost();
         _costTxt.text = $"Cost:{cost}";

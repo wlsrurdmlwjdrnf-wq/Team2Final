@@ -84,7 +84,6 @@ public class SkillManager : Singleton<SkillManager>
 
     public void GetNewEnemy() 
     {
-        Debug.Log("NewEnemy");
         _enemies.Clear();
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
         foreach (var monster in monsters) 
