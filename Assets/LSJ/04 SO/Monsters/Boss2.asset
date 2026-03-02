@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49953ac1fe9b9e94fae85472c0517af2, type: 3}
   m_Name: Boss2
   m_EditorClassIdentifier: 
-  monsterName: "\uBD81\uBD81\uC774"
+  monsterName: "\uC655\uBD81\uBD81\uC774"
   baseAttackPower: 10
   baseMaxHP: 300
   baseDefensivePower: 0

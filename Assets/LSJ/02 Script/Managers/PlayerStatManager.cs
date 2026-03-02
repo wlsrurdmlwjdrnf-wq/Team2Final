@@ -77,6 +77,9 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
     // 모든 모디파이어
     private readonly List<StatModifier> _modifiers = new List<StatModifier>();
 
+    // 스탯 변경 알림 이벤트
+    public event Action OnStatChanged;
+
     private void Awake()
     {
         if (_baseStats == null)
@@ -148,6 +151,7 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         _floatCachedValues[StatType.MoveSpeed] = CalculateFloatStat(StatType.MoveSpeed, v => Mathf.Max(-10f, v));
 
         _isDirty = false;
+        OnStatChanged?.Invoke();
     }
 
     // BigNumber 스탯 계산 헬퍼
