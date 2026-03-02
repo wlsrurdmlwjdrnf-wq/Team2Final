@@ -31,8 +31,8 @@ public class AdventureView : MonoBehaviour
     {
         ButtonsAddListener();
         stageStartButton.onClick.AddListener(() => OnAdventureStageStartButtonClicked?.Invoke());
-        confirmButton.onClick.AddListener(() => OnConfirmButtonClicked?.Invoke());
-        cancelFailPanelButton.onClick.AddListener(() => OnCancelButtonClicked?.Invoke());
+        //confirmButton.onClick.AddListener(() => OnConfirmButtonClicked?.Invoke());
+        //cancelFailPanelButton.onClick.AddListener(() => OnCancelButtonClicked?.Invoke());
 
         LockAdventureStages(); // 모든 모험 스테이지 버튼 잠금으로 초기화
 
@@ -61,6 +61,7 @@ public class AdventureView : MonoBehaviour
     }
     private void LockAdventureStages()
     {
+        Debug.Log("모험스테이지 잠금!");
         foreach (var button in stageButtons)
         {
             button.interactable = false;

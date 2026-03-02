@@ -1717,6 +1717,10 @@ PrefabInstance:
       propertyPath: view
       value: 
       objectReference: {fileID: 1184260219}
+    - target: {fileID: 8584445746740798753, guid: b77ebc1092560c744a8b1ec580f3eba2, type: 3}
+      propertyPath: view
+      value: 
+      objectReference: {fileID: 1716214896}
     - target: {fileID: 9211113317876588861, guid: b77ebc1092560c744a8b1ec580f3eba2, type: 3}
       propertyPath: m_Name
       value: Presenters
@@ -5081,6 +5085,78 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: selectPanel
+      value: 
+      objectReference: {fileID: 5098420774230115144}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: diaRewardText
+      value: 
+      objectReference: {fileID: 1423146223672858427}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: gameOverPanel
+      value: 
+      objectReference: {fileID: 2515727345044562056}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageClearPanel
+      value: 
+      objectReference: {fileID: 510939464507303436}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageStartButton
+      value: 
+      objectReference: {fileID: 7308937105441987844}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: emeraldRewardText
+      value: 
+      objectReference: {fileID: 7596983394614233571}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: artifactRewardText
+      value: 
+      objectReference: {fileID: 1620754740927046812}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 6662908805584975765}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 952244017994146138}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[2]
+      value: 
+      objectReference: {fileID: 5726599403950636328}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[3]
+      value: 
+      objectReference: {fileID: 2262824432486391042}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[4]
+      value: 
+      objectReference: {fileID: 7488565148308648218}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[5]
+      value: 
+      objectReference: {fileID: 4731197624715308555}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[6]
+      value: 
+      objectReference: {fileID: 8643972355546512142}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[7]
+      value: 
+      objectReference: {fileID: 4194664142803875145}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[8]
+      value: 
+      objectReference: {fileID: 6829502596358312207}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: stageButtons.Array.data[9]
+      value: 
+      objectReference: {fileID: 4698261818165807148}
     - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: expText
       value: 
@@ -5102,9 +5178,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1018725404958156599}
     - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: featherText
+      value: 
+      objectReference: {fileID: 5623360434144469254}
+    - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: feather2Text
+      value: 
+      objectReference: {fileID: 8651996006588357679}
+    - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: fireStoneText
+      value: 
+      objectReference: {fileID: 6292372958661968716}
+    - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: statPointText
       value: 
       objectReference: {fileID: 3572770082859096146}
+    - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: windStoneText
+      value: 
+      objectReference: {fileID: 4112343323794468424}
+    - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: earthStoneText
+      value: 
+      objectReference: {fileID: 4807972035431050877}
+    - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: waterStoneText
+      value: 
+      objectReference: {fileID: 2016631848293368293}
+    - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: enhancementCubeText
+      value: 
+      objectReference: {fileID: 5564747234154134905}
     - target: {fileID: 5034790255650392634, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: stageNameText
       value: 
@@ -5141,6 +5245,46 @@ PrefabInstance:
       propertyPath: needHideObjects.Array.data[3]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playerHpText
+      value: 
+      objectReference: {fileID: 5384877271100912352}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playerAtkText
+      value: 
+      objectReference: {fileID: 5234331043317225785}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playerManaText
+      value: 
+      objectReference: {fileID: 7551945906321057224}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playerLevelText
+      value: 
+      objectReference: {fileID: 5721866265020701432}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playeCriRateText
+      value: 
+      objectReference: {fileID: 8652064419668946242}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playerCriDmgText
+      value: 
+      objectReference: {fileID: 8646162150301088933}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playerHpRegenText
+      value: 
+      objectReference: {fileID: 1085672992447539180}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playerExpMultiText
+      value: 
+      objectReference: {fileID: 8757863147207982638}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playerGoldMultiText
+      value: 
+      objectReference: {fileID: 7315894235912993374}
+    - target: {fileID: 6044121223170629672, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: playerManaRegenText
+      value: 
+      objectReference: {fileID: 878887862337747235}
     - target: {fileID: 6149268033234773642, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.049999952
@@ -7577,6 +7721,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694063725}
   m_CullTransparentMesh: 1
+--- !u!114 &1716214896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+  m_PrefabInstance: {fileID: 1184260217}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0fa2707a3b681b4c9c28b452f29a7be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1738589436
 GameObject:
   m_ObjectHideFlags: 0
@@ -18182,7 +18337,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 4869408906870822052}
   m_OnClick:
     m_PersistentCalls:
