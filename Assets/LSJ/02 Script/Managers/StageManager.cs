@@ -38,8 +38,8 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private StageProgressBar _stageProgressBar;
 
     private const int MAX_SUBNUMBER = 20; // 최대 보조 스테이지 수
-    private const int ADVENTURE_BASE_DIAMOND_AMOUNT = 1000;
-    private const int ADVENTURE_BASE_EMERALD_AMOUNT = 200;
+    public const int ADVENTURE_BASE_DIAMOND_AMOUNT = 1000;
+    public const int ADVENTURE_BASE_EMERALD_AMOUNT = 200;
     public int CurrentMainNumber { get; private set; }
     public int CurrentSubNumber { get; private set; }
     public StageSO CurrentStageData => _currentStageData;
@@ -174,7 +174,7 @@ public class StageManager : Singleton<StageManager>
         PlayerResourceManager.Instance.AddResource(ResourceType.Diamond, new BigNumber(_currentAdventureNumber * ADVENTURE_BASE_DIAMOND_AMOUNT));
         PlayerResourceManager.Instance.AddResource(ResourceType.Emerald, new BigNumber(_currentAdventureNumber * ADVENTURE_BASE_EMERALD_AMOUNT));
 
-        // TODO : 확률적으로 유물 얻기, 보상 팝업 띄우기
+        // TODO : 확률적으로 유물 얻기, 보상 팝업 띄우기 이벤트 주기
 
         if(_bestAdventureNumber < _currentAdventureNumber) _bestAdventureNumber = _currentAdventureNumber;
     }
@@ -182,7 +182,6 @@ public class StageManager : Singleton<StageManager>
     // 게임 오버 시 (플레이어가 죽거나 시간 초과나 나가기버튼 클릭 시)
     public void GameOver()
     {
-        OnGameOver?.Invoke();
         // 타이머 OFF
         if (_currentStageData.isBossStage || _currentStageData.isTierStage || _currentStageData.isAdventureStage)
         {
@@ -193,6 +192,8 @@ public class StageManager : Singleton<StageManager>
         if (_currentStageData.isTierStage || _currentStageData.isAdventureStage)
             ApplyStage(GetStageData(_tmpStageData.mainNumber, _tmpStageData.subNumber)); // 승급,모험 스테이지 전 스테이지 적용
         else ApplyStage(GetStageData(CurrentMainNumber, CurrentSubNumber)); // 현재 스테이지 반복
+
+        OnGameOver?.Invoke();
     }
 
     // 매개변수에 맞는 StageSO 가져오기

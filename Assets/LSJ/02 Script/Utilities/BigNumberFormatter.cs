@@ -74,7 +74,7 @@ public static class BigNumberFormatter
         // 1000 미만 -> 일반 숫자
         if (absValue < 1000)
         {
-            string formatted = absValue.ToString("N0");
+            string formatted = absValue.ToString("N1");
             formatted = CleanDecimal(formatted);
             return isNegative ? "-" + formatted : formatted;
         }

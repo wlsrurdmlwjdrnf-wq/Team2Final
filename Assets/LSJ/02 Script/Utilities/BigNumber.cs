@@ -66,15 +66,19 @@ public class BigNumber : IComparable<BigNumber>
             mantissa *= 10.0;
             exponent--;
         }
-        // mantissa가 거의 1.0 또는 10.0에 가까우면 스냅
-        if (Math.Abs(mantissa - 1.0) < 1e-10)
+
+        // 정수에 매우 가까운 수는 정수로 스냅
+        double nearest = Math.Round(mantissa);
+        if (Math.Abs(mantissa - nearest) <= ComparisonEpsilon)
         {
-            mantissa = 1.0;
-        }
-        else if (Math.Abs(mantissa - 10.0) < 1e-9)
-        {
-            mantissa = 1.0;
-            exponent++;
+            mantissa = nearest;
+
+            // 10.0이 된 경우 바로 정규화
+            if (mantissa >= 10.0)
+            {
+                mantissa = 1.0;
+                exponent++;
+            }
         }
 
         // 극단적인 underflow 방지

@@ -17,6 +17,7 @@ public class ResourcesView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI windStoneText;
     [SerializeField] private TextMeshProUGUI earthStoneText;
     [SerializeField] private TextMeshProUGUI featherText;
+    [SerializeField] private TextMeshProUGUI feather2Text;
 
     private Dictionary<ResourceType, TextMeshProUGUI> _textMap = new();
 
@@ -41,6 +42,8 @@ public class ResourcesView : MonoBehaviour
         {
             if(type == ResourceType.StatPoint) text.text = "STAT POINT : " + formattedValue;
             else text.text = formattedValue;
+
+            if (type == ResourceType.Feather) feather2Text.text = formattedValue;
         }
     }
     public void UpdateExpRate()
