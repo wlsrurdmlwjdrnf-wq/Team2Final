@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c973c70b5bf3fe419aedd303d98379a
+    m_Address: EarthGrow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0d315fc6f59e1804f8e923248a34318c
     m_Address: RING_MYTHICAL_04
     m_ReadOnly: 0
@@ -112,6 +117,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7112a709e50d20243bf61234debbe219
+    m_Address: WindGust
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76ea28d58b069644b8f5fb4f934a5004
+    m_Address: Lightning
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7876c080aadce604a9737a573d6e529f
     m_Address: RING_MYTHICAL_01
     m_ReadOnly: 0
@@ -167,6 +182,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1dd1e640cf18414fae10f09ef6cd8ff
+    m_Address: IceSlash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a1e29b211de8b964bb6e5e6ae8752312
     m_Address: AXE_MYTHICAL_03
     m_ReadOnly: 0
@@ -194,6 +214,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b1513453dcc3ee34bab74aaf581cfc29
     m_Address: RING_MYTHICAL_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba0eddce3d42e714e84ef4a2bca8a544
+    m_Address: FireExplosion
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

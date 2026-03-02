@@ -43,9 +43,9 @@ public class SkillInstance : IUpgradable
     }
     public void Cast() 
     {
-        Debug.Log($"CoolTime : {baseData.CoolTime}");
-        Debug.Log($"TriggerCount : {baseData.TriggerCount}");
-        Debug.Log($"AttackCount : {_currAttackCount}");
+        //Debug.Log($"CoolTime : {baseData.CoolTime}");
+        //Debug.Log($"TriggerCount : {baseData.TriggerCount}");
+        //Debug.Log($"AttackCount : {_currAttackCount}");
         _lastCastTime = Time.time;
         _currAttackCount = 0;
         effect.Apply(_enemyDamageables, baseData.Damage);

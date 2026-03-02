@@ -17,6 +17,12 @@ public enum EGameEventType
     EquipChanged,
     GachaProgressUpdate,
     GachaRequestEnd,
+    SkillUsed,
+    DamageDealt,
+    VolumeBGMUpdate,
+    VolumeSFXUpdate,
+    VolumeBGMMuteToggle,
+    VolumeSFXMuteToggle,
 }
 
 [CreateAssetMenu(fileName = "GameEventChannel", menuName = "Scriptable Objects/GameEventChannel")]

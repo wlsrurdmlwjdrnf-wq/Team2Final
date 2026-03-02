@@ -56,12 +56,10 @@ public class InventorySystem : Singleton<InventorySystem>
                         case EDataType.Artifact:
                             var item = ItemSkillDataManager.Instance.GetItemData(card);
                             if (item != null) AddItem(item);
-                            else Debug.LogWarning("GetItemDataFail");
                             break;
                         case EDataType.Skill:
                             var skillData = ItemSkillDataManager.Instance.GetSkillData(card);
                             if (skillData != null) AddSkill(skillData);
-                            else Debug.LogWarning("GetSkillDataFail");
                             break;
                     }
                 }
@@ -96,7 +94,6 @@ public class InventorySystem : Singleton<InventorySystem>
         SortInventory(EDataType.Weapon);
         SortInventory(EDataType.Accessories);
         SortInventory(EDataType.Skill);
-        Debug.Log($"Weapon:{_weaponInventory.Count}, Accessory:{_accessoriesInventory.Count}, Skill:{_skillInventory.Count}");
     }
     #region 정렬
     public void SortInventory(EDataType type)
@@ -145,12 +142,12 @@ public class InventorySystem : Singleton<InventorySystem>
     #region 획득
     public void AddItem(ItemDataSO itemDataSO) 
     {
-        if (itemDataSO == null) Debug.LogWarning($"ItemDataNull!!");
+        if (itemDataSO == null) return;
         AddToInventory(itemDataSO, itemDataSO.Type);
     }
     public void AddSkill(SkillDataSO skillDataSO)
     {
-        if (skillDataSO == null) Debug.LogWarning($"skillDataSONull!!");
+        if (skillDataSO == null) return;
         AddToInventory(skillDataSO, skillDataSO.Type);
     }
     private void AddToInventory(ScriptableObject data, EDataType type)
@@ -164,7 +161,6 @@ public class InventorySystem : Singleton<InventorySystem>
             var slot = targetInventory[index];
             if (!slot.Unlocked)
             {
-                Debug.Log("SlotUnlocked!!");
                 slot.Unlocked = true;
                 slot.Stack = 0;
                 _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
@@ -272,7 +268,6 @@ public class InventorySystem : Singleton<InventorySystem>
             else
             {
                 //강화실패
-                Debug.Log("NotEnoughCost or NotUnlocked");
             }
         }
     }
@@ -283,7 +278,6 @@ public class InventorySystem : Singleton<InventorySystem>
         //해금 안된 경우
         if (!slot.Unlocked)
         {
-            Debug.Log("NotUnlocked");
             return;
         }
         switch (slot.GetDataType())
@@ -294,7 +288,7 @@ public class InventorySystem : Singleton<InventorySystem>
                 slot.IsEquipped = true;
                 break;
             case EDataType.Accessories:
-                if (_equippedAccessory != null) { UnEquip(_equippedWeapon); }
+                if (_equippedAccessory != null) { UnEquip(_equippedAccessory); }
                 _equippedAccessory = slot;
                 slot.IsEquipped = true;
                 break;
@@ -458,6 +452,15 @@ public class InventorySystem : Singleton<InventorySystem>
             case EDataType.Skill: return _skillInventory;
             default: return null;
         }
+    }
+    public ItemDataSO GetRandomArtifact() 
+    {
+        int rand = UnityEngine.Random.Range(0, _artifactInventory.Count);
+        if (_artifactInventory != null && _artifactInventory.Count > 0)
+        {
+            return _artifactInventory[rand].BaseData as ItemDataSO;
+        }
+        else return null;
     }
     public List<InventorySlot> GetEquippedSkills() { return _equippedSkills; }
     public InventorySlot GetEquippedWeapon() { return _equippedWeapon; }
