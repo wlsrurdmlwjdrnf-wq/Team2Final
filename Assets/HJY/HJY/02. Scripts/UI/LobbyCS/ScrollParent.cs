@@ -13,8 +13,6 @@ public class ScrollParent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     [SerializeField] private Transform contentTr;
     [SerializeField] private Slider tabSlider;
 
-    [Header("보상 상단 바")]
-    [SerializeField] private StandardBar standardBar;
 
     const int SIZE = 5;
     float[] pos = new float[SIZE];
@@ -31,9 +29,6 @@ public class ScrollParent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         // 거리에 따라 0~1인 pos 대입
         distance = 1f / (SIZE - 1);
         for (int i = 0; i < SIZE; i++) pos[i] = distance * i;
-
-        // 씬 시작 시 상단바 갱신
-        standardBar.UpdateTopBar(targetIndex);
 
     }
 
@@ -104,17 +99,11 @@ public class ScrollParent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             }
         }
 
-        // 현재 탭 인덱스 기준으로 상단 바 켜고 끄기
-        standardBar.UpdateTopBar(targetIndex);
-
     }
 
     public void TapClick(int n)
     {
         targetIndex = n;
         targetPos = pos[n];
-
-        // 탭 클릭시 동일하게 반영!!!
-        standardBar.UpdateTopBar(n);
     }
 }
