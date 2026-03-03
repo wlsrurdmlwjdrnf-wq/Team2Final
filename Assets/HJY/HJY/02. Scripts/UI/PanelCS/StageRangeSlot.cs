@@ -39,6 +39,13 @@ public class StageRangeSlot : RecycleScrollSlot<StageSO>
         // 필요하다면 잠금 UI로 블러 처리하기!!!
         // lockBlur.SetActive(stageSO.isLocked); -> StageSO에 isLocked 필드가 있을 경우 주석 해제할 것!!!
 
+        if(stageSO.mainNumber < StageManager.Instance.GetRecord().bestMainNumber)
+            lockBlur.SetActive(false);
+        else if(stageSO.mainNumber == StageManager.Instance.GetRecord().bestMainNumber
+            && stageSO.subNumber <= StageManager.Instance.GetRecord().bestSubNumber)
+            lockBlur.SetActive(false);
+        else lockBlur.SetActive(true);
+
     }
 
     // 해당 스테이지로 이동

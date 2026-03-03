@@ -133,7 +133,7 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         _bigCachedValues.Clear();
         _floatCachedValues.Clear();
 
-        BigNumber tierBonus = new BigNumber(GetTierBonus(_currentTier));
+        BigNumber tierBonus = GetTierBonus(_currentTier);
 
         // BigNumber Ω∫≈»µÈ
         _bigCachedValues[StatType.AttackPower] = CalculateBigStat(StatType.AttackPower, tierBonus, 1.0);
@@ -158,9 +158,10 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
     private BigNumber CalculateBigStat(StatType type, BigNumber baseMultiplier, double minValue)
     {
         BigNumber baseVal = new BigNumber(GetBaseValue(type));
-        BigNumber final = baseVal * baseMultiplier;
+        BigNumber final = baseVal;
         final += GetAdditiveBig(type);
         final *= GetMultiplicativeBig(type);
+        final *= baseMultiplier;
         return final >= new BigNumber(minValue) ? final : new BigNumber(minValue);
     }
 
@@ -291,20 +292,20 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         MarkDirty();
     }
 
-    private float GetTierBonus(Tier tier)
+    private BigNumber GetTierBonus(Tier tier)
     {
         switch (tier)
         {
-            case Tier.Bronze: return 2f;
-            case Tier.Iron: return 5f;
-            case Tier.Silver: return 18f;
-            case Tier.Gold: return 25f;
-            case Tier.Platinum: return 50f;
-            case Tier.Diamond: return 100f;
-            case Tier.Amethyst: return 300f;
-            case Tier.Ruby: return 1000f;
-            case Tier.Brilliance: return 5000f;
-            default: return 1f;
+            case Tier.Bronze: return new BigNumber(2);
+            case Tier.Iron: return new BigNumber(5);
+            case Tier.Silver: return new BigNumber(18);
+            case Tier.Gold: return new BigNumber(25);
+            case Tier.Platinum: return new BigNumber(50);
+            case Tier.Diamond: return new BigNumber(100);
+            case Tier.Amethyst: return new BigNumber(300);
+            case Tier.Ruby: return new BigNumber(1000);
+            case Tier.Brilliance: return new BigNumber(5000);
+            default: return new BigNumber(1);
         }
     }
 
