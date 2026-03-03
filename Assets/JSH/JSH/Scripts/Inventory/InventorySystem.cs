@@ -67,6 +67,9 @@ public class InventorySystem : Singleton<InventorySystem>
             case EGameEventType.AutoCombine:
                 if (payload is EDataType combineType) AutoCombine(combineType);
                 break;
+            case EGameEventType.RequestAddSkillSlot:
+                AddSkillSlot();
+                break;
         }
     }
     public void Initialize()
@@ -248,11 +251,10 @@ public class InventorySystem : Singleton<InventorySystem>
         {
             if (slot.Stack >= PublicConst.UpgradeStack && slot.Unlocked) 
             {
-                //여기서 골드 소모 & 소모 가능여부 체크 둘 다 해줌 + 다른 재화 써야하면 나중에 수정
-                if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Gold, amount)) return;
+                //여기서 강화재화 소모 & 소모 가능여부 체크 둘 다 해줌 + 다른 재화 써야하면 나중에 수정
+                if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Emerald, amount)) return;
                 slot.Stack -= PublicConst.UpgradeStack;
                 slot.Upgrade();
-                StatModifyToPlayer();
                 _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
             }
         }
@@ -260,9 +262,8 @@ public class InventorySystem : Singleton<InventorySystem>
         {
             if (slot.Unlocked)
             {
-                if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Gold, amount)) return;
+                if (!PlayerResourceManager.Instance.SpendResource(ResourceType.EnhancementCube, amount)) return;
                 slot.Upgrade();
-                StatModifyToPlayer();
                 _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
             }
             else
@@ -270,6 +271,7 @@ public class InventorySystem : Singleton<InventorySystem>
                 //강화실패
             }
         }
+        StatModifyToPlayer();
     }
     #endregion
     #region 장착
@@ -318,6 +320,8 @@ public class InventorySystem : Singleton<InventorySystem>
     }
     public void AddSkillSlot()
     {
+        BigNumber amount = new BigNumber(100);
+        if (!PlayerResourceManager.Instance.SpendResource(ResourceType.EnhancementCube, amount)) return;
         if (_currSkillSlot < _maxSkillSlot) _currSkillSlot++;
     }
     #endregion
@@ -361,24 +365,23 @@ public class InventorySystem : Singleton<InventorySystem>
             if (!slot.Unlocked) continue;
             if (slot.BaseData is ItemDataSO item)
             {
-                AddStat(item.PassiveStat, item.PassiveValue);
+                AddStat(item.PassiveStat, slot.PassiveEffectValue);
 
                 switch (item.Type) 
                 {
                     case EDataType.Weapon:
                         AddStat(StatType.CritRate, item.CriticalRate);
-                        AddStat(StatType.CritDamage, item.CriticalDMG);
-                        AddStat(StatType.GoldMultiplier, item.GoldPer);
+                        AddStat(StatType.CritDamage, slot.CriticalDMG);
+                        AddStat(StatType.GoldMultiplier, slot.GoldPer);
                         break;
                     case EDataType.Accessories:
-                        AddStat(StatType.MaxMana, item.CriticalDMG);
-                        AddStat(StatType.ExpMultiplier, item.GoldPer);
+                        AddStat(StatType.MaxMana, slot.CriticalDMG);
+                        AddStat(StatType.ExpMultiplier, slot.GoldPer);
                         break;
                 }
             }
             else if (slot.BaseData is SkillDataSO skill) 
             {
-                //스킬데이터의 크리 항목이 스킬 보정치면 이거 빼야함
                 AddStat(StatType.CritRate, skill.CriticalRate);
                 AddStat(StatType.CritDamage, skill.CriticalDMG);
             }
@@ -390,11 +393,11 @@ public class InventorySystem : Singleton<InventorySystem>
 
         if (slot.BaseData is ItemDataSO item)
         {
-            AddStat(item.EquipStat, item.EquipValue);
+            AddStat(item.EquipStat, slot.ActiveEffectValue);
         }
         else if (slot.BaseData is SkillDataSO skill) 
         {
-            AddStat(skill.Stat, skill.ModifyAmount);
+            AddStat(skill.Stat, slot.ActiveEffectValue);
         }
     }
     private void AddStat(StatType stat, float value) 

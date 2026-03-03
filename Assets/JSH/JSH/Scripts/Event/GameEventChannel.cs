@@ -23,6 +23,8 @@ public enum EGameEventType
     VolumeSFXUpdate,
     VolumeBGMMuteToggle,
     VolumeSFXMuteToggle,
+    RequestSkillUse,
+    RequestAddSkillSlot,
 }
 
 [CreateAssetMenu(fileName = "GameEventChannel", menuName = "Scriptable Objects/GameEventChannel")]

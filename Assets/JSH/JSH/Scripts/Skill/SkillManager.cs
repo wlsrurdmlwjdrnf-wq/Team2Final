@@ -13,6 +13,7 @@ public class SkillManager : Singleton<SkillManager>
     private List<IDamageable> _enemies = new List<IDamageable>();
 
     private bool _IsPlayerReady = true;
+    private bool _IsAuto = true;
 
     private void OnEnable()
     {
@@ -34,12 +35,20 @@ public class SkillManager : Singleton<SkillManager>
     }
     private void HandleEvent(EGameEventType eventType, object payload) 
     {
-        if (eventType == EGameEventType.SlotUpdated || 
-            eventType == EGameEventType.EquipRequest ||
-            eventType == EGameEventType.EquipChanged) 
+        switch (eventType) 
         {
-            if(payload is InventorySlot slot && slot.BaseData is SkillDataSO)
-                RefreshSlots();
+            case EGameEventType.SlotUpdated:
+            case EGameEventType.EquipChanged:
+            case EGameEventType.EquipRequest:
+                if (payload is InventorySlot slot && slot.BaseData is SkillDataSO) RefreshSlots();
+                break;
+            case EGameEventType.RequestSkillUse:
+                if (payload is InventorySlot useSlot && useSlot.BaseData is SkillDataSO) 
+                {
+                    if (GetSkillInstance(useSlot) != null && GetSkillInstance(useSlot).CanCast(_playerHpMp))
+                        GetSkillInstance(useSlot).Cast();
+                }
+                break;
         }
     }
     public void RefreshSlots() 
@@ -58,27 +67,21 @@ public class SkillManager : Singleton<SkillManager>
     }
     private void Update()
     {
-        foreach (var skill in _equippedSkills) 
-        {
-            if (skill.baseData.TriggerCount <= 0 && _IsPlayerReady) 
-            {
-                if (skill.CanCast(_playerHpMp)) skill.Cast();                
-            }
-        }
+        if (_IsAuto && _IsPlayerReady) CheckCast();    
     }
-
     private void PlayerDead() { _IsPlayerReady = false; }
     private void PlayerReady() { _IsPlayerReady = true; }
-
     public void OnNormalAttack() 
     {
-        foreach (var skill in _equippedSkills) 
+        foreach (var skill in _equippedSkills) skill.OnNormalAttack();
+        if (_IsAuto && _IsPlayerReady) CheckCast();
+    }
+
+    public void CheckCast() 
+    {
+        foreach (var skill in _equippedSkills)
         {
-            if (skill.baseData.TriggerCount > 0 && _IsPlayerReady) 
-            {
-                skill.OnNormalAttack();
-                if (skill.CanCast(_playerHpMp)) skill.Cast(); 
-            }
+            if (skill.CanCast(_playerHpMp) && _IsAuto) skill.Cast();
         }
     }
 
@@ -91,7 +94,6 @@ public class SkillManager : Singleton<SkillManager>
             if (monster.TryGetComponent(out IDamageable damageable)) { _enemies.Add(damageable); }
         }
     }
-
     public List<IDamageable> CheckEnemy(float range) 
     {
         List<IDamageable> enemiesInRange = new List<IDamageable>();
@@ -114,7 +116,6 @@ public class SkillManager : Singleton<SkillManager>
         }
         return enemiesInRange;
     }
-
     private void OnDrawGizmos()
     {
         Vector2 playerPos = _player.transform.position;
@@ -133,7 +134,17 @@ public class SkillManager : Singleton<SkillManager>
             }
         }
     }
-
+    public SkillInstance GetSkillInstance(InventorySlot slot)
+    {
+        if (slot.BaseData is SkillDataSO skillData)
+        {
+            foreach (var skill in _equippedSkills)
+            {
+                if (skill.baseData == skillData) return skill;
+            }
+        }
+        return null;
+    }
     public GameObject GetClosestEnemy(List<IDamageable> enemies) 
     {
         if (_player == null || !_player.activeSelf) return null;
@@ -154,6 +165,6 @@ public class SkillManager : Singleton<SkillManager>
         }
         return closestEnemy;
     }
-
+    public void ToggleAuto() { _IsAuto = !_IsAuto; }
     public GameObject GetPlayer() { return _player; }
 }
