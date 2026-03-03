@@ -83,7 +83,6 @@ public class InventorySlot
         }
         return effectValue;
     }
-
     public bool TryCombine(int requireStack, out InventorySlot newSlot)
     {
         newSlot = null;

@@ -50,4 +50,16 @@ public class SkillInstance : IUpgradable
         _currAttackCount = 0;
         effect.Apply(_enemyDamageables, baseData.Damage);
     }
+    public float GetCooldownProgress() 
+    {
+        if (baseData.TriggerCount > 0)
+        {
+            return Mathf.Clamp01(_currAttackCount / (float)baseData.TriggerCount);
+        }
+        else 
+        {
+            float elapsed = Time.time - _lastCastTime;
+            return Mathf.Clamp01(elapsed / baseData.CoolTime);
+        }
+    }
 }

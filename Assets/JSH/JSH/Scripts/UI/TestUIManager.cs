@@ -141,7 +141,6 @@ public class TestUIManager : Singleton<TestUIManager>
         }
         popUp.SetActive(true);
     }
-    //수정할 부분
     private void RefreshEquippedSkills() 
     {
         foreach (TestSlotUI slotUI in _skillSlots) slotUI.SetEmpty();
