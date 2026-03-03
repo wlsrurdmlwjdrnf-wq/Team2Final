@@ -40,6 +40,11 @@ public class StageManager : Singleton<StageManager>
     private const int MAX_SUBNUMBER = 20; // 최대 보조 스테이지 수
     public const int ADVENTURE_BASE_DIAMOND_AMOUNT = 1000;
     public const int ADVENTURE_BASE_EMERALD_AMOUNT = 200;
+    public const float ADVENTURE_BASE_ARTIFACT_PROBABILITY = 0.05f;
+
+    private ItemDataSO _artifact;
+    private bool _isClearing = false; // 클리어 중 인지 여부
+    public string ArtifactName { get; set; } = string.Empty;
     public int CurrentMainNumber { get; private set; }
     public int CurrentSubNumber { get; private set; }
     public StageSO CurrentStageData => _currentStageData;
@@ -83,6 +88,7 @@ public class StageManager : Singleton<StageManager>
     public void ApplyStage(StageSO targetStage)
     {
         if (targetStage == null) return;
+        if (_isClearing) return;
 
         if (targetStage.isTierStage || targetStage.isAdventureStage)
         {
@@ -106,6 +112,8 @@ public class StageManager : Singleton<StageManager>
     {
         // 화면이 잠시 어두워졌다 원래대로 되는 연출
         OnNeedScreenFader?.Invoke();
+
+        _isClearing = true; // 스테이지 클리어 중에는 다른 스테이지가 적용되지 않도록 하기
         _player.gameObject.SetActive(false);
 
         yield return _waitFadeOut;
@@ -124,6 +132,8 @@ public class StageManager : Singleton<StageManager>
         if (_currentStageData.isBossStage) OnBossStageChanged?.Invoke();
         if (_currentStageData.isTierStage) OnTierStageChanged?.Invoke();
         if (_currentStageData.isAdventureStage) OnAdventureStageChanged?.Invoke();
+
+        _isClearing = false;
     }
 
     // 몬스터 사망 시 호출 (MonsterBase.cs에서)
@@ -174,9 +184,24 @@ public class StageManager : Singleton<StageManager>
         PlayerResourceManager.Instance.AddResource(ResourceType.Diamond, new BigNumber(_currentAdventureNumber * ADVENTURE_BASE_DIAMOND_AMOUNT));
         PlayerResourceManager.Instance.AddResource(ResourceType.Emerald, new BigNumber(_currentAdventureNumber * ADVENTURE_BASE_EMERALD_AMOUNT));
 
-        // TODO : 확률적으로 유물 얻기, 보상 팝업 띄우기 이벤트 주기
+        // 확률적으로 유물 얻기
+        GetArtifactReward();
 
         if(_bestAdventureNumber < _currentAdventureNumber) _bestAdventureNumber = _currentAdventureNumber;
+    }
+    private void GetArtifactReward()
+    {
+        float probability = _currentAdventureNumber * ADVENTURE_BASE_ARTIFACT_PROBABILITY;
+
+        if (UnityEngine.Random.value <= probability)
+        {
+            _artifact = InventorySystem.Instance.GetRandomArtifact();   
+            ArtifactName = _artifact.Name;
+        }
+        else
+        {
+            ArtifactName = "X";
+        }
     }
 
     // 게임 오버 시 (플레이어가 죽거나 시간 초과나 나가기버튼 클릭 시)
@@ -241,8 +266,13 @@ public class StageManager : Singleton<StageManager>
     public void BestStageRecord(StageSO stage)
     {
         if (stage.isTierStage || stage.isAdventureStage) return;
-        _bestMainNumber = stage.mainNumber;
-        _bestSubNumber = stage.subNumber;
+        if (_bestMainNumber > stage.mainNumber) return;
+        else if (_bestMainNumber == stage.mainNumber && _bestSubNumber >= stage.subNumber) return;
+        else
+        {
+            _bestMainNumber = stage.mainNumber;
+            _bestSubNumber = stage.subNumber;
+        }
     }
 
     // 최고 기록 내보내기

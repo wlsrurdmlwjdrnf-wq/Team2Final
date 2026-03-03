@@ -23,5 +23,5 @@ MonoBehaviour:
   baseManaRegenPerSec: 1
   baseGoldMultiplier: 1
   baseExpMultiplier: 1
-  baseAttackSpeed: 1
+  baseAttackSpeed: 1.5
   baseMoveSpeed: 4

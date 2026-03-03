@@ -56,6 +56,7 @@ MonoBehaviour:
   windStoneText: {fileID: 0}
   earthStoneText: {fileID: 0}
   featherText: {fileID: 0}
+  feather2Text: {fileID: 0}
 --- !u!1 &1286983582654265872
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,14 +167,23 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   stageStartButton: {fileID: 0}
-  confirmButton: {fileID: 0}
-  cancelFailPanelButton: {fileID: 0}
   selectPanel: {fileID: 0}
   stageClearPanel: {fileID: 0}
   gameOverPanel: {fileID: 0}
-  diaRewardText: {fileID: 0}
-  emeraldRewardText: {fileID: 0}
+  diaRewardText:
+  - {fileID: 0}
+  - {fileID: 0}
+  emeraldRewardText:
+  - {fileID: 0}
+  - {fileID: 0}
   artifactRewardText: {fileID: 0}
 --- !u!1 &1900284214424346641
 GameObject:
@@ -221,6 +231,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tierText: {fileID: 0}
   stageButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tierIconImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tierIcons:
+  - {fileID: 8894990140691945955, guid: f9a6c93da0c591d498cab7381dc21f64, type: 3}
+  - {fileID: -8068735104775675943, guid: 4552ec0c5b9b48745b2995f778b0043f, type: 3}
+  - {fileID: 4688192023265028122, guid: b24ea26542b1732428a836f3d94476cc, type: 3}
+  - {fileID: -619263165662114286, guid: 04e92d93fe5b4a743a46c4e35e81aa22, type: 3}
+  - {fileID: -8169733289039851879, guid: f3313b9ff35f378449c64ee4194a95ed, type: 3}
+  promoteCompleteText:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -328,7 +353,6 @@ MonoBehaviour:
   bossStageButton: {fileID: 0}
   exitStageButton: {fileID: 0}
   needHideObjects:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
