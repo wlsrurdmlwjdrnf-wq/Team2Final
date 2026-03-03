@@ -17,8 +17,6 @@ public class AdventurePresenter : MonoBehaviour
     {
         view.OnAdventureStageButtonClicked += AdventureStageClick;
         view.OnAdventureStageStartButtonClicked += AdventureStageStartClick;
-        view.OnConfirmButtonClicked += ConfirmButtonClick;
-        view.OnCancelButtonClicked += CancelFailPanelButtonClick;
     }
 
     public void AdventureStageClick(int number, Button selected)
@@ -71,6 +69,5 @@ public class AdventurePresenter : MonoBehaviour
         if (view == null) return;
         view.OnAdventureStageButtonClicked -= AdventureStageClick;
         view.OnAdventureStageStartButtonClicked -= AdventureStageStartClick;
-        view.OnConfirmButtonClicked -= ConfirmButtonClick;
     }
 }

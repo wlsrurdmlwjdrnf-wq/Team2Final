@@ -9,21 +9,17 @@ public class AdventureView : MonoBehaviour
 {
     [SerializeField] private Button[] stageButtons;
     [SerializeField] private Button stageStartButton;
-    [SerializeField] private Button confirmButton;
-    [SerializeField] private Button cancelFailPanelButton;
 
     [SerializeField] private GameObject selectPanel;
     [SerializeField] private GameObject stageClearPanel;
     [SerializeField] private GameObject gameOverPanel;
 
-    [SerializeField] private TextMeshProUGUI diaRewardText;
-    [SerializeField] private TextMeshProUGUI emeraldRewardText;
+    [SerializeField] private TextMeshProUGUI[] diaRewardText;
+    [SerializeField] private TextMeshProUGUI[] emeraldRewardText;
     [SerializeField] private TextMeshProUGUI artifactRewardText;
 
     public event Action<int, Button> OnAdventureStageButtonClicked;
     public event Action OnAdventureStageStartButtonClicked;
-    public event Action OnConfirmButtonClicked;
-    public event Action OnCancelButtonClicked;
 
     private bool _isAdventure = false;
 
@@ -31,8 +27,6 @@ public class AdventureView : MonoBehaviour
     {
         ButtonsAddListener();
         stageStartButton.onClick.AddListener(() => OnAdventureStageStartButtonClicked?.Invoke());
-        //confirmButton.onClick.AddListener(() => OnConfirmButtonClicked?.Invoke());
-        //cancelFailPanelButton.onClick.AddListener(() => OnCancelButtonClicked?.Invoke());
 
         LockAdventureStages(); // 모든 모험 스테이지 버튼 잠금으로 초기화
 
@@ -61,7 +55,6 @@ public class AdventureView : MonoBehaviour
     }
     private void LockAdventureStages()
     {
-        Debug.Log("모험스테이지 잠금!");
         foreach (var button in stageButtons)
         {
             button.interactable = false;
@@ -77,8 +70,11 @@ public class AdventureView : MonoBehaviour
     }
     public void UpdateStageInfo(int number)
     {
-        diaRewardText.text = (StageManager.ADVENTURE_BASE_DIAMOND_AMOUNT * number).ToString();
-        emeraldRewardText.text = (StageManager.ADVENTURE_BASE_EMERALD_AMOUNT * number).ToString();
+        for (int i = 0; i < diaRewardText.Length; i++)
+        {
+            diaRewardText[i].text = (StageManager.ADVENTURE_BASE_DIAMOND_AMOUNT * number).ToString();
+            emeraldRewardText[i].text = (StageManager.ADVENTURE_BASE_EMERALD_AMOUNT * number).ToString();
+        }
     }
     public void HideSelectAdventurePanel()
     {
@@ -88,6 +84,7 @@ public class AdventureView : MonoBehaviour
     {
         if (!_isAdventure) return;
         stageClearPanel.SetActive(true);
+        artifactRewardText.text = StageManager.Instance.ArtifactName;
         ToggleIsAdventure();
     }
     public void HideClearPanel()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class PlayerLevelUpSystem
 {
-    private static BigNumber _expRequirement;
+    private static BigNumber _expRequirement = new BigNumber(100);
 
     // 레벨 업 버튼 누를 때 호출
     public static void TryPlayerLevelUp()
