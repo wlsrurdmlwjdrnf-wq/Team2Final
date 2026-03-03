@@ -58,7 +58,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
     }
     private void Update()
     {
-        if (_skillInstance != null)
+        if (_skillInstance != null && _IsEquipSlot)
         {
             float progress = _skillInstance.GetCooldownProgress();
 
@@ -103,6 +103,8 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         StackTxt.text = $"0/{PublicConst.UpgradeStack}";
         StackSlider.value = 0f;
         EquipDot.SetActive(false);
+        if (CoolTimeImage != null)
+        CoolTimeImage.fillAmount = 0;
     }
     public void SetUp(InventorySlot slot)
     {
@@ -158,6 +160,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         TierTxt.text = $"{tier}";
         StackTxt.text = $"{stack}/{PublicConst.UpgradeStack}";
         StackSlider.value = Mathf.Clamp((float)stack/PublicConst.UpgradeStack, 0f, 1f);
+        CoolTimeImage.fillAmount = 0;
     }
 
     private async Task LoadIcon(string address) 
