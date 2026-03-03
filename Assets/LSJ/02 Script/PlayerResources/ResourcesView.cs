@@ -43,7 +43,7 @@ public class ResourcesView : MonoBehaviour
             if(type == ResourceType.StatPoint) text.text = "STAT POINT : " + formattedValue;
             else text.text = formattedValue;
 
-            if (type == ResourceType.Feather) feather2Text.text = formattedValue + " / 1";
+            if (type == ResourceType.Feather) feather2Text.text = formattedValue;
         }
     }
     public void UpdateExpRate()

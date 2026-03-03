@@ -8296,6 +8296,22 @@ PrefabInstance:
       propertyPath: stageButtons.Array.data[9]
       value: 
       objectReference: {fileID: 4698261818165807148}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: diaRewardText.Array.data[0]
+      value: 
+      objectReference: {fileID: 7635912469371251303}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: diaRewardText.Array.data[1]
+      value: 
+      objectReference: {fileID: 1423146223672858427}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: emeraldRewardText.Array.data[0]
+      value: 
+      objectReference: {fileID: 7191792436949611486}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: emeraldRewardText.Array.data[1]
+      value: 
+      objectReference: {fileID: 7596983394614233571}
     - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: expText
       value: 
@@ -8319,11 +8335,11 @@ PrefabInstance:
     - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: featherText
       value: 
-      objectReference: {fileID: 5623360434144469254}
+      objectReference: {fileID: 8651996006588357679}
     - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: feather2Text
       value: 
-      objectReference: {fileID: 8651996006588357679}
+      objectReference: {fileID: 5623360434144469254}
     - target: {fileID: 2345228198518738240, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: fireStoneText
       value: 
@@ -8560,6 +8576,34 @@ PrefabInstance:
       propertyPath: stageButtons.Array.data[3]
       value: 
       objectReference: {fileID: 3217372258258477966}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: tierIconImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 3897577103973386667}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: tierIconImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 5837044490684760503}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: tierIconImages.Array.data[2]
+      value: 
+      objectReference: {fileID: 185567461515986200}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: promoteCompleteText.Array.data[0]
+      value: 
+      objectReference: {fileID: 2368058170815065570}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: promoteCompleteText.Array.data[1]
+      value: 
+      objectReference: {fileID: 8693966494447557408}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: promoteCompleteText.Array.data[2]
+      value: 
+      objectReference: {fileID: 5205253089105024624}
+    - target: {fileID: 7584307880322654660, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: promoteCompleteText.Array.data[3]
+      value: 
+      objectReference: {fileID: 4769165092943255718}
     - target: {fileID: 7627783605929742423, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: hpText
       value: 
@@ -17833,11 +17877,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Image: {fileID: 514183451192659346}
   Frame: {fileID: 1631267296628261022}
+  CoolTimeImage: {fileID: 0}
   NameTxt: {fileID: 525900380019108972}
   LevelTxt: {fileID: 3610447958622116708}
   TierTxt: {fileID: 676621009983328578}
   StackTxt: {fileID: 2212570682509232923}
   StackSlider: {fileID: 3287355891282593837}
+  EquipDot: {fileID: 0}
   IsUnlocked: 0
   _IsEquipSlot: 1
   _equipType: 1
@@ -26625,11 +26671,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Image: {fileID: 1612608970338082171}
   Frame: {fileID: 567718233731780727}
+  CoolTimeImage: {fileID: 0}
   NameTxt: {fileID: 1589704511359630469}
   LevelTxt: {fileID: 2547206725695540109}
   TierTxt: {fileID: 1738472426892313003}
   StackTxt: {fileID: 1150455434248526834}
   StackSlider: {fileID: 4385543463837030596}
+  EquipDot: {fileID: 0}
   IsUnlocked: 0
   _IsEquipSlot: 1
   _equipType: 0
@@ -29287,11 +29335,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Image: {fileID: 1879717561109361469}
   Frame: {fileID: 835359185699405361}
+  CoolTimeImage: {fileID: 0}
   NameTxt: {fileID: 1907548966771069635}
   LevelTxt: {fileID: 3399731168997877195}
   TierTxt: {fileID: 1465764513069068269}
   StackTxt: {fileID: 252209715498300852}
   StackSlider: {fileID: 3507089090592536194}
+  EquipDot: {fileID: 0}
   IsUnlocked: 0
   _IsEquipSlot: 0
   _equipType: 0
@@ -51173,11 +51223,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Image: {fileID: 4732699944084743764}
   Frame: {fileID: 5777061070403988312}
+  CoolTimeImage: {fileID: 0}
   NameTxt: {fileID: 4738645535909447594}
   LevelTxt: {fileID: 8400816203007996066}
   TierTxt: {fileID: 5759124948250065540}
   StackTxt: {fileID: 6357943347696345309}
   StackSlider: {fileID: 7714765520389039083}
+  EquipDot: {fileID: 0}
   IsUnlocked: 0
   _IsEquipSlot: 0
   _equipType: 0
@@ -66241,7 +66293,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 210
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
   m_sharedMaterial: {fileID: -1962616221610082763, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
@@ -69571,7 +69623,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1,050
+  m_text: '
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
   m_sharedMaterial: {fileID: -1962616221610082763, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
