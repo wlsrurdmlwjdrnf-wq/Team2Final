@@ -22,6 +22,8 @@ public class DamageText : MonoBehaviour, IPoolable2
     public void Initialize(BigNumber damage, Color color, Vector3 worldPosition)
     {
         tmpText.text = BigNumberFormatter.ToFormatted(damage);
+        if (damage == new BigNumber(0)) tmpText.text = "MISS";
+
         tmpText.color = color;
 
         transform.position = worldPosition + Vector3.up * 0.8f;

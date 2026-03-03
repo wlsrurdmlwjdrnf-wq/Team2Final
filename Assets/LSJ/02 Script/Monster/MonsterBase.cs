@@ -70,6 +70,7 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
         }
 
         BigNumber finalDamage = amount - CurrentDef;
+        if(finalDamage <= new BigNumber(0)) finalDamage = new BigNumber(0); // 최종 데미지가 0이하면 체력이 회복되지 않도록 0으로 스냅
         CurrentHP -= finalDamage;
 
         // hp 업데이트

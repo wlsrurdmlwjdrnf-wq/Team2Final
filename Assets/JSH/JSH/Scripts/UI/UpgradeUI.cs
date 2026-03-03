@@ -58,74 +58,54 @@ public class UpgradeUI : MonoBehaviour
         _currSlot = slot;
         gameObject.SetActive(true);
 
-        float beforeActive = slot.CalculateEffect(0, slot.Level);
-        float beforePassive = slot.CalculateEffect(1, slot.Level);
-
-        float afterActive = slot.CalculateEffect(0, slot.Level + 1);
-        float afterPassive = slot.CalculateEffect(1, slot.Level + 1);
-
-        if (slot.BaseData is ItemDataSO item)
-        {
-            _beforeStatsTxt.text = $"장착효과:{item.EquipStat} - {beforeActive}\n보유효과:{item.PassiveStat} - {beforePassive}";
-            _afterStatsTxt.text = $"장착효과:{item.EquipStat} - {afterActive}\n보유효과:{item.PassiveStat} - {afterPassive}";
-        }
-        else if (slot.BaseData is SkillDataSO skill)
-        {
-            _beforeStatsTxt.text = $"데미지배율:{skill.Damage} - {beforeActive}\n패시브:{skill.Stat} - {beforePassive}";
-            _afterStatsTxt.text = $"데미지배율:{skill.Damage} - {afterActive}\n패시브:{skill.Stat} - {afterPassive}";
-        }
-
-        int cost = slot.GetUpgradeCost();
-        _costTxt.text = $"Cost:{cost}";
-
         _upgradeButton.onClick.RemoveAllListeners();
-        _equipButton.onClick.RemoveAllListeners();
+        _upgradeButton.onClick.AddListener(() => {
+            _eventChannel.RaiseEvent(EGameEventType.UpgradeRequest, _currSlot);
+        });
 
-        _upgradeButton.onClick.AddListener(() => 
-            _eventChannel.RaiseEvent(EGameEventType.UpgradeRequest, _currSlot));
 
-        EquipButtonText();
+        RefreshText(slot);
     }
     private void RefreshUI(InventorySlot slot)
     {
         if(_currSlot != null && slot.Id != _currSlot.Id) return;
 
-        float beforeActive = slot.CalculateEffect(0, slot.Level);
-        float beforePassive = slot.CalculateEffect(1, slot.Level);
+        RefreshText(slot);
+    }
+    private void RefreshText(InventorySlot slot) 
+    {
+        float beforeActive = slot.ActiveEffectValue;
+        float beforePassive = slot.PassiveEffectValue;
 
         float afterActive = slot.CalculateEffect(0, slot.Level + 1);
         float afterPassive = slot.CalculateEffect(1, slot.Level + 1);
 
         if (slot.BaseData is ItemDataSO item)
         {
-            _beforeStatsTxt.text = $"장착효과:{item.EquipStat}{beforeActive}, 보유효과:{item.PassiveStat}{beforePassive}";
-            _afterStatsTxt.text = $"장착효과:{item.EquipStat}{afterActive}, 보유효과:{item.PassiveStat}{afterPassive}";
+            _beforeStatsTxt.text = $"장착효과:{item.EquipStat}{beforeActive}\n보유효과:{item.PassiveStat}{beforePassive}";
+            _afterStatsTxt.text = $"장착효과:{item.EquipStat}{afterActive}\n보유효과:{item.PassiveStat}{afterPassive}";
         }
-        else  if (slot.BaseData is SkillDataSO skill)
+        else if (slot.BaseData is SkillDataSO skill)
         {
-            _beforeStatsTxt.text = $"데미지배율:{skill.Damage}{beforeActive}, 패시브:{skill.Stat}{beforePassive}";
-            _afterStatsTxt.text = $"데미지배율:{skill.Damage}{afterActive}, 패시브:{skill.Stat}{afterPassive}";
+            _beforeStatsTxt.text = $"데미지배율:{skill.Damage}{beforeActive}\n패시브:{skill.Stat}{beforePassive}";
+            _afterStatsTxt.text = $"데미지배율:{skill.Damage}{afterActive}\n패시브:{skill.Stat}{afterPassive}";
         }
-
-        int cost = slot.GetUpgradeCost();
-        _costTxt.text = $"Cost:{cost}";
-
-        EquipButtonText();
-    }
-    private void EquipButtonText() 
-    {
         if (_currSlot != null && _currSlot.IsEquipped)
         {
             _equipButtonTxt.text = "Unequip";
+            _equipButton.onClick.RemoveAllListeners();
             _equipButton.onClick.AddListener(() =>
                 _eventChannel.RaiseEvent(EGameEventType.UnEquipRequest, _currSlot));
         }
         else
         {
             _equipButtonTxt.text = "Equip";
+            _equipButton.onClick.RemoveAllListeners();
             _equipButton.onClick.AddListener(() =>
                 _eventChannel.RaiseEvent(EGameEventType.EquipRequest, _currSlot));
         }
+        int cost = slot.GetUpgradeCost();
+        _costTxt.text = $"Cost:{cost}";
     }
     public void OpenCombinePanel() 
     { 

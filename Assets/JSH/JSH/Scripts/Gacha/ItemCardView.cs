@@ -1,13 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
-//using static UnityEditor.Progress;
 
 public class ItemCardView : MonoBehaviour, IPoolable
 {
     [SerializeField] private Image _icon;
+    [SerializeField] private Image _Image;  
     [SerializeField] private TextMeshProUGUI _itemName;
     [SerializeField] private TextMeshProUGUI _gradeText;
     [SerializeField] private TextMeshProUGUI _tierText;
@@ -17,6 +19,8 @@ public class ItemCardView : MonoBehaviour, IPoolable
     public void Setup(ItemDataSO item) 
     {
         SetColor(item.Grade);
+
+        _ = LoadIcon(item.Name);
         _itemName.text = item.Name;
         _gradeText.text = item.Grade.ToString();
         _tierText.text = $"T{item.Tier.ToString()}";
@@ -25,6 +29,7 @@ public class ItemCardView : MonoBehaviour, IPoolable
     public void Setup(SkillDataSO skill) 
     {
         SetColor(skill.Grade);
+        _ = LoadIcon(Enum.GetName(typeof(ESkillEffectType), skill.SkillType));
         _itemName.text = skill.Name;
         _gradeText.text = skill.Grade.ToString();
         _tierText.text = " ";
@@ -42,7 +47,21 @@ public class ItemCardView : MonoBehaviour, IPoolable
             case GradeType.Mythical: _icon.color = Color.red; break;
         }
     }
+    private async Task LoadIcon(string address)
+    {
+        AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(address);
 
+        Sprite sprite = await handle.Task;
+
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            _Image.sprite = sprite;
+        }
+        else
+        {
+            Debug.Log($"IconLoadFailed{address}");
+        }
+    }
     public void SetPool(IPool pool) { _pool = pool; }
     public void ReturnPool() 
     {

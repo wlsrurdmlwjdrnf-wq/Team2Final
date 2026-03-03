@@ -11,16 +11,18 @@ public class TestSlotUI : MonoBehaviour, IPoolable
     public InventorySlot Slot;
     public Image Image;
     public Image Frame;
+    public Image CoolTimeImage;
     public TextMeshProUGUI NameTxt;
     public TextMeshProUGUI LevelTxt;
     public TextMeshProUGUI TierTxt;
     public TextMeshProUGUI StackTxt;
     public Slider StackSlider;
+    public GameObject EquipDot;
     public bool IsUnlocked = false;
 
     [SerializeField] private bool _IsEquipSlot = false;
     [SerializeField] private EDataType _equipType;
-
+    private SkillInstance _skillInstance;
     private IPool _pool;
     [SerializeField] private GameEventChannelSO _eventChannel;
     private void OnEnable()
@@ -35,22 +37,59 @@ public class TestSlotUI : MonoBehaviour, IPoolable
 
     private void HandleEvent(EGameEventType type, object payload)
     {
-        if (type == EGameEventType.SlotUpdated && payload is InventorySlot updatedSlot)
+        switch (type) 
         {
-            if (Slot == null && _IsEquipSlot)
-            {
-                if (_equipType == updatedSlot.GetDataType() && updatedSlot.IsEquipped)
+            case EGameEventType.SlotUpdated:
+            case EGameEventType.EquipChanged:
+                if (payload is InventorySlot updatedSlot)
                 {
-                    Slot = updatedSlot;
+                    if (Slot == null && _IsEquipSlot)
+                    {
+                        if (_equipType == updatedSlot.GetDataType() && updatedSlot.IsEquipped)
+                        {
+                            Slot = updatedSlot;
+                        }
+                    }
+                    else if (Slot == null && !_IsEquipSlot) { Slot = updatedSlot; }
+                    else if (Slot.Id == updatedSlot.Id) { SetUp(updatedSlot); }
                 }
+                break;
+        }      
+    }
+    private void Update()
+    {
+        if (_skillInstance != null)
+        {
+            float progress = _skillInstance.GetCooldownProgress();
+
+            if (_skillInstance.baseData.TriggerCount > 0)
+            {
+                CoolTimeImage.fillAmount = 1f - progress;
             }
-            else if (Slot == null && !_IsEquipSlot) { Slot = updatedSlot; }
-            else if (Slot.Id == updatedSlot.Id) { SetUp(updatedSlot); }
+            else 
+            {
+                CoolTimeImage.fillAmount = 1f - progress;
+            }
         }
     }
     public void OnClick() 
     {
-        _eventChannel.RaiseEvent(EGameEventType.SlotClicked, Slot);
+        if (_IsEquipSlot && _equipType == EDataType.Skill)
+        {
+            if (Slot == null)
+            {
+                Debug.Log("TryAddSkillSlot");
+                _eventChannel.RaiseEvent(EGameEventType.RequestAddSkillSlot);
+            }
+            else 
+            {
+                _eventChannel.RaiseEvent(EGameEventType.RequestSkillUse, Slot);
+            }
+        }
+        else 
+        {
+            _eventChannel.RaiseEvent(EGameEventType.SlotClicked, Slot);
+        }
     }
     public void SetEmpty() 
     {
@@ -63,11 +102,12 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         TierTxt.text = "0";
         StackTxt.text = $"0/{PublicConst.UpgradeStack}";
         StackSlider.value = 0f;
+        EquipDot.SetActive(false);
     }
     public void SetUp(InventorySlot slot)
     {
         Slot = slot;
-   
+        _skillInstance =SkillManager.Instance.GetSkillInstance(Slot);
         GradeType grade = GradeType.Normal;
         string name = "";
         int tier = 0;
@@ -111,7 +151,8 @@ public class TestSlotUI : MonoBehaviour, IPoolable
                 case GradeType.Mythical: Frame.color = Color.red; break;
             }
         }
-  
+        
+        EquipDot.SetActive(Slot.IsEquipped);
         NameTxt.text = name;
         LevelTxt.text = $"+{level}";
         TierTxt.text = $"{tier}";
