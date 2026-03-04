@@ -12,6 +12,7 @@ public class TierUpPresenter : MonoBehaviour
     }
     private void Start()
     {
+        view.ToggleIsTier();
         view.UpdateTier();
     }
 

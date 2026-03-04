@@ -54,7 +54,7 @@ public class TierUpView : MonoBehaviour
 
         ToggleIsTier();
     }
-    private void ToggleIsTier()
+    public void ToggleIsTier()
     {
         _isTier = !_isTier;
     }
