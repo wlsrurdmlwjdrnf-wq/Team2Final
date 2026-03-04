@@ -11,7 +11,7 @@ public class AutoCombineButton : MonoBehaviour
     {
         _button.onClick.AddListener(() => 
         {
-            _eventChannel.RaiseEvent(EGameEventType.AutoCombine, _type);
+            _eventChannel.RaiseEvent(EGameEventType.AutoCombine, new EDataTypePayload(_type));
         });
     }
 }

@@ -16,7 +16,10 @@ public class InventorySystem : Singleton<InventorySystem>
     [SerializeField] private GameEventChannelSO _eventChannel;
     private Dictionary<StatType,float> _totalStatDict = new Dictionary<StatType,float>();
     private List<StatModifier> _InventoryModifiers = new List<StatModifier>();
-
+    //스킬 바꾸는 기능
+    public bool _OnSkillChange = false;
+    private InventorySlot _EquipSkill = null;
+    private InventorySlot _UnequipSkill = null;
     public int MaxSkillSlot { get => _maxSkillSlot; set => _maxSkillSlot = value; }
     public int CurrSkillSlot { get => _currSkillSlot; set => _currSkillSlot = value; }
     private void OnEnable()
@@ -69,6 +72,13 @@ public class InventorySystem : Singleton<InventorySystem>
                 break;
             case EGameEventType.RequestAddSkillSlot:
                 AddSkillSlot();
+                break;
+            case EGameEventType.RequestChangeSkill:
+                if (payload is InventorySlot slot)
+                {
+                    _UnequipSkill = slot;
+                    ChangeSkill();
+                }
                 break;
         }
     }
@@ -166,21 +176,21 @@ public class InventorySystem : Singleton<InventorySystem>
             {
                 slot.Unlocked = true;
                 slot.Stack = 0;
-                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
+                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(slot));
             }
             else 
             {
                 slot.Stack++;
                 if (slot.GetDataType() == EDataType.Weapon && _equippedWeapon == null) Equip(slot);
                 else if (slot.GetDataType() == EDataType.Accessories && _equippedAccessory == null) Equip(slot);
-                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
+                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(slot));
             }
         }
         else
         {
             var newSlot = new InventorySlot(data, 0, true);
             targetInventory.Add(newSlot);
-            _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, newSlot);
+            _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(newSlot));
         }
         StatModifyToPlayer();
     }
@@ -206,17 +216,17 @@ public class InventorySystem : Singleton<InventorySystem>
             if (existingIndex >= 0)
             {
                 targetInventory[existingIndex].Stack++;
-                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, targetInventory[existingIndex]);
+                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(targetInventory[existingIndex]));
             }
             else
             {
                 targetInventory.Add(newSlot);
-                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, newSlot);
+                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(newSlot));
             }
         }
         StatModifyToPlayer();
         //스택감소 반영
-        _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
+        _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(slot));
     }
     public void CombineCount(int count, InventorySlot slot)
     {
@@ -229,18 +239,18 @@ public class InventorySystem : Singleton<InventorySystem>
                 if (existingIndex >= 0)
                 {
                     targetInventory[existingIndex].Stack++;
-                    _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, targetInventory[existingIndex]);
+                    _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(targetInventory[existingIndex]));
                 }
                 else
                 {
                     targetInventory.Add(newSlot);
-                    _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, newSlot);
+                    _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(newSlot));
                 }
             }
         }
         StatModifyToPlayer();
         //스택감소 반영
-        _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
+        _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(slot));
     }
     #endregion
     #region 강화  
@@ -255,7 +265,7 @@ public class InventorySystem : Singleton<InventorySystem>
                 if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Emerald, amount)) return;
                 slot.Stack -= PublicConst.UpgradeStack;
                 slot.Upgrade();
-                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
+                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(slot));
             }
         }
         else
@@ -264,7 +274,7 @@ public class InventorySystem : Singleton<InventorySystem>
             {
                 if (!PlayerResourceManager.Instance.SpendResource(ResourceType.EnhancementCube, amount)) return;
                 slot.Upgrade();
-                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, slot);
+                _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(slot));
             }
             else
             {
@@ -300,11 +310,17 @@ public class InventorySystem : Singleton<InventorySystem>
                     _equippedSkills.Add(slot);
                     slot.IsEquipped = true;
                 }
+                else if (!_equippedSkills.Contains(slot) && _equippedSkills.Count >= _currSkillSlot) 
+                {
+                    _eventChannel.RaiseEvent(EGameEventType.CloseUpgradeUI);
+                    _EquipSkill = slot;
+                    _OnSkillChange = true;
+                }
                 else { slot.IsEquipped = false; }
                 break;
         }
         StatModifyToPlayer();
-        _eventChannel.RaiseEvent(EGameEventType.EquipChanged, slot);
+        _eventChannel.RaiseEvent(EGameEventType.EquipChanged, new SlotPayload(slot));
     }
     public void UnEquip(InventorySlot slot)
     {
@@ -316,13 +332,29 @@ public class InventorySystem : Singleton<InventorySystem>
         }
         slot.IsEquipped = false;
         StatModifyToPlayer();
-        _eventChannel.RaiseEvent(EGameEventType.EquipChanged, slot);
+        _eventChannel.RaiseEvent(EGameEventType.EquipChanged, new SlotPayload(slot));
     }
     public void AddSkillSlot()
     {
         BigNumber amount = new BigNumber(100);
         if (!PlayerResourceManager.Instance.SpendResource(ResourceType.EnhancementCube, amount)) return;
         if (_currSkillSlot < _maxSkillSlot) _currSkillSlot++;
+    }
+    public void ChangeSkill() 
+    {
+        if (!_OnSkillChange || _EquipSkill == null || _UnequipSkill == null) return;
+
+        int index = _equippedSkills.IndexOf(_UnequipSkill);
+        if (index >= 0)
+        {
+            _equippedSkills[index].IsEquipped = false;
+            _equippedSkills[index] = _EquipSkill;
+            _EquipSkill.IsEquipped = true;
+        }
+
+        _OnSkillChange = false;
+        StatModifyToPlayer();
+        _eventChannel.RaiseEvent(EGameEventType.EquipChanged, new SlotPayload(_EquipSkill));
     }
     #endregion
     #region 스탯합산

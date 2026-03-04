@@ -35,7 +35,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         _eventChannel.OnEventRaised -= HandleEvent;
     }
 
-    private void HandleEvent(EGameEventType type, object payload)
+    private void HandleEvent(EGameEventType type, object payload) //¹Ú½Ì ¾ð¹Ú½Ì? °øºÎ
     {
         switch (type) 
         {
@@ -81,14 +81,18 @@ public class TestSlotUI : MonoBehaviour, IPoolable
                 Debug.Log("TryAddSkillSlot");
                 _eventChannel.RaiseEvent(EGameEventType.RequestAddSkillSlot);
             }
-            else 
+            else if (InventorySystem.instance._OnSkillChange) 
             {
-                _eventChannel.RaiseEvent(EGameEventType.RequestSkillUse, Slot);
+                _eventChannel.RaiseEvent(EGameEventType.RequestChangeSkill, new SlotPayload(Slot));
+            }
+            else
+            {
+                _eventChannel.RaiseEvent(EGameEventType.RequestSkillUse, new SlotPayload(Slot));
             }
         }
         else 
         {
-            _eventChannel.RaiseEvent(EGameEventType.SlotClicked, Slot);
+            _eventChannel.RaiseEvent(EGameEventType.SlotClicked, new SlotPayload(Slot));
         }
     }
     public void SetEmpty() 

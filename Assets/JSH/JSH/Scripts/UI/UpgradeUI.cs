@@ -21,7 +21,6 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField] private Slider _combineSlider;
 
     private InventorySlot _currSlot;
-
     private void Awake()
     {
         _eventChannel.OnEventRaised += HandleEvent;
@@ -48,6 +47,7 @@ public class UpgradeUI : MonoBehaviour
                     break;
             }
         }
+        if (type == EGameEventType.CloseUpgradeUI) Close();
     }
     private void OpenPopUp(InventorySlot slot) 
     {
@@ -60,9 +60,8 @@ public class UpgradeUI : MonoBehaviour
 
         _upgradeButton.onClick.RemoveAllListeners();
         _upgradeButton.onClick.AddListener(() => {
-            _eventChannel.RaiseEvent(EGameEventType.UpgradeRequest, _currSlot);
+            _eventChannel.RaiseEvent(EGameEventType.UpgradeRequest, new SlotPayload(_currSlot));
         });
-
 
         RefreshText(slot);
     }
@@ -95,14 +94,14 @@ public class UpgradeUI : MonoBehaviour
             _equipButtonTxt.text = "Unequip";
             _equipButton.onClick.RemoveAllListeners();
             _equipButton.onClick.AddListener(() =>
-                _eventChannel.RaiseEvent(EGameEventType.UnEquipRequest, _currSlot));
+                _eventChannel.RaiseEvent(EGameEventType.UnEquipRequest, new SlotPayload(_currSlot)));
         }
         else
         {
             _equipButtonTxt.text = "Equip";
             _equipButton.onClick.RemoveAllListeners();
             _equipButton.onClick.AddListener(() =>
-                _eventChannel.RaiseEvent(EGameEventType.EquipRequest, _currSlot));
+                _eventChannel.RaiseEvent(EGameEventType.EquipRequest, new SlotPayload(_currSlot)));
         }
         int cost = slot.GetUpgradeCost();
         _costTxt.text = $"Cost:{cost}";

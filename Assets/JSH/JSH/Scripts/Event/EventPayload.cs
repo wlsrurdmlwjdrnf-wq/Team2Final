@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
+
+public interface IGmeEventPayload { }
 [System.Serializable]
-public class InventoryEventPayload 
+public class InventoryEventPayload : IGmeEventPayload
 {
     public EDataType Type;
     public int SlotIndex;
@@ -15,7 +18,7 @@ public class InventoryEventPayload
     }
 }
 
-public class GachaRequestPayload 
+public class GachaRequestPayload : IGmeEventPayload
 {
     public EDataType Type;
     public int Count;
@@ -27,7 +30,7 @@ public class GachaRequestPayload
     }
 }
 
-public class GachaProgressPayload 
+public class GachaProgressPayload : IGmeEventPayload
 {
     public EDataType Type;
     public int CurrCount;
@@ -41,4 +44,15 @@ public class GachaProgressPayload
         LevelUpCount = levelUpCount;
         Level = level;
     }
+}
+
+public class EDataTypePayload : IGmeEventPayload 
+{
+    public EDataType Type;
+    public EDataTypePayload(EDataType type) { Type = type; }
+}
+public class SlotPayload : IGmeEventPayload
+{
+    public InventorySlot Slot;
+    public SlotPayload(InventorySlot slot) { Slot = slot; }
 }
