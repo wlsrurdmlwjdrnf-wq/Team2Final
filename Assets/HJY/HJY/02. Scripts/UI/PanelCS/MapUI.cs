@@ -19,6 +19,9 @@ public class MapUI : MonoBehaviour
     [Header("스테이지 패널")]
     [SerializeField] private StagePickPanel stagePickPanel;   // 스테이지 선택 패널
 
+    [Header("속성 패널")]
+    [SerializeField] private GameObject attributePanel;       // 속성 설명 패널
+
     [Header("데이터")]
     [SerializeField] private StageViewSO stageViewSO;  // 지역 이름 및 이미지 데이터
     [SerializeField] private List<StageSO> stageList;  // 스테이지 데이터 리스트
@@ -78,8 +81,13 @@ public class MapUI : MonoBehaviour
     // 실패 패널을 닫아라.
     public void CloseFail() => failPanel?.SetActive(false);
 
+    // 속성 패널을 열어라,
+    public void OpenAttribute() => attributePanel?.SetActive(true);
 
-   // 스테이지 선택 패널을 열어라.
+    // 속성 패널을 닫아라.
+    public void CloseAttribute() => attributePanel?.SetActive(false);
+
+    // 스테이지 선택 패널을 열어라.
     public void OpenStage()
     {
         if (stagePickPanel != null)
