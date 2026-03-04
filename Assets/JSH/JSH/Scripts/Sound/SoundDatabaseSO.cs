@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-public enum EBGMType { Lobby, Battle, Victory, Defeat }
-public enum ESFXType { Move, Attack, Hit, TurnStart, TurnEnd, Button, CylinderSpin, CylinderClick }
 
 [System.Serializable]
 public class BGMEntry

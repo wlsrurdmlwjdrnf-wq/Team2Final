@@ -136,7 +136,6 @@ public class SkillVFX : MonoBehaviour, IPoolable
                 target.TakeDamage(damage, true, _elementType);
             }
             else target.TakeDamage(damage, false, _elementType);
-            // 이펙트나 사운드 넣으면 될 듯
             _enemiesHit.Add(target);
         }
     }

@@ -25,14 +25,16 @@ public enum EGameEventType
     VolumeSFXMuteToggle,
     RequestSkillUse,
     RequestAddSkillSlot,
+    CloseUpgradeUI,
+    RequestChangeSkill,
 }
 
 [CreateAssetMenu(fileName = "GameEventChannel", menuName = "Scriptable Objects/GameEventChannel")]
 public class GameEventChannelSO : ScriptableObject
 {
-    public UnityAction<EGameEventType, object> OnEventRaised;
+    public UnityAction<EGameEventType, IGmeEventPayload> OnEventRaised;
 
-    public void RaiseEvent(EGameEventType type, object payload = null) 
+    public void RaiseEvent(EGameEventType type, IGmeEventPayload payload = null) 
     {
         OnEventRaised?.Invoke(type, payload);
     }

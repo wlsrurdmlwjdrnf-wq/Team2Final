@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //가챠결과물
-public struct ItemCard 
+public struct ItemCard : IGmeEventPayload
 {
     public EDataType Type;
     public GradeType Grade;
@@ -60,23 +61,6 @@ public class GachaSystem : Singleton<GachaSystem>
     private void OnDisable()
     {
         _eventChannel.OnEventRaised -= HandleEvent;
-    }
-    public void Initialize()
-    {
-        //테스트
-        //DrawGacha(EDataType.Weapon, 11);
-        //DrawGacha(EDataType.Accessories, 11);   
-        //DrawGacha(EDataType.Skill, 11);
-
-        //InventorySystem.Instance.SortInventory(EDataType.Weapon);
-        //InventorySystem.Instance.SortInventory(EDataType.Accessories);
-        //InventorySystem.Instance.SortInventory(EDataType.Skill);
-#if UNITY_EDITOR
-        //InventorySystem.Instance.PrintInventory(EDataType.Weapon);
-        //InventorySystem.Instance.PrintInventory(EDataType.Accessories);
-        //InventorySystem.Instance.PrintInventory(EDataType.Skill);
-#endif
-        //SkillManager.Instance.RefreshSlots();
     }
     private void HandleEvent(EGameEventType type, object payload)
     {

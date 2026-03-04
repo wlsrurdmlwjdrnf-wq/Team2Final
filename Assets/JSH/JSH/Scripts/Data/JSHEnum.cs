@@ -14,3 +14,24 @@ public enum ETargetingType
     NonTarget = 1,
     Projectile = 2,
 }
+
+public enum EBGMType 
+{ 
+    Lobby, 
+    Battle, 
+    Victory, 
+    Defeat, 
+}
+public enum ESFXType
+{
+    Attack = 0,
+    Hit = 1,
+    Button = 2,
+    Equip = 3,
+    Unequip = 4,
+    Explosion = 5,
+    IceSlash = 5,
+    EarthGrow = 6,
+    Lightning = 7,
+    WindGust = 8,
+}

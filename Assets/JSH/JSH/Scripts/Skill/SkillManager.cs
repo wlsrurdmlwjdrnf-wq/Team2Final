@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SkillManager : Singleton<SkillManager>
@@ -53,17 +54,48 @@ public class SkillManager : Singleton<SkillManager>
     }
     public void RefreshSlots() 
     {
-        _equippedSkills.Clear();
         List<InventorySlot> equippedSlots = InventorySystem.Instance.GetEquippedSkills();
 
-        foreach (var slot in equippedSlots) 
+        //»õ·Î ÀåÂøµÈ ½½·Ô Ãß°¡
+        foreach (InventorySlot slot in equippedSlots)
         {
-            if (slot.BaseData is SkillDataSO skillData) 
+            bool exists = false;
+            foreach (SkillInstance skill in _equippedSkills)
+            {
+                if (skill.baseData == slot.BaseData)
+                {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists)
             {
                 SkillInstance instance = SkillFactory.CreateInstance(slot);
                 _equippedSkills.Add(instance);
             }
         }
+
+        //ÇØÁ¦µÈ ½½·Ô Á¦°Å
+        for (int i = _equippedSkills.Count - 1; i >= 0; i--)
+        {
+            SkillInstance skill = _equippedSkills[i];
+            bool stillEquipped = false;
+            foreach (InventorySlot slot in equippedSlots)
+            {
+                if (slot.BaseData == skill.baseData)
+                {
+                    stillEquipped = true;
+                    break;
+                }
+            }
+
+            if (!stillEquipped)
+            {
+                _equippedSkills.RemoveAt(i);
+            }
+        }
+
     }
     private void Update()
     {

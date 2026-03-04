@@ -13,4 +13,18 @@ MonoBehaviour:
   m_Name: SoundDatabase
   m_EditorClassIdentifier: 
   bgmEntries: []
-  sfxEntries: []
+  sfxEntries:
+  - type: 3
+    clip: {fileID: 8300000, guid: 5c49dcd00867fc841b5d83fb129817c7, type: 3}
+  - type: 4
+    clip: {fileID: 8300000, guid: 26ae1840a23af914e82f4e409073ae7a, type: 3}
+  - type: 5
+    clip: {fileID: 8300000, guid: 3ea4d58874e6bca4694ea4da12f8a038, type: 3}
+  - type: 6
+    clip: {fileID: 8300000, guid: 3ac5f6ca53d3e7742833905670337363, type: 3}
+  - type: 7
+    clip: {fileID: 8300000, guid: d2f024d6f0c70a8449fddc2c31b8c29b, type: 3}
+  - type: 8
+    clip: {fileID: 8300000, guid: 919ce48d4dad1a64d888534dbcda51e8, type: 3}
+  - type: 9
+    clip: {fileID: 8300000, guid: 9d01e7ecf5b4c4c43944582d515f37f0, type: 3}

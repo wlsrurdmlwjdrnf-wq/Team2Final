@@ -21,6 +21,7 @@ public class FireExplosion : ISkillEffect
         }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
         effect.Setup(_elementType, SkillManager.Instance.GetClosestEnemy(enemies), damageDuplicator);
+        SoundManager.Instance.PlaySFX(ESFXType.Explosion);
     }
 }
 public class EarthGrow : ISkillEffect
@@ -42,6 +43,7 @@ public class EarthGrow : ISkillEffect
         }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
         effect.Setup(_elementType, SkillManager.Instance.GetClosestEnemy(enemies), damageDuplicator);
+        SoundManager.Instance.PlaySFX(ESFXType.EarthGrow);
     }
 }
 public class WindGust : ISkillEffect
@@ -63,6 +65,7 @@ public class WindGust : ISkillEffect
         }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
         effect.Setup(_elementType, SkillManager.Instance.GetClosestEnemy(enemies), damageDuplicator);
+        SoundManager.Instance.PlaySFX(ESFXType.WindGust);
     }
 }
 public class IceSlash : ISkillEffect
@@ -84,6 +87,7 @@ public class IceSlash : ISkillEffect
         }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
         effect.Setup(_elementType, SkillManager.Instance.GetClosestEnemy(enemies), damageDuplicator);
+        SoundManager.Instance.PlaySFX(ESFXType.IceSlash);
     }
 }
 public class Lightning : ISkillEffect
@@ -115,6 +119,7 @@ public class Lightning : ISkillEffect
         {
             var effect = PoolManager.Instance.GetFromPool(_vfx);
             effect.Setup(_elementType, spawnPos, damageDuplicator);
+            SoundManager.Instance.PlaySFX(ESFXType.Lightning);
             //effect.OnAttackHit();
             spawnPos += _effectOffset;
             yield return _effectWaitSec;

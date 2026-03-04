@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 5558b3931a39a49478ddff1ec88270d9
+  - enabled: 1
+    path: Assets/JSH/JSH/JSHLobby.unity
+    guid: 0b2f8b85d37e95444bb54f9fa2c0d996
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: b571995783bd63942a0c105e9dac20e6, type: 2}

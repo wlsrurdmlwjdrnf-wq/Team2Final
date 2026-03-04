@@ -36,7 +36,6 @@ public class ItemSkillDataManager : MonoBehaviour
         }
         InventorySystem.Instance.Initialize();
         TestUIManager.Instance.Initialize();
-        GachaSystem.Instance.Initialize();
     }
 
     private void ConvertData()
