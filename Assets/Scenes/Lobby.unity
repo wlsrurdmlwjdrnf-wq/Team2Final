@@ -8476,6 +8476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDestroyOnLoad: 0
   _eventChannel: {fileID: 11400000, guid: 345cf9c9edc892f4d9c22c0384dc31f4, type: 2}
+  _OnSkillChange: 0
 --- !u!4 &1152638349
 Transform:
   m_ObjectHideFlags: 0
@@ -8645,6 +8646,10 @@ PrefabInstance:
       propertyPath: gameOverPanel
       value: 
       objectReference: {fileID: 2515727345044562056}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: questListText
+      value: 
+      objectReference: {fileID: 6162977599092657701}
     - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: stageClearPanel
       value: 
@@ -60067,7 +60072,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[1/10]'
+  m_text: '[ ? / 10 ]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
   m_sharedMaterial: {fileID: -1962616221610082763, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
