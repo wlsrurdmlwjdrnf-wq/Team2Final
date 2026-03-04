@@ -36,9 +36,7 @@ public class StageRangeSlot : RecycleScrollSlot<StageSO>
         warpButton.onClick.RemoveAllListeners();
         warpButton.onClick.AddListener(OnClickEnter);
 
-        // 필요하다면 잠금 UI로 블러 처리하기!!!
-        // lockBlur.SetActive(stageSO.isLocked); -> StageSO에 isLocked 필드가 있을 경우 주석 해제할 것!!!
-
+        // 안 열린 스테이지 프리팹 블러로 처리하기
         if(stageSO.mainNumber < StageManager.Instance.GetRecord().bestMainNumber)
             lockBlur.SetActive(false);
         else if(stageSO.mainNumber == StageManager.Instance.GetRecord().bestMainNumber
