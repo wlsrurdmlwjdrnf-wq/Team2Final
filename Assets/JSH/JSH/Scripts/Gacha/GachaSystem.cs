@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 //가챠결과물
-public struct ItemCard : IGmeEventPayload
+public struct ItemCard : IGameEventPayload
 {
     public EDataType Type;
     public GradeType Grade;
@@ -62,7 +62,7 @@ public class GachaSystem : Singleton<GachaSystem>
     {
         _eventChannel.OnEventRaised -= HandleEvent;
     }
-    private void HandleEvent(EGameEventType type, object payload)
+    private void HandleEvent(EGameEventType type, IGameEventPayload payload)
     {
         switch (type)
         {

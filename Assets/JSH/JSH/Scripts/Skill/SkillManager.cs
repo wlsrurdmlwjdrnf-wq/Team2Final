@@ -34,20 +34,20 @@ public class SkillManager : Singleton<SkillManager>
         Player.OnKnockBack -= PlayerDead;
         if (StageManager.Instance != null) StageManager.Instance.OnStageChanged -= GetNewEnemy;
     }
-    private void HandleEvent(EGameEventType eventType, object payload) 
+    private void HandleEvent(EGameEventType eventType, IGameEventPayload payload) 
     {
         switch (eventType) 
         {
             case EGameEventType.SlotUpdated:
             case EGameEventType.EquipChanged:
             case EGameEventType.EquipRequest:
-                if (payload is InventorySlot slot && slot.BaseData is SkillDataSO) RefreshSlots();
+                if (payload is SlotPayload slot && slot.Slot.BaseData is SkillDataSO) RefreshSlots();
                 break;
             case EGameEventType.RequestSkillUse:
-                if (payload is InventorySlot useSlot && useSlot.BaseData is SkillDataSO) 
+                if (payload is SlotPayload useSlot && useSlot.Slot.BaseData is SkillDataSO) 
                 {
-                    if (GetSkillInstance(useSlot) != null && GetSkillInstance(useSlot).CanCast(_playerHpMp))
-                        GetSkillInstance(useSlot).Cast();
+                    if (GetSkillInstance(useSlot.Slot) != null && GetSkillInstance(useSlot.Slot).CanCast(_playerHpMp))
+                        GetSkillInstance(useSlot.Slot).Cast();
                 }
                 break;
         }

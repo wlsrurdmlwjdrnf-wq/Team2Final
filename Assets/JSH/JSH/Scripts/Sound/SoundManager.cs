@@ -12,8 +12,16 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private SoundDatabaseSO mDatabase;
 
     private List<AudioSource> mSFXPool = new List<AudioSource>();
-    private WaitForSeconds mWaitForSeconds = new WaitForSeconds(0.5f);
+    private WaitForSeconds mWaitForSeconds = new WaitForSeconds(0.1f);
     private AudioSource mLoopSource;
+
+    [SerializeField] private Dictionary<string, EBGMType> _sceneBgmMap = new Dictionary<string, EBGMType> 
+    {
+        { "JSHTitle", EBGMType.Title },
+        { "JSHLobby", EBGMType.MainStage },
+        { "Title", EBGMType.Title },
+        { "Lobby", EBGMType.MainStage }
+    };
 
     [Header("Event Channel")]
     [SerializeField] private GameEventChannelSO mEventChannel;
@@ -43,6 +51,15 @@ public class SoundManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        string currScene = SceneManager.GetActiveScene().name;
+        if (_sceneBgmMap.TryGetValue(currScene, out EBGMType bgm)) 
+        {
+            PlayBGM(bgm);
         }
     }
     private void OnEnable()
@@ -103,9 +120,9 @@ public class SoundManager : MonoBehaviour
     private IEnumerator FadeInBGM(AudioClip clip) 
     {
         //지금 플레이하는거 볼륨 점점 줄이고
-        if (mBGMSource.isPlaying) 
+        if (mBGMSource.isPlaying && mBGMSource.clip != null) 
         {
-            for (float v = mBGMVolume; v >= 0; v -= 0.05f) 
+            for (float v = mBGMVolume; v >= 0; v -= 0.2f) 
             {
                 mBGMSource.volume = v;
                 yield return mWaitForSeconds;
@@ -114,7 +131,7 @@ public class SoundManager : MonoBehaviour
         //다 줄이면 새로운거
         mBGMSource.clip = clip;
         mBGMSource.Play();
-        for (float v = 0; v <= mBGMVolume; v += 0.05f) 
+        for (float v = 0; v <= mBGMVolume; v += 0.2f) 
         {
             mBGMSource.volume = v;
             yield return mWaitForSeconds;
@@ -122,14 +139,12 @@ public class SoundManager : MonoBehaviour
     }
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
     {
-        switch (scene.name) 
+        if (_sceneBgmMap.TryGetValue(scene.name, out EBGMType bGMType)) 
         {
-            case "BattleScene":
-                PlayBGM(EBGMType.Battle);
-                break;
+            PlayBGM(bGMType);
         }
     }
-    private void HandleGameEvent(EGameEventType type, object payload) 
+    private void HandleGameEvent(EGameEventType type, IGameEventPayload payload) 
     {
         switch (type) 
         {
@@ -142,12 +157,41 @@ public class SoundManager : MonoBehaviour
                 PlaySFX(ESFXType.Button);
                 break;
             case EGameEventType.VolumeBGMUpdate:
+                var bgmPayload = payload as VolumeUpdatePayload;
+                if (bgmPayload != null)
+                {
+                    mBGMVolume = Mathf.Clamp01(bgmPayload.volume);
+                    mBGMSource.volume = bgmPayload.volume;
+                    PlayerPrefs.SetFloat("BGMVolume", mBGMVolume);
+                }
                 break;
             case EGameEventType.VolumeSFXUpdate:
+                var sfxPayload = payload as VolumeUpdatePayload;
+                if (sfxPayload != null)
+                {
+                    mSFXVolume = Mathf.Clamp01(sfxPayload.volume);
+                    foreach (var src in mSFXPool)
+                    {
+                        src.volume = sfxPayload.volume;
+                    }
+                    mLoopSource.volume = mSFXVolume;
+                    PlayerPrefs.SetFloat("SFXVolume", mSFXVolume);
+                }
                 break;
             case EGameEventType.VolumeBGMMuteToggle:
+                var bgmMutePayload = payload as MutePayload;
+                if (bgmMutePayload != null) { mBGMSource.mute = bgmMutePayload.isMuted; }
                 break;
             case EGameEventType.VolumeSFXMuteToggle:
+                var sfxMutePayload = payload as MutePayload;
+                if (sfxMutePayload != null)
+                {
+                    foreach (var src in mSFXPool)
+                    {
+                        src.mute = sfxMutePayload.isMuted;
+                        mLoopSource.mute = sfxMutePayload.isMuted;
+                    }
+                }
                 break;
         }
     }

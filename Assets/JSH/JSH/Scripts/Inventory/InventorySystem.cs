@@ -30,28 +30,29 @@ public class InventorySystem : Singleton<InventorySystem>
     {
         _eventChannel.OnEventRaised -= HandleEvent;
     }
-    private void HandleEvent(EGameEventType type, object payload) 
+    private void HandleEvent(EGameEventType type, IGameEventPayload payload) 
     {
         switch (type)
         {
             case EGameEventType.SortInventory:
-                if (payload is EDataType sortType) SortInventory(sortType);
+                if (payload is EDataTypePayload sortType) SortInventory(sortType.Type);
                 break;
             case EGameEventType.CombineSlot:
-                if (payload is InventorySlot combineSlot) CombineSlot(combineSlot);
+                if (payload is SlotPayload combineSlot) CombineSlot(combineSlot.Slot);
                 break;
             case EGameEventType.UpgradeRequest:
-                if (payload is InventorySlot upgradeSlot) UpgradeSlot(upgradeSlot);
+                if (payload is SlotPayload upgradeSlot) UpgradeSlot(upgradeSlot.Slot);
                 break;
             case EGameEventType.EquipRequest:
-                if (payload is InventorySlot equipSlot) Equip(equipSlot);
+                if (payload is SlotPayload equipSlot) Equip(equipSlot.Slot);
                 break;
             case EGameEventType.UnEquipRequest:
-                if (payload is InventorySlot unEquipSlot) UnEquip(unEquipSlot);
+                if (payload is SlotPayload unEquipSlot) UnEquip(unEquipSlot.Slot);
                 break;
             case EGameEventType.GachaPull:
                 if (payload is ItemCard card)
                 {
+                    Debug.Log("GachaDataCatch");
                     switch (card.Type)
                     {
                         case EDataType.Weapon:
@@ -68,15 +69,15 @@ public class InventorySystem : Singleton<InventorySystem>
                 }
                 break;
             case EGameEventType.AutoCombine:
-                if (payload is EDataType combineType) AutoCombine(combineType);
+                if (payload is EDataTypePayload combineType) AutoCombine(combineType.Type);
                 break;
             case EGameEventType.RequestAddSkillSlot:
                 AddSkillSlot();
                 break;
             case EGameEventType.RequestChangeSkill:
-                if (payload is InventorySlot slot)
+                if (payload is SlotPayload slot)
                 {
-                    _UnequipSkill = slot;
+                    _UnequipSkill = slot.Slot;
                     ChangeSkill();
                 }
                 break;

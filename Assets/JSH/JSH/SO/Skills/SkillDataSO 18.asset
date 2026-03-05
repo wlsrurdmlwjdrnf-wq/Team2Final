@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7470147a46402844f997bab36939dfbe, type: 3}
   m_Name: SkillDataSO 18
   m_EditorClassIdentifier: 
-  Name: l3
+  Name: WindGust
   Type: 2
-  Element: 0
+  Element: 2
   Grade: 4
   Level: 1
   DataSO: 0
   SkillType: 2
   CoolTime: 7
-  ManaCost: 8
+  ManaCost: 0
   TriggerCount: 0
   Range: 5
   Damage: 1.2

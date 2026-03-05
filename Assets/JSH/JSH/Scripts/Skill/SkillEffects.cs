@@ -16,7 +16,6 @@ public class FireExplosion : ISkillEffect
     {
         if (enemies == null || enemies.Count <= 0)
         {
-            Debug.Log("EnemyNull");
             return;
         }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
@@ -38,7 +37,6 @@ public class EarthGrow : ISkillEffect
     {
         if (enemies == null || enemies.Count <= 0)
         {
-            Debug.Log("EnemyNull");
             return;
         }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
@@ -60,7 +58,6 @@ public class WindGust : ISkillEffect
     {
         if (enemies == null || enemies.Count <= 0)
         {
-            Debug.Log("EnemyNull");
             return;
         }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
@@ -82,7 +79,6 @@ public class IceSlash : ISkillEffect
     {
         if (enemies == null || enemies.Count <= 0)
         {
-            Debug.Log("EnemyNull");
             return;
         }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
@@ -107,7 +103,6 @@ public class Lightning : ISkillEffect
     {
         if (enemies == null || enemies.Count <= 0)
         {
-            Debug.Log("EnemyNull");
             return;
         }
         SkillManager.Instance.StartCoroutine(SpawnLightning(enemies, damageDuplicator));
@@ -119,10 +114,9 @@ public class Lightning : ISkillEffect
         {
             var effect = PoolManager.Instance.GetFromPool(_vfx);
             effect.Setup(_elementType, spawnPos, damageDuplicator);
-            SoundManager.Instance.PlaySFX(ESFXType.Lightning);
-            //effect.OnAttackHit();
             spawnPos += _effectOffset;
             yield return _effectWaitSec;
         }
+        SoundManager.Instance.PlaySFX(ESFXType.Lightning);
     }
 }

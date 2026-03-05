@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7470147a46402844f997bab36939dfbe, type: 3}
   m_Name: SkillDataSO 17
   m_EditorClassIdentifier: 
-  Name: l2
+  Name: EarthGrow
   Type: 2
-  Element: 0
+  Element: 3
   Grade: 4
   Level: 1
   DataSO: 0
   SkillType: 1
   CoolTime: 3
-  ManaCost: 8
+  ManaCost: 0
   TriggerCount: 0
   Range: 5
   Damage: 1.2

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 
 
-public interface IGmeEventPayload { }
+public interface IGameEventPayload { }
 [System.Serializable]
-public class InventoryEventPayload : IGmeEventPayload
+public class InventoryEventPayload : IGameEventPayload
 {
     public EDataType Type;
     public int SlotIndex;
@@ -18,7 +18,7 @@ public class InventoryEventPayload : IGmeEventPayload
     }
 }
 
-public class GachaRequestPayload : IGmeEventPayload
+public class GachaRequestPayload : IGameEventPayload
 {
     public EDataType Type;
     public int Count;
@@ -30,7 +30,7 @@ public class GachaRequestPayload : IGmeEventPayload
     }
 }
 
-public class GachaProgressPayload : IGmeEventPayload
+public class GachaProgressPayload : IGameEventPayload
 {
     public EDataType Type;
     public int CurrCount;
@@ -46,13 +46,23 @@ public class GachaProgressPayload : IGmeEventPayload
     }
 }
 
-public class EDataTypePayload : IGmeEventPayload 
+public class EDataTypePayload : IGameEventPayload
 {
     public EDataType Type;
     public EDataTypePayload(EDataType type) { Type = type; }
 }
-public class SlotPayload : IGmeEventPayload
+public class SlotPayload : IGameEventPayload
 {
     public InventorySlot Slot;
     public SlotPayload(InventorySlot slot) { Slot = slot; }
+}
+
+public class VolumeUpdatePayload : IGameEventPayload
+{
+    public float volume;
+}
+
+public class MutePayload : IGameEventPayload
+{
+    public bool isMuted;
 }
