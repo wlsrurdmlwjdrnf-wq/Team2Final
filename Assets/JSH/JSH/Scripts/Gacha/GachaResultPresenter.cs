@@ -29,7 +29,7 @@ public class GachaResultPresenter : MonoBehaviour
         _eventChannel.OnEventRaised -= HandleEvent;
     }
 
-    private void HandleEvent(EGameEventType type, object payload) 
+    private void HandleEvent(EGameEventType type, IGameEventPayload payload) 
     {
         if (type == EGameEventType.GachaPull && payload is ItemCard card)
         {

@@ -40,14 +40,15 @@ public class TestUIManager : Singleton<TestUIManager>
         _eventChannel.OnEventRaised -= HandleEvent;
     }
 
-    private void HandleEvent(EGameEventType type, object payload)
+    private void HandleEvent(EGameEventType type, IGameEventPayload payload)
     {
         var payloadData = payload; 
         switch (type) 
         {
             case EGameEventType.SlotUpdated:
-                if (payloadData is InventorySlot updateSlot)
+                if (payloadData is SlotPayload slotPayload)
                 {
+                    InventorySlot updateSlot = slotPayload.Slot;
                     var slotUIs = _weaponContent.GetComponentsInChildren<TestSlotUI>(true);
                     slotUIs = slotUIs.Concat(_accessoryContent.GetComponentsInChildren<TestSlotUI>(true)).ToArray();
                     slotUIs = slotUIs.Concat(_artifactContent.GetComponentsInChildren<TestSlotUI>(true)).ToArray();

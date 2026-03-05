@@ -30,20 +30,20 @@ public class UpgradeUI : MonoBehaviour
     {
         _eventChannel.OnEventRaised -= HandleEvent;
     }
-    private void HandleEvent(EGameEventType type, object payload) 
+    private void HandleEvent(EGameEventType type, IGameEventPayload payload) 
     {
-        if (payload is InventorySlot slot)
+        if (payload is SlotPayload slot)
         {
             switch (type)
             {
                 case EGameEventType.SlotClicked:
-                    OpenPopUp(slot);
+                    OpenPopUp(slot.Slot);
                     break;
                 case EGameEventType.SlotUpdated:
-                    RefreshUI(slot);
+                    RefreshUI(slot.Slot);
                     break;
                 case EGameEventType.EquipChanged:
-                    RefreshUI(slot);
+                    RefreshUI(slot.Slot);
                     break;
             }
         }

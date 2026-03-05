@@ -32,9 +32,9 @@ public enum EGameEventType
 [CreateAssetMenu(fileName = "GameEventChannel", menuName = "Scriptable Objects/GameEventChannel")]
 public class GameEventChannelSO : ScriptableObject
 {
-    public UnityAction<EGameEventType, IGmeEventPayload> OnEventRaised;
+    public UnityAction<EGameEventType, IGameEventPayload> OnEventRaised;
 
-    public void RaiseEvent(EGameEventType type, IGmeEventPayload payload = null) 
+    public void RaiseEvent(EGameEventType type, IGameEventPayload payload = null) 
     {
         OnEventRaised?.Invoke(type, payload);
     }

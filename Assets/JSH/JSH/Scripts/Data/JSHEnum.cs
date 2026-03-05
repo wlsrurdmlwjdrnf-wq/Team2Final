@@ -17,10 +17,9 @@ public enum ETargetingType
 
 public enum EBGMType 
 { 
-    Lobby, 
-    Battle, 
-    Victory, 
-    Defeat, 
+    Title = 0,
+    MainStage = 1,
+    BossStage = 2,
 }
 public enum ESFXType
 {
@@ -34,4 +33,10 @@ public enum ESFXType
     EarthGrow = 6,
     Lightning = 7,
     WindGust = 8,
+    LevelUpButton = 9,
+    ItemDrop = 10,
+    StatUpButton = 11,
+    SwingAxe1 = 12,
+    SwingAxe2 = 13,
+    SwingAxe3 = 14,
 }

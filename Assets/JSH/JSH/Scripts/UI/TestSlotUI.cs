@@ -35,14 +35,15 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         _eventChannel.OnEventRaised -= HandleEvent;
     }
 
-    private void HandleEvent(EGameEventType type, object payload) //¹Ú½Ì ¾ð¹Ú½Ì? °øºÎ
+    private void HandleEvent(EGameEventType type, IGameEventPayload payload)
     {
         switch (type) 
         {
             case EGameEventType.SlotUpdated:
             case EGameEventType.EquipChanged:
-                if (payload is InventorySlot updatedSlot)
+                if (payload is SlotPayload slotPayload)
                 {
+                    InventorySlot updatedSlot = slotPayload.Slot;
                     if (Slot == null && _IsEquipSlot)
                     {
                         if (_equipType == updatedSlot.GetDataType() && updatedSlot.IsEquipped)
@@ -78,7 +79,6 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         {
             if (Slot == null)
             {
-                Debug.Log("TryAddSkillSlot");
                 _eventChannel.RaiseEvent(EGameEventType.RequestAddSkillSlot);
             }
             else if (InventorySystem.instance._OnSkillChange) 

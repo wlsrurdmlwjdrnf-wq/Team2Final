@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7470147a46402844f997bab36939dfbe, type: 3}
   m_Name: SkillDataSO 20
   m_EditorClassIdentifier: 
-  Name: m1
+  Name: FireExplosion
   Type: 2
   Element: 0
   Grade: 5
@@ -20,7 +20,7 @@ MonoBehaviour:
   DataSO: 0
   SkillType: 0
   CoolTime: 6
-  ManaCost: 8
+  ManaCost: 0
   TriggerCount: 0
   Range: 5
   Damage: 1.2
