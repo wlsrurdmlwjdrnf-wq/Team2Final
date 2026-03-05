@@ -23,6 +23,10 @@ public class SoundUI : MonoBehaviour
 
     private void Start()
     {
+        mBGMSlider.minValue = 0f;
+        mBGMSlider.maxValue = 1f;
+        mSFXSlider.minValue = 0f;
+        mSFXSlider.maxValue = 1f;
         if (SoundManager.Instance != null) 
         {
             mBGMSlider.value = SoundManager.Instance.GetBGMVolume();
