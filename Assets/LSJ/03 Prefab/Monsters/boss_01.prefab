@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1365491824585371154}
   - component: {fileID: 5975220752515231009}
   - component: {fileID: 4851089420938445478}
+  - component: {fileID: 873345454619879016}
   m_Layer: 6
   m_Name: boss_01
   m_TagString: Monster
@@ -201,6 +202,20 @@ MonoBehaviour:
   _baseStats: {fileID: 11400000, guid: be9659dd31bf2134589c4137800d59af, type: 2}
   _damageTextPrefab: {fileID: 5744721325997502162, guid: d37e935060377c5468309050800bf7f5, type: 3}
   _hpBar: {fileID: 1186151166032354844}
+--- !u!114 &873345454619879016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7237030636073894823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50af1c51c88bc164da48fe6a77deefd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashDuration: 0.3
+  flashTint: {r: 36.87481, g: 0.7653254, b: 0.7653254, a: 1}
 --- !u!1001 &1066195599643163811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -209,6 +224,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7498446310310506118}
     m_Modifications:
+    - target: {fileID: 784452758996725057, guid: dd2e71ee7cdb3d74295e352a41afae5e, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3379935194880685614, guid: dd2e71ee7cdb3d74295e352a41afae5e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

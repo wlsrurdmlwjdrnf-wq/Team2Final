@@ -13,7 +13,7 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
     protected SpriteRenderer _sr;
     protected Collider2D _col;
     protected BigNumber _maxHp;
-
+    protected ObjectFlash _flash;
     public Transform Transform => transform;
     public string Name { get; protected set; }
     public BigNumber CurrentHP {  get; protected set; }
@@ -31,7 +31,7 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
         _anim = GetComponent<Animator>();
         _sr = GetComponent<SpriteRenderer>();
         _col = GetComponent<Collider2D>();
-
+        _flash = GetComponent<ObjectFlash>();
         
         Name = _baseStats.monsterName;
 
@@ -72,6 +72,9 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
         BigNumber finalDamage = amount - CurrentDef;
         if(finalDamage <= new BigNumber(0)) finalDamage = new BigNumber(0); // 최종 데미지가 0이하면 체력이 회복되지 않도록 0으로 스냅
         CurrentHP -= finalDamage;
+
+        // 번쩍임
+        _flash.Flash();
 
         // hp 업데이트
         if (_hpBar != null)

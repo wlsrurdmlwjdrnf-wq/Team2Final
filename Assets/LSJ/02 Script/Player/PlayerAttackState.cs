@@ -28,7 +28,6 @@ public class PlayerAttackState : IEntityState
         else
             _player.Animator.Play("Stand");
 
-        Debug.Log("ATTACK");
     }
 
     public void OnUpdate()

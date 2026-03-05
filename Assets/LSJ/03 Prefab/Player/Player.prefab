@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 2796494333152882760}
   - component: {fileID: 6472207238414216678}
   - component: {fileID: 8165833104710470051}
+  - component: {fileID: -450936778070884809}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -219,6 +220,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hpBar: {fileID: 2572695191759938372}
   _mpBar: {fileID: 5313182980812955811}
+--- !u!114 &-450936778070884809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8601827122832313819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50af1c51c88bc164da48fe6a77deefd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashDuration: 0.5
+  flashTint: {r: 2.2706037, g: 0.08139868, b: 0.08139868, a: 1}
 --- !u!1001 &3071393119563007356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -227,6 +242,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3882059221117516757}
     m_Modifications:
+    - target: {fileID: 337532403958636617, guid: bcf1f6c57859b0149b58224f61986fbc, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4515271529133934994, guid: bcf1f6c57859b0149b58224f61986fbc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

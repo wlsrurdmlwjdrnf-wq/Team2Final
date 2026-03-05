@@ -185,6 +185,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   artifactRewardText: {fileID: 0}
+  questListText: {fileID: 0}
 --- !u!1 &1900284214424346641
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +241,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   tierIcons:
-  - {fileID: 8894990140691945955, guid: f9a6c93da0c591d498cab7381dc21f64, type: 3}
+  - {fileID: 4517692805231746911, guid: c951935818a985f4fae71e936c85ca4a, type: 3}
   - {fileID: -8068735104775675943, guid: 4552ec0c5b9b48745b2995f778b0043f, type: 3}
   - {fileID: 4688192023265028122, guid: b24ea26542b1732428a836f3d94476cc, type: 3}
   - {fileID: -619263165662114286, guid: 04e92d93fe5b4a743a46c4e35e81aa22, type: 3}

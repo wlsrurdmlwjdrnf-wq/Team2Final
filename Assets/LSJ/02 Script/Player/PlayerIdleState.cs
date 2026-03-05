@@ -13,8 +13,6 @@ public class PlayerIdleState : IEntityState
         _player.Animator.SetBool("IsKnockBack", false);
         _player.Animator.SetBool("IsDead", false);
         _player.Animator.SetBool("IsSkilling", false);
-
-        Debug.Log("IDLE");
     }
 
     public void OnUpdate()

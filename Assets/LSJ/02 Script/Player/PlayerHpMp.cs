@@ -12,7 +12,12 @@ public class PlayerHpMp : MonoBehaviour
 
     private Coroutine _recoveryCo;
     private WaitForSeconds _recoveryInterval = new WaitForSeconds(1f);
+    private ObjectFlash _flash;
 
+    private void Start()
+    {
+        _flash = GetComponent<ObjectFlash>();
+    }
     private void OnEnable()
     {
         CurrentHP = PlayerStatManager.Instance.MaxHP;
@@ -69,6 +74,8 @@ public class PlayerHpMp : MonoBehaviour
         if (amount <= new BigNumber(0)) return;
 
         CurrentHP -= amount;
+
+        _flash.Flash();
 
         if (CurrentHP <= new BigNumber(0))
         {
