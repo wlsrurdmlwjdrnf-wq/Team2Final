@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7604100374034310770}
   - component: {fileID: 4376511930400610520}
   - component: {fileID: 7356260765037642742}
+  - component: {fileID: 7191133332065355364}
   m_Layer: 6
   m_Name: monster_03
   m_TagString: Monster
@@ -169,6 +170,20 @@ MonoBehaviour:
   _baseStats: {fileID: 11400000, guid: 513b7aa09b69e424d820e19fe25ce5f1, type: 2}
   _damageTextPrefab: {fileID: 5744721325997502162, guid: 8dc8ed839d1d99e4ead5d0c4a27262ce, type: 3}
   _hpBar: {fileID: 2984309542033670208}
+--- !u!114 &7191133332065355364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3327221700254952552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50af1c51c88bc164da48fe6a77deefd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashDuration: 0.3
+  flashTint: {r: 36.87481, g: 0.7653254, b: 0.7653254, a: 1}
 --- !u!1001 &4023835129963045631
 PrefabInstance:
   m_ObjectHideFlags: 0

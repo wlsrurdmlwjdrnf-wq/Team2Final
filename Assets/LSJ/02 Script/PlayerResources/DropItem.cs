@@ -14,7 +14,8 @@ public class DropItem : MonoBehaviour, IPoolable2
     [SerializeField] private float spinAmount = 360f * 2f;      // 몇 도 회전할지 (랜덤 방향)
     [SerializeField] private bool randomizeSpinDirection = true;
 
-    [Header("착지 후 흔들림 (선택)")]
+    [Header("착지")]
+    [SerializeField] private float yFixedPosition = 0f;
     [SerializeField] private bool doLandingShake = true;
     [SerializeField] private float shakeDuration = 0.18f;
     [SerializeField] private float shakeStrength = 0.07f;
@@ -22,37 +23,48 @@ public class DropItem : MonoBehaviour, IPoolable2
     [Header("반납 타이밍")]
     [SerializeField] private float autoReturnDelayAfterLanding = 0.8f; // 착지 후 몇 초 뒤에 사라질지
 
+    [Header("페이드 아웃")]
+    [SerializeField] private float fadeOutDuration = 0.4f;  // 투명해지는 데 걸리는 시간
+    [SerializeField] private Ease fadeEase = Ease.InQuad;   // 서서히 사라지게
+
     private void PlayDropAnimation()
     {
-        // 랜덤 방향 & 거리
+
         Vector2 randomDir = Random.insideUnitCircle.normalized;
         float randomDist = Random.Range(spreadRadius * 0.4f, spreadRadius);
-        Vector3 targetPos = (Vector3)(randomDir * randomDist);
 
-        // 약간의 지연 (몇 개 동시에 떨어지면 더 자연스러움)
+        // 목표 위치 → y는 무조건 고정
+        Vector3 targetPos = new Vector3(
+            randomDir.x * randomDist,
+            yFixedPosition,
+            randomDir.y * randomDist
+        );
+
         float randomDelay = Random.Range(staggerMin, staggerMax);
 
-        // 회전 방향 랜덤화
         float spinDir = randomizeSpinDirection ? (Random.value > 0.5f ? 1f : -1f) : 1f;
         float finalRotation = spinDir * (spinAmount + Random.Range(-80f, 80f));
 
         Sequence seq = DOTween.Sequence();
-
-        // 살짝 위로 띄우고 → 점프하며 목표지점으로
         seq.AppendInterval(randomDelay);
 
         seq.Append(
-            transform.DOJump(targetPos, jumpPower, 1, duration)
-                .SetEase(Ease.OutQuad)
+            transform.DOJump(
+                targetPos,
+                jumpPower,     // 최대 상승 높이 (상대적)
+                1,             // 점프 횟수 (1이면 한 번 튀는 느낌)
+                duration
+            )
+            .SetEase(Ease.OutQuad)   // 또는 OutBounce, OutBack 등 취향껏
         );
 
-        // 동시에 회전
+        // 회전은 전체 시간 동안 같이
         seq.Join(
             transform.DORotate(new Vector3(0, 0, finalRotation), duration, RotateMode.FastBeyond360)
                 .SetEase(Ease.OutSine)
         );
 
-        // 착지 후 살짝 흔들림 (선택)
+        // 착지 시점에 흔들림 넣기
         if (doLandingShake)
         {
             seq.AppendCallback(() =>
@@ -62,16 +74,32 @@ public class DropItem : MonoBehaviour, IPoolable2
             });
         }
 
-        // 연출 모두 끝난 후 풀에 반납
+        // 착지 후 대기 시간 후에 페이드 아웃 시작
         seq.AppendInterval(autoReturnDelayAfterLanding);
+
+        // 페이드 아웃 → 완료 후 풀 반납
         seq.AppendCallback(() =>
         {
-            PoolManager2.Instance.Release(gameObject);
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.DOFade(0f, fadeOutDuration)
+                  .SetEase(fadeEase)
+                  .OnComplete(() => PoolManager2.Instance.Release(gameObject));
+            }
+            else
+            {
+                // SpriteRenderer가 없으면 바로 반납 (fallback)
+                PoolManager2.Instance.Release(gameObject);
+            }
         });
     }
 
     public void OnSpawn()
     {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr != null) sr.color = new Color(1, 1, 1, 1);
+
         PlayDropAnimation();
     }
 

@@ -102,29 +102,21 @@ public class Player : EntityStateMachine
     // Animation Event가 부를 함수
     public void OnAttackHit()
     {
-        //Collider2D[] hits = Physics2D.OverlapCircleAll(
-        //    AttackPoint.position,
-        //    AttackRange,
-        //    MonsterLayer
-        //);
-        //if (hits.Length > 0)
-        //{
-            IDamageable target = EnemyManager.Instance.GetClosestEnemy(transform.position);
+        IDamageable target = EnemyManager.Instance.GetClosestEnemy(transform.position);
 
-            if (target != null)
+        if (target != null)
+        {
+            BigNumber damage = PlayerStatManager.Instance.AttackPower;
+            // 크리티컬
+            if (UnityEngine.Random.value < PlayerStatManager.Instance.CritRate)
             {
-                BigNumber damage = PlayerStatManager.Instance.AttackPower;
-                // 크리티컬
-                if (UnityEngine.Random.value < PlayerStatManager.Instance.CritRate)
-                {
-                    damage *= PlayerStatManager.Instance.CritDamage;
-                    target.TakeDamage(damage, true);
-                }
-                else target.TakeDamage(damage);
-
-                // 이펙트나 사운드 넣으면 될 듯
+                damage *= PlayerStatManager.Instance.CritDamage;
+                target.TakeDamage(damage, true);
             }
-        //}
+            else target.TakeDamage(damage);
+
+            // 이펙트나 사운드 넣으면 될 듯
+        }
     }
     public void OnChangeIdle()
     {

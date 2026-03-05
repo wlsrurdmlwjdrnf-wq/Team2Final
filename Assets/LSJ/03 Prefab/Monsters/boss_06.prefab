@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9141720814604045627}
   - component: {fileID: 7998148444505839276}
   - component: {fileID: 6999279563209928624}
+  - component: {fileID: 68838120963931814}
   m_Layer: 0
   m_Name: boss_06
   m_TagString: Untagged
@@ -169,6 +170,20 @@ MonoBehaviour:
   _baseStats: {fileID: 11400000, guid: 1af98e90249d51143ad18c2679ccb044, type: 2}
   _damageTextPrefab: {fileID: 5744721325997502162, guid: d37e935060377c5468309050800bf7f5, type: 3}
   _hpBar: {fileID: 6559713063455357084}
+--- !u!114 &68838120963931814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8723628648747048229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50af1c51c88bc164da48fe6a77deefd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashDuration: 0.3
+  flashTint: {r: 36.87481, g: 0.7653254, b: 0.7653254, a: 1}
 --- !u!1001 &5022961961091488291
 PrefabInstance:
   m_ObjectHideFlags: 0
