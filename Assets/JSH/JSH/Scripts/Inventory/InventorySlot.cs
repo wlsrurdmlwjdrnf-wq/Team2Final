@@ -74,10 +74,10 @@ public class InventorySlot
             switch (type)
             {
                 case 0:
-                    effectValue = skill.Damage + level * 10f;
+                    effectValue = skill.Damage + level * skill.DamagePerLevel;
                     break;
                 case 1:
-                    effectValue = skill.ModifyAmount + level * 10f;
+                    effectValue = skill.ModifyAmount * (level * 2) ;
                     break;
             }
         }

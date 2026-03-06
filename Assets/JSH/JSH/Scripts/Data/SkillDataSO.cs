@@ -18,9 +18,13 @@ public class SkillDataSO : ScriptableObject
 
     public float Range;
     public float Damage;
+    public float DamagePerLevel = 0.1f;
     public float CriticalRate;
     public float CriticalDMG;
     //패시브 > 스탯증가류
     public StatType Stat;
     public float ModifyAmount;
+
+    public string DescryptionTxt;
+    [TextArea] public string MechanismTxtTemplate;
 }

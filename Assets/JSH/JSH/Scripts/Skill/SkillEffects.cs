@@ -114,9 +114,9 @@ public class Lightning : ISkillEffect
         {
             var effect = PoolManager.Instance.GetFromPool(_vfx);
             effect.Setup(_elementType, spawnPos, damageDuplicator);
+            SoundManager.Instance.PlaySFX(ESFXType.Lightning);
             spawnPos += _effectOffset;
             yield return _effectWaitSec;
         }
-        SoundManager.Instance.PlaySFX(ESFXType.Lightning);
     }
 }

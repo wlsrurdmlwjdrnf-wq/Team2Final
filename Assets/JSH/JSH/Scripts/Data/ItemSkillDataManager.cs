@@ -14,7 +14,16 @@ public class ItemSkillDataManager : MonoBehaviour
     public ItemDatabaseSO ArtifactsDatabase;
     public SkillDatabaseSO SkillDatabase;
     public SkillVFXDatabaseSO SkillVFXDatabase;
-
+    public Dictionary<GradeType, string> GradeMap = new Dictionary<GradeType, string>
+    {
+        { GradeType.Normal,"일반" },
+        { GradeType.Advanced,"고급"},
+        { GradeType.Rare,"희귀"},
+        { GradeType.Heroic,"영웅"},
+        { GradeType.Legendary,"전설"},
+        { GradeType.Mythical,"신화"},
+        { GradeType.Immortal,"불멸"}
+    };
     private void Awake()
     {
         Instance = this;
@@ -94,14 +103,14 @@ public class ItemSkillDataManager : MonoBehaviour
                 AccessoriesDatabase.items.Add(itemSO);
         }
 
-        if (ArtifactsDatabase != null) ArtifactsDatabase.items.Clear();
+        if (ArtifactsDatabase != null) return;
         else ArtifactsDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
         //유물 데이터
         foreach (var artifact in ItemDatabaseSO.artifacts)
         {
                 ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
                 itemSO.Name = artifact.Name;
-            itemSO.Type = EDataType.Artifact;
+                itemSO.Type = EDataType.Artifact;
                 itemSO.Element = artifact.Element;
                 itemSO.Grade = artifact.Grade;
                 itemSO.Level = artifact.Level;
@@ -151,8 +160,6 @@ public class ItemSkillDataManager : MonoBehaviour
         }
         return null;
     }
-
-    //이쪽은 더 보강할 필요가 있음
     public SkillDataSO GetSkillData(ItemCard card) 
     {
         List<SkillDataSO> dataLists = new List<SkillDataSO>();

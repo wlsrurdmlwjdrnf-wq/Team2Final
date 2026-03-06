@@ -132,6 +132,8 @@ public class TestUIManager : Singleton<TestUIManager>
             slotUI.SetEquipSlot(EDataType.Skill);
             _skillSlots.Add(slotUI);
         }
+        _equippedAccessorySlot.SetEmpty();
+        _equippedWeaponSlot.SetEmpty();
         PopUp(Inventories[0]);
     }
     public void PopUp(GameObject popUp)

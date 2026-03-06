@@ -82,40 +82,6 @@ public static class ItemDatabaseConverter
         }
         EditorUtility.SetDirty(manager.AccessoriesDatabase);
 
-        if (manager.ArtifactsDatabase != null) manager.ArtifactsDatabase.items.Clear();
-        else manager.ArtifactsDatabase = ScriptableObject.CreateInstance<ItemDatabaseSO>();
-        //유물 데이터
-        foreach (var artifact in manager.ItemDatabaseSO.artifacts)
-        {
-            ItemDataSO itemSO = ScriptableObject.CreateInstance<ItemDataSO>();
-            itemSO.Name = artifact.Name;
-            itemSO.Type = EDataType.Artifact;
-            itemSO.Element = artifact.Element;
-            itemSO.Grade = artifact.Grade;
-            itemSO.Level = artifact.Level;
-            itemSO.DataSO = DataSOType.Resource;
-
-            itemSO.IconKey = artifact.Icon;
-
-            manager.ArtifactsDatabase.items.Add(itemSO);
-        }
-        EditorUtility.SetDirty(manager.ArtifactsDatabase);
-
-        //if (manager.SkillDatabase != null) manager.SkillDatabase.skills.Clear();
-        //else manager.SkillDatabase = ScriptableObject.CreateInstance<SkillDatabaseSO>();
-        //foreach (var skill in manager.ItemDatabaseSO.skills)
-        //{
-        //    SkillDataSO skillSO = ScriptableObject.CreateInstance<SkillDataSO>();
-        //    skillSO.Name = skill.Name;
-        //    skillSO.Type = EDataType.Skill;
-        //    skillSO.Grade = skill.Grade;
-        //    skillSO.Level = skill.Level;
-        //    skillSO.DataSO = DataSOType.Resource;
-
-        //    manager.SkillDatabase.skills.Add(skillSO);
-        //}
-        //EditorUtility.SetDirty(manager.SkillDatabase);
-
         EditorUtility.SetDirty(manager.ItemDatabaseSO);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
