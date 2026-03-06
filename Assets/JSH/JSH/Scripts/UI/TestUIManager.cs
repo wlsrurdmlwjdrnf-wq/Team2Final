@@ -21,7 +21,7 @@ public class TestUIManager : Singleton<TestUIManager>
     [SerializeField] private TextMeshProUGUI _accessoryGachaLevelText;
     [SerializeField] private TextMeshProUGUI _accessoryGachaProgressText;
 
-    private List<TestSlotUI> _skillSlots = new List<TestSlotUI>();
+    public List<TestSlotUI> SkillSlots = new List<TestSlotUI>();
 
     [SerializeField] private GameEventChannelSO _eventChannel;
     //²ô°íÅ°´Â¿ë
@@ -130,7 +130,16 @@ public class TestUIManager : Singleton<TestUIManager>
             slotUI.transform.SetParent(_equippedSkillContent, false);
             slotUI.SetEmpty();
             slotUI.SetEquipSlot(EDataType.Skill);
-            _skillSlots.Add(slotUI);
+
+            if (i < 4)
+            {
+                slotUI.IsOpened = true;
+            }
+            else 
+            {
+                slotUI.IsOpened = false;
+            }
+            SkillSlots.Add(slotUI);
         }
         _equippedAccessorySlot.SetEmpty();
         _equippedWeaponSlot.SetEmpty();
@@ -146,13 +155,17 @@ public class TestUIManager : Singleton<TestUIManager>
     }
     private void RefreshEquippedSkills() 
     {
-        foreach (TestSlotUI slotUI in _skillSlots) slotUI.SetEmpty();
+        foreach (TestSlotUI slotUI in SkillSlots) slotUI.SetEmpty();
 
         var equippedSkills = InventorySystem.Instance.GetEquippedSkills();
-
+        int currOened = InventorySystem.instance.CurrSkillSlot;
+        for (int i = 0; i < currOened; i++) 
+        {
+            SkillSlots[i].IsOpened = true;
+        }
         for (int i = 0; i < equippedSkills.Count; i++) 
         {
-            _skillSlots[i].SetUp(equippedSkills[i]);
+            SkillSlots[i].SetUp(equippedSkills[i]);
         }
     }
 }

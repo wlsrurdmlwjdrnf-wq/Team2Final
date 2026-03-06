@@ -13,6 +13,8 @@ public class GachaResultPresenter : MonoBehaviour
     private List<ItemCardView> _itemCardViews = new List<ItemCardView>();
     private WaitForSeconds _waitForSeconds = new WaitForSeconds(0.1f);
 
+    private ItemDataSO _itemDataSO;
+    private SkillDataSO _skillDataSO;
     private void Start()
     {
         PoolManager.Instance.CreatePool(_itemCardPrefab, 33, null);
@@ -52,8 +54,18 @@ public class GachaResultPresenter : MonoBehaviour
             cardView.gameObject.transform.SetParent(_resultPanel);
             cardView.gameObject.transform.localScale = Vector3.one;
 
-            if (card.Type == EDataType.Skill) cardView.Setup(ItemSkillDataManager.Instance.GetSkillData(card));
-            else cardView.Setup(ItemSkillDataManager.Instance.GetItemData(card));
+            if (card.Type == EDataType.Skill)
+            {
+                _skillDataSO = (ItemSkillDataManager.Instance.GetSkillData(card));
+                cardView.Setup(_skillDataSO);
+                InventorySystem.instance.AddSkill(_skillDataSO);
+            }
+            else 
+            { 
+                _itemDataSO = (ItemSkillDataManager.Instance.GetItemData(card));
+                cardView.Setup(_itemDataSO);
+                InventorySystem.instance.AddItem(_itemDataSO);
+            }
 
             yield return _waitForSeconds;
         }

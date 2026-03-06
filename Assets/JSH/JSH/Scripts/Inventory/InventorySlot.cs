@@ -140,7 +140,7 @@ public class InventorySlot
         }
         else if (BaseData is SkillDataSO skill && other is SkillDataSO newSkill)
         {
-            return skill.Name == newSkill.Name && skill.Type == newSkill.Type;
+            return skill.Name == newSkill.Name && skill.Type == newSkill.Type && skill.Grade == newSkill.Grade;
         }
 
         return false;
