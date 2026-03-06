@@ -103,7 +103,7 @@ public class SoundManager : MonoBehaviour
         //지금 플레이하는거 볼륨 점점 줄이고
         if (mBGMSource.isPlaying && mBGMSource.clip != null) 
         {
-            for (float v = mBGMVolume; v >= 0; v -= 0.2f) 
+            for (float v = mBGMVolume; v >= 0; v -= mBGMVolume * 0.1f) 
             {
                 mBGMSource.volume = v;
                 yield return mWaitForSeconds;
@@ -112,7 +112,7 @@ public class SoundManager : MonoBehaviour
         //다 줄이면 새로운거
         mBGMSource.clip = clip;
         mBGMSource.Play();
-        for (float v = 0; v <= mBGMVolume; v += 0.2f) 
+        for (float v = 0; v <= mBGMVolume; v += mBGMVolume * 0.1f) 
         {
             mBGMSource.volume = v;
             yield return mWaitForSeconds;
