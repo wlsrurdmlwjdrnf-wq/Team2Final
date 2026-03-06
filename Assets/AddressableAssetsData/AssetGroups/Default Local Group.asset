@@ -47,13 +47,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16072034d5c360b4ebb8948f3654c3b0
+    m_Address: SpeedStone
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1820c066b2c0df44e8e3f9998ca1bb1e
     m_Address: AXE_ADVANCED_02
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 185a9ac78fc18e542ab907d2ff097066
+    m_Address: CritPlate
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1c9685f3e7a1ba2458a76bf26dc94810
     m_Address: RING_ADVANCED_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1fcaeb7a3f7f48b408d2dab1d6313db7
+    m_Address: HPStone
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -69,6 +84,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 291ff0b8a8bf4054b9df44e2fdbcaaf2
     m_Address: AXE_MYTHICAL_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2bb56ba1dcede994e971ef83e5d899a4
+    m_Address: CritStone
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -112,8 +132,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 555f462a690f0e74e8ccd671e0b7ff62
+    m_Address: GoldOrb
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5997f00e37b114e44a85ef6e9e3669b4
+    m_Address: MPPlate
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5998e232e7dea0d42bdfc5395bd7e7c3
     m_Address: RING_LEGENDARY_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59e5f1c11946640479bee7e48a7f5c7c
+    m_Address: ExpOrb
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 62abfc976d9182045938668f6ce262f6
+    m_Address: MPStone
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -159,6 +199,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 96df274e0582f5b448f50cb3714f74bf
     m_Address: AXE_HEROIC_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 977adfa803b4ba34085914504c173e10
+    m_Address: AttackStone
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -232,6 +277,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca6a4bd83fe652d45b979831b52e21ed
+    m_Address: HPPlate
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ccafc1ab6d48f934e9236d6681508876
     m_Address: RING_RARE_04
     m_ReadOnly: 0
@@ -254,6 +304,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d3738415b720a224d9b8e88e350846ff
     m_Address: AXE_HEROIC_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4eebb5cdd455e641bb745ab5abaa9d8
+    m_Address: RapidStone
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

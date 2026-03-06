@@ -20,11 +20,17 @@ MonoBehaviour:
   DataSO: 0
   SkillType: 4
   CoolTime: 6
-  ManaCost: 0
+  ManaCost: 20
   TriggerCount: 0
   Range: 5
   Damage: 1.2
+  DamagePerLevel: 0.1
   CriticalRate: 0
   CriticalDMG: 0
   Stat: 0
   ModifyAmount: 0
+  DescryptionTxt: "\uC804\uBC29\uC744 \uD5A5\uD574 \uB098\uC544\uAC00\uB294 \uBC88\uAC1C\uB97C
+    \uC18C\uD658\uD569\uB2C8\uB2E4."
+  MechanismTxtTemplate: "\uC55E\uC73C\uB85C \uB098\uC544\uAC00\uB294 \uBC88\uAC1C\uB97C
+    \uC18C\uD658\uD558\uC5EC \uD50C\uB808\uC774\uC5B4 \uACF5\uACA9\uB825 {0}\uBC30\uC758
+    \uC77C\uBC18 \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."

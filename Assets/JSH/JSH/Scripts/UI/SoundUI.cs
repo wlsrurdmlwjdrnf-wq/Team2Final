@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +31,9 @@ public class SoundUI : MonoBehaviour
         if (SoundManager.Instance != null) 
         {
             mBGMSlider.value = SoundManager.Instance.GetBGMVolume();
+            mBGMVolumeText.text = (mBGMSlider.value * 100f).ToString("F0") + "%";
             mSFXSlider.value = SoundManager.Instance.GetSFXVolume();
+            mSFXVolumeText.text = (mSFXSlider.value * 100f).ToString("F0") + "%";
         }
 
         mBGMSlider.onValueChanged.AddListener(OnBGMVolumeChanged);
@@ -69,6 +72,7 @@ public class SoundUI : MonoBehaviour
 
     public void Close() { gameObject.SetActive(false); }
     public void Open() { gameObject.SetActive(true); }
+    public void Toggle() { gameObject.SetActive(!gameObject.activeSelf); }
     private void UpdateButtonImage(Image buttonImage, int k) 
     {
         bool isMuted = true;

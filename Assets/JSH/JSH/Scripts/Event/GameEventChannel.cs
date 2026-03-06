@@ -6,23 +6,23 @@ public enum EGameEventType
     SlotUpdated,
     SlotClicked,
     UpgradeRequest,
-    EquipRequest,
-    UnEquipRequest,
+    EquipRequest,//
+    UnEquipRequest,//
     AutoCombine,
     GachaPull,
     SortInventory,
     CombineSlot,
     ButtonClicked,
     GachaRequest,
-    EquipChanged,
+    EquipChanged,//
     GachaProgressUpdate,
     GachaRequestEnd,
-    SkillUsed,
-    DamageDealt,
-    VolumeBGMUpdate,
-    VolumeSFXUpdate,
-    VolumeBGMMuteToggle,
-    VolumeSFXMuteToggle,
+    SkillUsed,//
+    DamageDealt,//
+    VolumeBGMUpdate,//
+    VolumeSFXUpdate,//
+    VolumeBGMMuteToggle,//
+    VolumeSFXMuteToggle,//
     RequestSkillUse,
     RequestAddSkillSlot,
     CloseUpgradeUI,

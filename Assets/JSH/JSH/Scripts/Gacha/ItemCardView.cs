@@ -24,6 +24,7 @@ public class ItemCardView : MonoBehaviour, IPoolable
         _itemName.text = item.Name;
         _gradeText.text = item.Grade.ToString();
         _tierText.text = $"T{item.Tier.ToString()}";
+        SoundManager.Instance.PlaySFX(ESFXType.ItemDrop);
     }
 
     public void Setup(SkillDataSO skill) 
@@ -33,6 +34,7 @@ public class ItemCardView : MonoBehaviour, IPoolable
         _itemName.text = skill.Name;
         _gradeText.text = skill.Grade.ToString();
         _tierText.text = " ";
+        SoundManager.Instance.PlaySFX(ESFXType.ItemDrop);
     }
 
     private void SetColor(GradeType grade) 

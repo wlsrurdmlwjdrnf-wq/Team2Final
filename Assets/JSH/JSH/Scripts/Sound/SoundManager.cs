@@ -15,14 +15,6 @@ public class SoundManager : MonoBehaviour
     private WaitForSeconds mWaitForSeconds = new WaitForSeconds(0.1f);
     private AudioSource mLoopSource;
 
-    [SerializeField] private Dictionary<string, EBGMType> _sceneBgmMap = new Dictionary<string, EBGMType> 
-    {
-        { "JSHTitle", EBGMType.Title },
-        { "JSHLobby", EBGMType.MainStage },
-        { "Title", EBGMType.Title },
-        { "Lobby", EBGMType.MainStage }
-    };
-
     [Header("Event Channel")]
     [SerializeField] private GameEventChannelSO mEventChannel;
 
@@ -53,24 +45,13 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Start()
-    {
-        string currScene = SceneManager.GetActiveScene().name;
-        if (_sceneBgmMap.TryGetValue(currScene, out EBGMType bgm)) 
-        {
-            PlayBGM(bgm);
-        }
-    }
     private void OnEnable()
     {
         mEventChannel.OnEventRaised += HandleGameEvent;
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     private void OnDisable()
     {
         mEventChannel.OnEventRaised -= HandleGameEvent;
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     private void InitPool() 
     {
@@ -137,13 +118,6 @@ public class SoundManager : MonoBehaviour
             yield return mWaitForSeconds;
         }
     }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
-    {
-        if (_sceneBgmMap.TryGetValue(scene.name, out EBGMType bGMType)) 
-        {
-            PlayBGM(bGMType);
-        }
-    }
     private void HandleGameEvent(EGameEventType type, IGameEventPayload payload) 
     {
         switch (type) 
@@ -192,6 +166,13 @@ public class SoundManager : MonoBehaviour
                         mLoopSource.mute = sfxMutePayload.isMuted;
                     }
                 }
+                break;
+            case EGameEventType.EquipRequest:
+            case EGameEventType.EquipChanged:
+                PlaySFX(ESFXType.Equip);
+                break;
+            case EGameEventType.UnEquipRequest:
+                PlaySFX(ESFXType.Unequip);
                 break;
         }
     }

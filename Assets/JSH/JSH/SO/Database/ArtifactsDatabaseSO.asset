@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f116824232ab8d4eafadcf61e1961c6, type: 3}
+  m_Name: ArtifactsDatabaseSO
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: 1636260eb07b77e42ac91a8663a17553, type: 2}
+  - {fileID: 11400000, guid: 85b64aeaed7c6df41b215edaf0516da1, type: 2}
+  - {fileID: 11400000, guid: fa5ac62f7fd3e4c44835728520981b47, type: 2}
+  - {fileID: 11400000, guid: b5ef7c1a3a3749843afea2ed3a928cbb, type: 2}
+  - {fileID: 11400000, guid: 49550469ffeb3594aa8e4468f9b1ed3c, type: 2}
+  - {fileID: 11400000, guid: 4ae0fc98d50785c408059e3d008c8c88, type: 2}
+  - {fileID: 11400000, guid: 03c73d9e1da52fd428e396894b66853f, type: 2}
+  - {fileID: 11400000, guid: d5a6f95942f957a47a34cc50231e3d6d, type: 2}
+  - {fileID: 11400000, guid: 6f6067da0b4e4544e942711222db9af7, type: 2}
+  - {fileID: 11400000, guid: 5ba3ef3df865bc04f80121fa0cfbd835, type: 2}
+  - {fileID: 11400000, guid: 585c77f6c1132b94a820913cd21f04b1, type: 2}
+  weapons: []
+  accessories: []
+  artifacts: []
+  skills: []
+  playerInits: []
+  stages: []

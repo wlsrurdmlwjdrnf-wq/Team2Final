@@ -99,11 +99,11 @@ public class TestSlotUI : MonoBehaviour, IPoolable
     {
         Slot = null;
         Frame.color = Color.gray;
-        Image.color = Color.gray;
+        Image.color = Color.black;
         Image.sprite = null;
-        NameTxt.text = "Empty";
-        LevelTxt.text = "+0";
-        TierTxt.text = "0";
+        NameTxt.text = "";
+        LevelTxt.text = "";
+        TierTxt.text = "";
         StackTxt.text = $"0/{PublicConst.UpgradeStack}";
         StackSlider.value = 0f;
         EquipDot.SetActive(false);
@@ -129,6 +129,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
             stack = Slot.Stack;            
             _ = LoadIcon(Item.Name);
             IsUnlocked = Slot.Unlocked;
+            TierTxt.text = $"{tier}";
         }
         else if (Slot.BaseData is SkillDataSO Skill) 
         {
@@ -138,6 +139,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
             level = Slot.Level;
             stack = Slot.Stack;
             IsUnlocked = Slot.Unlocked;
+            TierTxt.text = " ";
         }
         if (!Slot.Unlocked)
         {
@@ -155,13 +157,13 @@ public class TestSlotUI : MonoBehaviour, IPoolable
                 case GradeType.Heroic: Frame.color = new Color(1f, 0f, 1f); break;
                 case GradeType.Legendary: Frame.color = Color.yellow; break;
                 case GradeType.Mythical: Frame.color = Color.red; break;
+                case GradeType.Immortal: Frame.color = Color.black; break;
             }
         }
         
         EquipDot.SetActive(Slot.IsEquipped);
         NameTxt.text = name;
         LevelTxt.text = $"+{level}";
-        TierTxt.text = $"{tier}";
         StackTxt.text = $"{stack}/{PublicConst.UpgradeStack}";
         StackSlider.value = Mathf.Clamp((float)stack/PublicConst.UpgradeStack, 0f, 1f);
         CoolTimeImage.fillAmount = 0;
