@@ -74,7 +74,6 @@ public class SkillManager : Singleton<SkillManager>
                 _equippedSkills.Add(instance);
             }
         }
-
         //해제된 슬롯 제거
         for (int i = _equippedSkills.Count - 1; i >= 0; i--)
         {
@@ -94,7 +93,6 @@ public class SkillManager : Singleton<SkillManager>
                 _equippedSkills.RemoveAt(i);
             }
         }
-
     }
     private void Update()
     {

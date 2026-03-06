@@ -49,25 +49,6 @@ public class InventorySystem : Singleton<InventorySystem>
             case EGameEventType.UnEquipRequest:
                 if (payload is SlotPayload unEquipSlot) UnEquip(unEquipSlot.Slot);
                 break;
-            case EGameEventType.GachaPull:
-                if (payload is ItemCard card)
-                {
-                    Debug.Log("GachaDataCatch");
-                    switch (card.Type)
-                    {
-                        case EDataType.Weapon:
-                        case EDataType.Accessories:
-                        case EDataType.Artifact:
-                            var item = ItemSkillDataManager.Instance.GetItemData(card);
-                            if (item != null) AddItem(item);
-                            break;
-                        case EDataType.Skill:
-                            var skillData = ItemSkillDataManager.Instance.GetSkillData(card);
-                            if (skillData != null) AddSkill(skillData);
-                            break;
-                    }
-                }
-                break;
             case EGameEventType.AutoCombine:
                 if (payload is EDataTypePayload combineType) AutoCombine(combineType.Type);
                 break;
@@ -189,9 +170,7 @@ public class InventorySystem : Singleton<InventorySystem>
         }
         else
         {
-            var newSlot = new InventorySlot(data, 0, true);
-            targetInventory.Add(newSlot);
-            _eventChannel.RaiseEvent(EGameEventType.SlotUpdated, new SlotPayload(newSlot));
+            return;
         }
         StatModifyToPlayer();
     }
@@ -349,13 +328,15 @@ public class InventorySystem : Singleton<InventorySystem>
         if (index >= 0)
         {
             _equippedSkills[index].IsEquipped = false;
+            _eventChannel.RaiseEvent(EGameEventType.EquipChanged, new SlotPayload(_UnequipSkill));
+
             _equippedSkills[index] = _EquipSkill;
             _EquipSkill.IsEquipped = true;
+            _eventChannel.RaiseEvent(EGameEventType.EquipChanged, new SlotPayload(_EquipSkill));
         }
 
         _OnSkillChange = false;
         StatModifyToPlayer();
-        _eventChannel.RaiseEvent(EGameEventType.EquipChanged, new SlotPayload(_EquipSkill));
     }
     #endregion
     #region Ω∫≈»«’ªÍ
@@ -494,6 +475,7 @@ public class InventorySystem : Singleton<InventorySystem>
         int rand = UnityEngine.Random.Range(0, _artifactInventory.Count);
         if (_artifactInventory != null && _artifactInventory.Count > 0)
         {
+            AddItem(_artifactInventory[rand].BaseData as ItemDataSO);
             return _artifactInventory[rand].BaseData as ItemDataSO;
         }
         else return null;

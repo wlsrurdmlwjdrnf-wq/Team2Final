@@ -118,20 +118,6 @@ public class ItemSkillDataManager : MonoBehaviour
 
                 ArtifactsDatabase.items.Add(itemSO);
         }
-
-        //if (SkillDatabase != null) SkillDatabase.skills.Clear();
-        //else SkillDatabase = ScriptableObject.CreateInstance<SkillDatabaseSO>();
-        //foreach (var skill in ItemDatabaseSO.skills)
-        //{
-        //        SkillDataSO skillSO = ScriptableObject.CreateInstance<SkillDataSO>();
-        //        skillSO.Name = skill.Name;
-        //        skillSO.Type = EDataType.Skill;
-        //        skillSO.Grade = skill.Grade;
-        //        skillSO.Level = skill.Level;
-        //        skillSO.DataSO = DataSOType.Resource;
-
-        //        SkillDatabase.skills.Add(skillSO);
-        //}
     }
     public ItemDataSO GetItemData(ItemCard card) 
     {
@@ -165,7 +151,7 @@ public class ItemSkillDataManager : MonoBehaviour
         List<SkillDataSO> dataLists = new List<SkillDataSO>();
         foreach (var skill in SkillDatabase.skills) 
         {
-            if (skill.Type == card.Type && skill.Grade == card.Grade) 
+            if (skill.Type == card.Type && skill.Grade == card.Grade ) 
             {
                 dataLists.Add(skill);
             }

@@ -19,6 +19,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
     public Slider StackSlider;
     public GameObject EquipDot;
     public bool IsUnlocked = false;
+    public bool IsOpened = false;
 
     [SerializeField] private bool _IsEquipSlot = false;
     [SerializeField] private EDataType _equipType;
@@ -62,26 +63,18 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         if (_skillInstance != null && _IsEquipSlot)
         {
             float progress = _skillInstance.GetCooldownProgress();
-
-            if (_skillInstance.baseData.TriggerCount > 0)
-            {
-                CoolTimeImage.fillAmount = 1f - progress;
-            }
-            else 
-            {
-                CoolTimeImage.fillAmount = 1f - progress;
-            }
+            CoolTimeImage.fillAmount = 1f - progress;
         }
     }
     public void OnClick() 
     {
         if (_IsEquipSlot && _equipType == EDataType.Skill)
         {
-            if (Slot == null)
+            if (!IsOpened)
             {
                 _eventChannel.RaiseEvent(EGameEventType.RequestAddSkillSlot);
             }
-            else if (InventorySystem.instance._OnSkillChange) 
+            else if (InventorySystem.instance._OnSkillChange)
             {
                 _eventChannel.RaiseEvent(EGameEventType.RequestChangeSkill, new SlotPayload(Slot));
             }
@@ -98,6 +91,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
     public void SetEmpty() 
     {
         Slot = null;
+
         Frame.color = Color.gray;
         Image.color = Color.black;
         Image.sprite = null;
