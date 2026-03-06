@@ -49,7 +49,6 @@ public class MpBar : MonoBehaviour
         if (current <= 0f)
         {
             _slider.value = 0f;
-            HideImmediately();
         }
         else
         {
