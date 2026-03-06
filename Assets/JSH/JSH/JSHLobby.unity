@@ -467,10 +467,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkillPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 1097315324826501349, guid: f5d5cf3e5806fa64eb7e714fc8da888b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4632371339855615845, guid: f5d5cf3e5806fa64eb7e714fc8da888b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -9122,7 +9118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7121822112348493765, guid: 52e92a18b18f38f4e9e4c64b4a8581ff, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9168131594826459828, guid: 52e92a18b18f38f4e9e4c64b4a8581ff, type: 3}
       propertyPath: m_Name
@@ -9130,7 +9126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9168131594826459828, guid: 52e92a18b18f38f4e9e4c64b4a8581ff, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10752,9 +10748,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4812493133393421741, guid: a21a6e638ecd9f348a300d739ee6e79b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5407140148450633284, guid: a21a6e638ecd9f348a300d739ee6e79b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052613532730588931, guid: a21a6e638ecd9f348a300d739ee6e79b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7476737470476502491, guid: a21a6e638ecd9f348a300d739ee6e79b, type: 3}
       propertyPath: m_Name
       value: SoundUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7476737470476502491, guid: a21a6e638ecd9f348a300d739ee6e79b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447727096570414567, guid: a21a6e638ecd9f348a300d739ee6e79b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
