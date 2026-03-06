@@ -11,6 +11,7 @@ public static class PlayerLevelUpSystem
 
         if (PlayerResourceManager.Instance.GetResource(ResourceType.EXP) < _expRequirement) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.LevelUpButton);
         PlayerStatManager.Instance.LevelUp();
         PlayerResourceManager.Instance.AddResource(ResourceType.StatPoint, new BigNumber(5));
         PlayerResourceManager.Instance.SpendResource(ResourceType.EXP, _expRequirement);

@@ -28,7 +28,7 @@ public class DamageText : MonoBehaviour, IPoolable2
 
         transform.position = worldPosition + Vector3.up * 0.8f;
         canvasGroup.alpha = 1f;
-        transform.localScale = Vector3.one * 0.8f;  // 살짝 작게 시작
+        transform.localScale = Vector3.one * 0.5f;  // 작게 시작
     }
 
     public void OnSpawn()

@@ -34,6 +34,11 @@ public class TierUpView : MonoBehaviour
     }
     public void UpdateTier()
     {
+        foreach (var icon in tierIconImages)
+        {
+            icon.sprite = tierIcons[(int)PlayerStatManager.Instance.PlayerTier];
+        }
+
         if (!_isTier) return;
 
         tierText.text = PlayerStatManager.Instance.PlayerTier.ToString();
@@ -43,10 +48,6 @@ public class TierUpView : MonoBehaviour
             {
                 stageButtons[i].gameObject.SetActive(true);
                 if (i != 0) promoteCompleteText[i - 1].text = "½Â±Þ ¿Ï·á";
-                foreach(var icon in tierIconImages)
-                {
-                    icon.sprite = tierIcons[i];
-                }
                 continue;
             }
             stageButtons[i].gameObject.SetActive(false);

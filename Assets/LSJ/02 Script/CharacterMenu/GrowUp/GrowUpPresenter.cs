@@ -31,8 +31,10 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void StrUpButtonClick()
     {
-        if (!TryLevelUp() || _model.MaxStrLevel == _model.StrLevel) return;
+        if(_model.MaxStrLevel == _model.StrLevel) return;
+        if (!TryLevelUp()) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddStrLevel();
         _tmpText = ShowNumber(StatType.AttackPower, _model.StrLevel);
         view.UpdateStr(_tmpText, _model.StrLevel.ToString());
@@ -40,8 +42,10 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void HpUpButtonClick()
     {
-        if (!TryLevelUp() || _model.MaxHpLevel == _model.HpLevel) return;
+        if(_model.MaxHpLevel == _model.HpLevel) return;
+        if (!TryLevelUp()) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddHpLevel();
         _tmpText = ShowNumber(StatType.MaxHP, _model.HpLevel);
         view.UpdateHp(_tmpText, _model.HpLevel.ToString());
@@ -49,8 +53,10 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void VitUpButtonClick()
     {
-        if (!TryLevelUp() || _model.MaxVitLevel == _model.VitLevel) return;
+        if(_model.MaxVitLevel == _model.VitLevel) return;
+        if (!TryLevelUp()) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddVitLevel();
         _tmpText = ShowNumber(StatType.HPRegenPerSec, _model.VitLevel);
         view.UpdateVit(_tmpText, _model.VitLevel.ToString());
@@ -58,8 +64,10 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void CriUpButtonClick()
     {
-        if (!TryLevelUp() || _model.MaxCriLevel == _model.CriLevel) return;
+        if(_model.MaxCriLevel == _model.CriLevel) return;
+        if (!TryLevelUp()) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddCriLevel();
         _tmpText = ShowNumber(StatType.CritDamage, _model.CriLevel);
         view.UpdateCri(_tmpText, _model.CriLevel.ToString());
@@ -67,8 +75,10 @@ public class GrowUpPresenter : MonoBehaviour
     }
     public void LukUpButtonClick()
     {
-        if (!TryLevelUp() || _model.MaxLukLevel == _model.LukLevel) return;
+        if(_model.MaxLukLevel == _model.LukLevel) return;
+        if (!TryLevelUp()) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddLukLevel();
         _tmpText = ShowNumber(StatType.GoldMultiplier, _model.LukLevel);
         view.UpdateLuk(_tmpText, _model.LukLevel.ToString());

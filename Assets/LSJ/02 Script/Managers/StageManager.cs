@@ -129,9 +129,23 @@ public class StageManager : Singleton<StageManager>
 
         // 이벤트 실행
         OnStageChanged?.Invoke();
-        if (_currentStageData.isBossStage) OnBossStageChanged?.Invoke();
-        if (_currentStageData.isTierStage) OnTierStageChanged?.Invoke();
-        if (_currentStageData.isAdventureStage) OnAdventureStageChanged?.Invoke();
+
+        if (_currentStageData.isBossStage)
+        {
+            SoundManager.Instance.PlayBGM(EBGMType.BossStage);
+            OnBossStageChanged?.Invoke();
+        }
+        else if (_currentStageData.isTierStage)
+        {
+            SoundManager.Instance.PlayBGM(EBGMType.TierStage);
+            OnTierStageChanged?.Invoke();
+        }
+        else if (_currentStageData.isAdventureStage)
+        {
+            SoundManager.Instance.PlayBGM(EBGMType.AdventureStage);
+            OnAdventureStageChanged?.Invoke();
+        }
+        else SoundManager.Instance.PlayBGM(EBGMType.MainStage);
 
         _isClearing = false;
     }

@@ -14,19 +14,20 @@ public class ObjectFlash : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
     private MaterialPropertyBlock propertyBlock;
+    private WaitForSeconds _flashDrt;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
         {
-            Debug.LogWarning($"{nameof(ObjectFlash)}: SpriteRenderer 컴포넌트가 없습니다. ({gameObject.name})", this);
             enabled = false;
             return;
         }
 
         originalColor = spriteRenderer.color;
         propertyBlock = new MaterialPropertyBlock();
+        _flashDrt = new WaitForSeconds(flashDuration * 0.4f);
     }
 
     public void Flash()
@@ -43,7 +44,7 @@ public class ObjectFlash : MonoBehaviour
         }
 
         // 플래시 색상 적용
-        block.SetColor("_Color", flashTint);           // Built-in 기본
+        block.SetColor("_Color", flashTint);
 
         spriteRenderer.SetPropertyBlock(block);
 
@@ -53,7 +54,7 @@ public class ObjectFlash : MonoBehaviour
     private IEnumerator ResetFlashRoutine()
     {
         // 순간 유지 시간
-        yield return new WaitForSeconds(flashDuration * 0.4f);
+        yield return _flashDrt;
 
         // 복귀
         var block = new MaterialPropertyBlock();
@@ -69,7 +70,6 @@ public class ObjectFlash : MonoBehaviour
 
     }
 
-    // 풀링 사용 시 호출 추천
     private void OnEnable()
     {
         // 색상 및 프로퍼티 블록 초기화

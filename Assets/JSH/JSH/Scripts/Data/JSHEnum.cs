@@ -20,6 +20,8 @@ public enum EBGMType
     Title = 0,
     MainStage = 1,
     BossStage = 2,
+    TierStage = 3,
+    AdventureStage = 4,
 }
 public enum ESFXType
 {

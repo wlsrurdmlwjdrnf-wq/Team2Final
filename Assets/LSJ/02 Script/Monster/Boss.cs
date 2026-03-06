@@ -39,15 +39,6 @@ public class Boss : MonsterBase
     // Animation Event가 호출할 함수
     public void OnBossAttackHit()
     {
-        //Collider2D[] hits = Physics2D.OverlapCircleAll(
-        //    AttackPoint.position,
-        //    AttackRange,
-        //    PlayerLayer
-        //);
-
-        //if (hits.Length == 0) return;
-
-       // PlayerHpMp target = hits[0].GetComponent<PlayerHpMp>();
         if (_target != null)
         {
             BigNumber damage = CurrentAtk;

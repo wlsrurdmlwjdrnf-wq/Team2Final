@@ -32,17 +32,6 @@ public class PlayerAttackState : IEntityState
 
     public void OnUpdate()
     {
-        //Collider2D hit = Physics2D.OverlapCircle(
-        //    _player.AttackPoint.position,
-        //    _player.AttackRange,
-        //    _player.MonsterLayer
-        //);
-
-        //if (hit == null)
-        //    _player.ChangeState(_player.IdleState);
-        //else if (_player.CanAttack())
-        //    _player.ChangeState(_player.AttackState); // ¿Á¡¯¿‘
-
         if (EnemyManager.Instance.GetClosestEnemy(_player.transform.position) != null)
         {
             _monsterDistance = (EnemyManager.Instance.GetClosestEnemy
@@ -67,5 +56,4 @@ public class PlayerAttackState : IEntityState
         Player.TriggerNoAttack();
         _player.Animator.speed = 1f;
     }
-    
 }
