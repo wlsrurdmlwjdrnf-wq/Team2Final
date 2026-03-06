@@ -16,7 +16,7 @@ MonoBehaviour:
   isBossStage: 0
   isAdventureStage: 1
   mainNumber: 1
-  subNumber: 15
+  subNumber: 20
   monsterPrefabs:
   - {fileID: 3327221700254952552, guid: a77d58cc4b3aaa8419dc0d55d3cecd2f, type: 3}
   spawnCount: 10

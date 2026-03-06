@@ -21,7 +21,7 @@ MonoBehaviour:
   - {fileID: 4405787325716414631, guid: fdd80d084233fad4eb0c0f91e56e91c3, type: 3}
   - {fileID: 9021709795335874315, guid: ab5f00943427d884f88594242ad8788d, type: 3}
   - {fileID: 345202284924123219, guid: 9b50232c77fb09b4f9140454955e59a2, type: 3}
-  spawnCount: 12
+  spawnCount: 13
   spawnAreaWidth: 40
   minDistance: 1.5
   yFixedPosition: 0.3

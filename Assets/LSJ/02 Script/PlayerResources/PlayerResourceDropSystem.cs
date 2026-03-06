@@ -25,6 +25,8 @@ public class PlayerResourceDropSystem : Singleton<PlayerResourceDropSystem>
 
     public void TriggerDrop(Vector3 monsterPosition)
     {
+        SoundManager.Instance.PlaySFX(ESFXType.ItemDrop);
+
         PlayerResourceManager.Instance.AddResource(ResourceType.EXP, DropAmountCorrection(amountSO.baseExpAmount));
         PlayerResourceManager.Instance.AddResource(ResourceType.Gold, DropAmountCorrection(amountSO.baseGoldAmount));
         SpawnDropItem(expPrefab, monsterPosition);
@@ -73,8 +75,8 @@ public class PlayerResourceDropSystem : Singleton<PlayerResourceDropSystem>
     private BigNumber DropAmountCorrection(float amount)
     {
         BigNumber bn = new BigNumber(amount) *
-            new BigNumber(Mathf.Pow(StageManager.Instance.CurrentMainNumber, 5)) *
-            new BigNumber((StageManager.Instance.CurrentSubNumber + StageManager.Instance.CurrentMainNumber - 2) * 2);
+            new BigNumber(Mathf.Pow(StageManager.Instance.CurrentMainNumber, 6)) *
+            new BigNumber((StageManager.Instance.CurrentSubNumber + StageManager.Instance.CurrentMainNumber - 2) * 3);
 
         if (bn <= new BigNumber(0)) return new BigNumber(amount);
         else return bn;

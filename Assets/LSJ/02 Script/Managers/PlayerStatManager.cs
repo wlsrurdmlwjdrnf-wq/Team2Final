@@ -394,18 +394,4 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
             return BigNumberFormatter.ToFormatted(_floatCachedValues[type]);
         }
     }
-    // 디버그용
-    [ContextMenu("Log All Stats")]
-    private void LogStats()
-    {
-        RecalculateIfNeeded();
-        foreach (var kvp in _bigCachedValues)
-        {
-            Debug.Log($"{kvp.Key} (Big): {GetFormatted(kvp.Key)}");
-        }
-        foreach (var kvp in _floatCachedValues)
-        {
-            Debug.Log($"{kvp.Key} (float): {GetFormatted(kvp.Key)}");
-        }
-    }
 }

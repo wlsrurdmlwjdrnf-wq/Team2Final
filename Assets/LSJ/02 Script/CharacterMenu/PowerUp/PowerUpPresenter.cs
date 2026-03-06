@@ -30,6 +30,7 @@ public class PowerUpPresenter : MonoBehaviour
 
         if (!TryLevelUp(_tmpCost)) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddAtkLevel();
         _tmpCost = CalculateCost(_model.AtkLevel);
         _tmpText = ShowNumber(StatType.AttackPower, _model.AtkLevel);
@@ -42,6 +43,7 @@ public class PowerUpPresenter : MonoBehaviour
 
         if (!TryLevelUp(_tmpCost)) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddHpLevel();
         _tmpCost = CalculateCost(_model.HpLevel);
         _tmpText = ShowNumber(StatType.MaxHP, _model.HpLevel);
@@ -54,6 +56,7 @@ public class PowerUpPresenter : MonoBehaviour
 
         if (!TryLevelUp(_tmpCost)) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddHpRegenLevel();
         _tmpCost = CalculateCost(_model.HpRegenLevel);
         _tmpText = ShowNumber(StatType.HPRegenPerSec, _model.HpRegenLevel);
@@ -62,10 +65,12 @@ public class PowerUpPresenter : MonoBehaviour
     }
     public void CriDmgUpButtonClick()
     {
+        if(_model.MaxCriDmgLevel == _model.CriDmgLevel) return;
         _tmpCost = CalculateCost(_model.CriDmgLevel);
 
         if (!TryLevelUp(_tmpCost)) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddCriDmgLevel();
         _tmpCost = CalculateCost(_model.CriDmgLevel);
         _tmpText = ShowNumber(StatType.CritDamage, _model.CriDmgLevel);
@@ -74,10 +79,12 @@ public class PowerUpPresenter : MonoBehaviour
     }
     public void CriRateUpButtonClick()
     {
+        if(_model.MaxCriRateLevel == _model.CriRateLevel) return;
         _tmpCost = CalculateCost(_model.CriRateLevel);
 
-        if (!TryLevelUp(_tmpCost) || _model.MaxCriRateLevel == _model.CriRateLevel) return;
+        if (!TryLevelUp(_tmpCost)) return;
 
+        SoundManager.Instance.PlaySFX(ESFXType.StatUpButton);
         _model.AddCriRateLevel();
         _tmpCost = CalculateCost(_model.CriRateLevel);
         _tmpText = ShowNumber(StatType.CritRate, _model.CriRateLevel);
@@ -118,8 +125,22 @@ public class PowerUpPresenter : MonoBehaviour
     // 업그레이드 비용 계산
     private BigNumber CalculateCost(int level)
     {
-        BigNumber cost = new BigNumber(1 +  level) * new BigNumber(Mathf.Pow(1.1f, level));
-        return cost;
+        if (level > 1000)
+        {
+            BigNumber cost = new BigNumber(1);
+            int tmpLevelCount = level / 1000;
+            for(int i = 0; i <= tmpLevelCount; i++)
+            {
+                if (i == tmpLevelCount) cost *= new BigNumber(1 + level) * new BigNumber(Mathf.Pow(1.05f, level - 1000 * tmpLevelCount));
+                else cost *= new BigNumber(Mathf.Pow(1.05f, 1000));
+            }
+            return cost;
+        }
+        else
+        {
+            BigNumber cost = new BigNumber(1 + level) * new BigNumber(Mathf.Pow(1.05f, level));
+            return cost;
+        }
     }
     // 업그레이드 가능 여부 반환 및 골드 소모
     private bool TryLevelUp(BigNumber cost)

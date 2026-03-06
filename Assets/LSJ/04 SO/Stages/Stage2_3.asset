@@ -20,8 +20,8 @@ MonoBehaviour:
   monsterPrefabs:
   - {fileID: 9204217136651007010, guid: ddb3c05bcd23d8042980fe4a68fc15dd, type: 3}
   - {fileID: 8723628648747048229, guid: f3c596456c494414393af0559679690d, type: 3}
-  spawnCount: 13
+  spawnCount: 20
   spawnAreaWidth: 40
-  minDistance: 1.5
-  yFixedPosition: 0.3
+  minDistance: 1
+  yFixedPosition: 0.5
   backgroundSprite: {fileID: 21300000, guid: 90c03d4b831e4ff4a9b19d21b5dad722, type: 3}

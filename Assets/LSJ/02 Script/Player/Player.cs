@@ -102,6 +102,7 @@ public class Player : EntityStateMachine
     // Animation Event가 부를 함수
     public void OnAttackHit()
     {
+        RandomSwingSoundPlay();
         IDamageable target = EnemyManager.Instance.GetClosestEnemy(transform.position);
 
         if (target != null)
@@ -116,6 +117,22 @@ public class Player : EntityStateMachine
             else target.TakeDamage(damage);
 
             // 이펙트나 사운드 넣으면 될 듯
+        }
+    }
+    private void RandomSwingSoundPlay()
+    {
+        int rand = UnityEngine.Random.Range(1, 4);
+        switch (rand)
+        {
+            case 1:
+                SoundManager.Instance.PlaySFX(ESFXType.SwingAxe1);
+                break;
+            case 2:
+                SoundManager.Instance.PlaySFX(ESFXType.SwingAxe2);
+                break;
+            case 3:
+                SoundManager.Instance.PlaySFX(ESFXType.SwingAxe3);
+                break;
         }
     }
     public void OnChangeIdle()

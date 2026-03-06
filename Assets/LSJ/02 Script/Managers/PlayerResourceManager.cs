@@ -16,9 +16,10 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
 
         // 시작 재화 테스트
         _resources[ResourceType.Gold] = new BigNumber(1000);
-        _resources[ResourceType.Diamond] = new BigNumber(10000);
-        _resources[ResourceType.Feather] = new BigNumber(10);
-        //_resources[ResourceType.EXP] = new BigNumber(7777777);
+        _resources[ResourceType.Diamond] = new BigNumber(100000);
+        _resources[ResourceType.Emerald] = new BigNumber(100000);
+        _resources[ResourceType.EnhancementCube] = new BigNumber(100000);
+        _resources[ResourceType.Feather] = new BigNumber(100);
     }
 
     public void AddResource(ResourceType type, BigNumber amount)
@@ -128,16 +129,6 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
         {
             Debug.LogError($"자원 로드 실패: {e.Message}");
             return false;
-        }
-    }
-
-    // 디버그용
-    [ContextMenu("Log All Resources")]
-    private void LogAll()
-    {
-        foreach (var kvp in _resources)
-        {
-            Debug.Log($"{kvp.Key}: {kvp.Value} ({GetFormatted(kvp.Key)})");
         }
     }
 }

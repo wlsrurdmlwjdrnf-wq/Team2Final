@@ -41,6 +41,7 @@ public class TitleManager : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.Instance.PlayBGM(EBGMType.Title);
         // 버튼 이벤트 연결
         callLoginBtn.onClick.AddListener(ShowLoginUI);
         callSignUpBtn.onClick.AddListener(ShowSignupUI);

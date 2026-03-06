@@ -55,7 +55,7 @@ public class DropItem : MonoBehaviour, IPoolable2
                 1,             // 점프 횟수 (1이면 한 번 튀는 느낌)
                 duration
             )
-            .SetEase(Ease.OutQuad)   // 또는 OutBounce, OutBack 등 취향껏
+            .SetEase(Ease.OutQuad)   
         );
 
         // 회전은 전체 시간 동안 같이

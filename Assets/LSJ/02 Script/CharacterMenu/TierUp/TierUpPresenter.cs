@@ -18,6 +18,7 @@ public class TierUpPresenter : MonoBehaviour
 
     public void TierStageButtonClick(Tier tier)
     {
+        SoundManager.Instance.PlaySFX(ESFXType.Button);
         StageManager.Instance.ApplyStage(
             StageManager.Instance.GetStageData(tier));
     }
