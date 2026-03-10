@@ -77,10 +77,9 @@ public class GachaSystem : Singleton<GachaSystem>
     //가챠실행
     public void DrawGacha(EDataType gachaType, int count = 1)
     {
-        int totalCost = GachaCost * count;
+        int totalCost = GachaCost * (count - count/11);
         //가챠비용 체크&차감
         if (!PlayerResourceManager.Instance.SpendResource(ResourceType.Diamond, new BigNumber(totalCost))) return;
-        Debug.Log($"{gachaType}:{count}, Cost:{GachaCost * count}");
         gachaResults.Clear();
         for (int i = 0; i < count; i++)
         {

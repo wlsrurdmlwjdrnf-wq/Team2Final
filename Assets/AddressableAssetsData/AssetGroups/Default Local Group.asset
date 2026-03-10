@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ae44963229508141a890e4ff4e6306f
+    m_Address: Water
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c973c70b5bf3fe419aedd303d98379a
     m_Address: EarthGrow
     m_ReadOnly: 0
@@ -37,6 +42,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1009b71a118d78442b27db9b7f5e6a9a
+    m_Address: Earth
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1075bca8b4842934f9de6da14564d7f8
     m_Address: AXE_LEGENDARY_02
     m_ReadOnly: 0
@@ -44,6 +54,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 129fe57927da485418413b4af5f3d02a
     m_Address: RING_ADVANCED_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1575b5b0a3759c843b0279f1627bc16f
+    m_Address: Wind
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -92,6 +107,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 305dc9d389e6c2741a7c8a25df218b28
+    m_Address: Fire
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 35aa7dbf870684648864bd3c41ca5ff2
     m_Address: RING_LEGENDARY_02
     m_ReadOnly: 0
@@ -99,6 +119,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 36cf826d061a1e74a90c9f4857fd9409
     m_Address: RING_ADVANCED_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4089fc6c46782f74a8761ddca11caa15
+    m_Address: Normal
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -30,7 +30,7 @@ public enum ESFXType
     Button = 2,
     Equip = 3,
     Unequip = 4,
-    Explosion = 5,
+    Explosion = 15,
     IceSlash = 5,
     EarthGrow = 6,
     Lightning = 7,

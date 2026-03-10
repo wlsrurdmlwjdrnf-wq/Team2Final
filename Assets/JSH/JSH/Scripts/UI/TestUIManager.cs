@@ -81,12 +81,12 @@ public class TestUIManager : Singleton<TestUIManager>
                 {
                     if (gachaData.Type == EDataType.Weapon)
                     {
-                        _weaponGachaLevelText.text = $"소환레벨 {gachaData.Level}";
+                        _weaponGachaLevelText.text = $"소환레벨 {gachaData.Level+1}";
                         _weaponGachaProgressText.text = $"{gachaData.CurrCount}/{gachaData.LevelUpCount}";
                     }
                     else if (gachaData.Type == EDataType.Accessories)
                     {
-                        _accessoryGachaLevelText.text = $"소환레벨 {gachaData.Level}";
+                        _accessoryGachaLevelText.text = $"소환레벨 {gachaData.Level+1}";
                         _accessoryGachaProgressText.text = $"{gachaData.CurrCount}/{gachaData.LevelUpCount}";
                     }
                 }
