@@ -17,43 +17,74 @@ public class SkillManager : Singleton<SkillManager>
 
     private void OnEnable()
     {
+        Debug.Log("[SkillManager] OnEnable 호출됨");
+
         _eventChannel.OnEventRaised += HandleEvent;
         Player.OnAttack += OnNormalAttack;
         Player.OnAttack += PlayerReady;
         Player.OnDead += PlayerDead;
         Player.OnKnockBack += PlayerDead;
-        if (StageManager.Instance != null) StageManager.Instance.OnStageChanged += GetNewEnemy;
+        if (StageManager.Instance != null) 
+        { 
+            StageManager.Instance.OnStageChanged += GetNewEnemy;
+            Debug.Log("[SkillManager] StageManager 연결 성공");
+        }
     }
     private void OnDisable()
     {
+        Debug.Log("[SkillManager] OnDisable 호출됨");
+
         _eventChannel.OnEventRaised -= HandleEvent;
         Player.OnAttack -= OnNormalAttack;
         Player.OnAttack -= PlayerReady;
         Player.OnDead -= PlayerDead;
         Player.OnKnockBack -= PlayerDead;
-        if (StageManager.Instance != null) StageManager.Instance.OnStageChanged -= GetNewEnemy;
+        if (StageManager.Instance != null) StageManager.Instance.OnStageChanged -= GetNewEnemy;       
     }
     private void HandleEvent(EGameEventType eventType, IGameEventPayload payload) 
     {
+        Debug.Log($"[SkillManager] HandleEvent 호출됨: {eventType}");
+
         switch (eventType) 
         {
             case EGameEventType.SlotUpdated:
             case EGameEventType.EquipChanged:
             case EGameEventType.EquipRequest:
-                if (payload is SlotPayload slot && slot.Slot.BaseData is SkillDataSO) RefreshSlots();
+                if (payload is SlotPayload slot && slot.Slot.BaseData is SkillDataSO)
+                {
+                    Debug.Log("[SkillManager] RefreshSlots 실행");
+                    RefreshSlots();
+                }
+
                 break;
             case EGameEventType.RequestSkillUse:
-                if (payload is SlotPayload useSlot && useSlot.Slot.BaseData is SkillDataSO) 
+                if (payload is SlotPayload useSlot && useSlot.Slot.BaseData is SkillDataSO)
                 {
-                    if (GetSkillInstance(useSlot.Slot) != null && GetSkillInstance(useSlot.Slot).CanCast(_playerHpMp))
-                        GetSkillInstance(useSlot.Slot).Cast();
+                    var instance = GetSkillInstance(useSlot.Slot);
+                    Debug.Log($"[SkillManager] RequestSkillUse: Slot={useSlot.Slot.BaseData.name}, Instance={(instance != null)}");
+
+                    if (instance != null && instance.CanCast(_playerHpMp))
+                    {
+                        Debug.Log("[SkillManager] 스킬 캐스트 실행");
+                        instance.Cast();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[SkillManager] 스킬 캐스트 실패 (Instance null 또는 CanCast=false)");
+                    }
                 }
+
                 break;
         }
     }
     public void RefreshSlots() 
     {
+        Debug.Log("[SkillManager] RefreshSlots 시작");
+
+
         List<InventorySlot> equippedSlots = InventorySystem.Instance.GetEquippedSkills();
+        Debug.Log($"[SkillManager] 현재 장착된 슬롯 개수: {equippedSlots.Count}");
+
 
         //새로 장착된 슬롯 추가
         foreach (InventorySlot slot in equippedSlots)
@@ -72,6 +103,8 @@ public class SkillManager : Singleton<SkillManager>
             {
                 SkillInstance instance = SkillFactory.CreateInstance(slot);
                 _equippedSkills.Add(instance);
+                Debug.Log($"[SkillManager] 새 스킬 추가: {slot.BaseData.name}");
+
             }
         }
         //해제된 슬롯 제거
@@ -90,9 +123,13 @@ public class SkillManager : Singleton<SkillManager>
 
             if (!stillEquipped)
             {
+                Debug.Log($"[SkillManager] 스킬 제거: {skill.baseData.Name}");
+
                 _equippedSkills.RemoveAt(i);
             }
         }
+        Debug.Log($"[SkillManager] RefreshSlots 완료. 현재 스킬 개수: {_equippedSkills.Count}");
+
     }
     private void Update()
     {
@@ -116,12 +153,24 @@ public class SkillManager : Singleton<SkillManager>
 
     public void GetNewEnemy() 
     {
+        Debug.Log("[SkillManager] GetNewEnemy 호출됨 (레이어 기반)");
+
         _enemies.Clear();
-        GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
-        foreach (var monster in monsters) 
+
+        // Monster 레이어 번호 가져오기
+        int monsterLayer = LayerMask.NameToLayer("Monster");
+
+        // 모든 활성 오브젝트 중 Monster 레이어만 필터링
+        foreach (var mono in GameObject.FindObjectsOfType<MonoBehaviour>())
         {
-            if (monster.TryGetComponent(out IDamageable damageable)) { _enemies.Add(damageable); }
+            if (mono.gameObject.layer == monsterLayer && mono.TryGetComponent(out IDamageable damageable))
+            {
+                _enemies.Add(damageable);
+                Debug.Log($"[SkillManager] 몬스터 발견: {mono.name}, Pos={mono.transform.position}");
+            }
         }
+
+        Debug.Log($"[SkillManager] 적 리스트 갱신 완료: {_enemies.Count}개");
     }
     public List<IDamageable> CheckEnemy(float range) 
     {
@@ -129,6 +178,11 @@ public class SkillManager : Singleton<SkillManager>
         Vector2 playerPos = _player.transform.position;
         Vector2 boxCenter = playerPos + Vector2.right * (range/2);
         Vector2 boxSize = new Vector2(range, 2f);
+        Debug.Log($"[SkillManager] CheckEnemy 호출됨, Range={range}, PlayerPos={playerPos}");
+        foreach (var enemy in _enemies)
+        {
+            Debug.Log($"[SkillManager] Enemy={enemy}, Active={(enemy as MonoBehaviour).gameObject.activeSelf}, Pos={(enemy as MonoBehaviour).transform.position}");
+        }
 
         foreach (var enemy in _enemies) 
         {

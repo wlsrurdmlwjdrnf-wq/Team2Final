@@ -15,7 +15,8 @@ public class SkillPanelUI : MonoBehaviour
     [SerializeField] private Button _upgradeButton;
     [SerializeField] private Button _equipButton;
     [SerializeField] private TextMeshProUGUI _equipButtonTxt;
-
+    [SerializeField] private Button _prevSlotButton;
+    [SerializeField] private Button _nextSlotButton;
     [SerializeField] private TestSlotUI _presentSlotUI;
     private InventorySlot _currSlot;
     private Color _tempColor;
@@ -24,6 +25,17 @@ public class SkillPanelUI : MonoBehaviour
         _eventChannel.OnEventRaised += HandleEvent;
         gameObject.SetActive(false);
         _tempColor = _equipButton.image.color;
+
+        _prevSlotButton.onClick.AddListener(() =>
+        {
+            var prev = InventorySystem.instance.GetPrevSlot(_currSlot);
+            if (prev != null) OpenPopUp(prev);
+        });
+        _nextSlotButton.onClick.AddListener(() =>
+        {
+            var next = InventorySystem.instance.GetNextSlot(_currSlot);
+            if (next != null) OpenPopUp(next);
+        });
     }
     private void OnDestroy()
     {
@@ -50,15 +62,23 @@ public class SkillPanelUI : MonoBehaviour
     }
     private void OpenPopUp(InventorySlot slot)
     {
-        if (!slot.Unlocked) return;
         if (slot.GetDataType() != EDataType.Skill) { return; }
         _currSlot = slot;
         gameObject.SetActive(true);
 
-        _upgradeButton.onClick.RemoveAllListeners();
-        _upgradeButton.onClick.AddListener(() => {
-            _eventChannel.RaiseEvent(EGameEventType.UpgradeRequest, new SlotPayload(_currSlot));
-        });
+        if (slot.Unlocked)
+        {
+            _upgradeButton.interactable = true;
+            _upgradeButton.onClick.RemoveAllListeners();
+            _upgradeButton.onClick.AddListener(() =>
+            {
+                _eventChannel.RaiseEvent(EGameEventType.UpgradeRequest, new SlotPayload(_currSlot));
+            });
+        }
+        else
+        {
+            _upgradeButton.interactable = false;
+        }
 
         RefreshText(slot);
     }
@@ -67,6 +87,8 @@ public class SkillPanelUI : MonoBehaviour
         if (_currSlot != null && slot.Id != _currSlot.Id) return;
 
         RefreshText(slot);
+        _prevSlotButton.interactable = InventorySystem.instance.GetPrevSlot(slot) != null;
+        _nextSlotButton.interactable = InventorySystem.instance.GetNextSlot(slot) != null;
     }
     private void RefreshText(InventorySlot slot)
     {
@@ -94,21 +116,31 @@ public class SkillPanelUI : MonoBehaviour
             else { _cooltimeTxt.text = $"∆Ú≈∏:{skill.TriggerCount}»∏"; }
             _manaCostTxt.text = $"{skill.ManaCost}∏∂≥™";
         }
-        if (_currSlot != null && _currSlot.IsEquipped)
+        if (_currSlot != null && _currSlot.Unlocked)
         {
-            _equipButtonTxt.text = "«ÿ¡¶";
-            _equipButton.image.color = Color.gray;
-            _equipButton.onClick.RemoveAllListeners();
-            _equipButton.onClick.AddListener(() =>
-                _eventChannel.RaiseEvent(EGameEventType.UnEquipRequest, new SlotPayload(_currSlot)));
+            _equipButton.interactable = true;
+            if (_currSlot.IsEquipped)
+            {
+                _equipButtonTxt.text = "«ÿ¡¶";
+                _equipButton.image.color = Color.gray;
+                _equipButton.onClick.RemoveAllListeners();
+                _equipButton.onClick.AddListener(() =>
+                    _eventChannel.RaiseEvent(EGameEventType.UnEquipRequest, new SlotPayload(_currSlot)));
+            }
+            else
+            {
+                _equipButtonTxt.text = "¿Â¬¯";
+                _equipButton.image.color = _tempColor;
+                _equipButton.onClick.RemoveAllListeners();
+                _equipButton.onClick.AddListener(() =>
+                    _eventChannel.RaiseEvent(EGameEventType.EquipRequest, new SlotPayload(_currSlot)));
+            }
         }
         else
         {
-            _equipButtonTxt.text = "¿Â¬¯";
-            _equipButton.image.color= _tempColor;
-            _equipButton.onClick.RemoveAllListeners();
-            _equipButton.onClick.AddListener(() =>
-                _eventChannel.RaiseEvent(EGameEventType.EquipRequest, new SlotPayload(_currSlot)));
+            _equipButton.interactable = false;
+            _equipButtonTxt.text = "¿·±Ë";
+            _equipButton.image.color = Color.gray;
         }
         int cost = slot.GetUpgradeCost();
         _costTxt.text = $"{cost}";

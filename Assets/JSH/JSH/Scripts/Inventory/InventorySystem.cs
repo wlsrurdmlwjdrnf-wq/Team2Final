@@ -457,7 +457,16 @@ public class InventorySystem : Singleton<InventorySystem>
     public InventorySlot GetNextSlot(InventorySlot slot) 
     {
         var targetInventory = GetInventory(slot.GetDataType());
-        return targetInventory[targetInventory.IndexOf(slot) + 1];
+        int index = targetInventory.IndexOf(slot);
+        if (index >= 0 && index < targetInventory.Count - 1) return targetInventory[index + 1];
+        else return null;
+    }
+    public InventorySlot GetPrevSlot(InventorySlot slot)
+    {
+        var targetInventory = GetInventory(slot.GetDataType());
+        int index = targetInventory.IndexOf(slot);
+        if (index > 0) return targetInventory[index - 1];
+        else return null;
     }
     public List<InventorySlot> GetInventory(EDataType type) 
     {

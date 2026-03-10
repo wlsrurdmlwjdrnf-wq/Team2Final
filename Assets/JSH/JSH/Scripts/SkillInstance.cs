@@ -26,40 +26,65 @@ public class SkillInstance : IUpgradable
     {
         _currAttackCount++;
     }
-    public bool CanCast(PlayerHpMp playerHpMp) 
+    public bool CanCast(PlayerHpMp playerHpMp)
     {
+        Debug.Log($"[SkillInstance] CanCast 시작: Skill={baseData.name}, CurrAttackCount={_currAttackCount}, TriggerCount={baseData.TriggerCount}");
+
         if (baseData.TriggerCount > 0)
         {
-            if (_currAttackCount < baseData.TriggerCount) return false;
+            if (_currAttackCount < baseData.TriggerCount)
+            {
+                Debug.Log("[SkillInstance] 조건 불충족: 공격 횟수 부족");
+                return false;
+            }
         }
-        else 
+        else
         {
-            if (Time.time < _lastCastTime + baseData.CoolTime) return false;
+            if (Time.time < _lastCastTime + baseData.CoolTime)
+            {
+                Debug.Log("[SkillInstance] 조건 불충족: 쿨타임 미완료");
+                return false;
+            }
         }
-        _enemyDamageables = SkillManager.Instance.CheckEnemy(PublicConst.SkillDetectRange);//스킬 시전 감지 사거리
-        if (_enemyDamageables == null || _enemyDamageables.Count <= 0) return false;                       //범위내 적 체크
-        if (!playerHpMp.UseMana(baseData.ManaCost)) return false;         //UseMana에서 마나 감소랑 마나 체크 둘 다 해줌
+
+        _enemyDamageables = SkillManager.Instance.CheckEnemy(PublicConst.SkillDetectRange);
+        if (_enemyDamageables == null || _enemyDamageables.Count <= 0)
+        {
+            SkillManager.instance.GetNewEnemy();
+            return false;
+        }
+
+        if (!playerHpMp.UseMana(baseData.ManaCost))
+        {
+            Debug.Log("[SkillInstance] 조건 불충족: 마나 부족");
+            return false;
+        }
+
+        Debug.Log("[SkillInstance] 모든 조건 충족 → 캐스트 가능");
         return true;
     }
-    public void Cast() 
+
+    public void Cast()
     {
-        //Debug.Log($"CoolTime : {baseData.CoolTime}");
-        //Debug.Log($"TriggerCount : {baseData.TriggerCount}");
-        //Debug.Log($"AttackCount : {_currAttackCount}");
+        Debug.Log($"[SkillInstance] Cast 실행: Skill={baseData.name}, Damage={baseData.Damage}, EnemyCount={_enemyDamageables.Count}");
         _lastCastTime = Time.time;
         _currAttackCount = 0;
         effect.Apply(_enemyDamageables, baseData.Damage);
     }
+
     public float GetCooldownProgress() 
     {
+        float progress;
         if (baseData.TriggerCount > 0)
         {
-            return Mathf.Clamp01(_currAttackCount / (float)baseData.TriggerCount);
+            progress = Mathf.Clamp01(_currAttackCount / (float)baseData.TriggerCount);
         }
-        else 
+        else
         {
             float elapsed = Time.time - _lastCastTime;
-            return Mathf.Clamp01(elapsed / baseData.CoolTime);
+            progress = Mathf.Clamp01(elapsed / baseData.CoolTime);
         }
+        Debug.Log($"[SkillInstance] 쿨타임 진행도: {progress}");
+        return progress;
     }
 }

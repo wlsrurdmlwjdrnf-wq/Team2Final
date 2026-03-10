@@ -12,6 +12,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
     public Image Image;
     public Image Frame;
     public Image CoolTimeImage;
+    public Image ElementImage;
     public TextMeshProUGUI NameTxt;
     public TextMeshProUGUI LevelTxt;
     public TextMeshProUGUI TierTxt;
@@ -95,6 +96,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         Frame.color = Color.gray;
         Image.color = Color.black;
         Image.sprite = null;
+        ElementImage.sprite = null;
         NameTxt.text = "";
         LevelTxt.text = "";
         TierTxt.text = "";
@@ -120,16 +122,18 @@ public class TestSlotUI : MonoBehaviour, IPoolable
             grade = Item.Grade;
             tier = Item.Tier;
             level = Slot.Level;
-            stack = Slot.Stack;            
-            _ = LoadIcon(Item.Name);
+            stack = Slot.Stack;
+            ElementImage.sprite = null;
+            _ = LoadIcon(Item.Name, Image);
             IsUnlocked = Slot.Unlocked;
-            TierTxt.text = $"{tier}";
+            TierTxt.text = $"{tier}µî±Þ";
         }
         else if (Slot.BaseData is SkillDataSO Skill) 
         {
             name = Skill.Name;
             grade = Skill.Grade;
-            _ = LoadIcon(Enum.GetName(typeof(ESkillEffectType), Skill.SkillType));
+            _ = LoadIcon(Enum.GetName(typeof(ElementType), Skill.Element), ElementImage);
+            _ = LoadIcon(Enum.GetName(typeof(ESkillEffectType), Skill.SkillType), Image);
             level = Slot.Level;
             stack = Slot.Stack;
             IsUnlocked = Slot.Unlocked;
@@ -163,7 +167,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         CoolTimeImage.fillAmount = 0;
     }
 
-    private async Task LoadIcon(string address) 
+    private async Task LoadIcon(string address, Image image) 
     {
         AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(address);
 
@@ -171,7 +175,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
 
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            Image.sprite = sprite;
+            image.sprite = sprite;
         }
         else
         {
