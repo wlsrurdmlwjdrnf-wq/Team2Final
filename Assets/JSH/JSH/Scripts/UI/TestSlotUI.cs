@@ -96,7 +96,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         Frame.color = Color.gray;
         Image.color = Color.black;
         Image.sprite = null;
-        ElementImage.sprite = null;
+        ElementImage.gameObject.SetActive(false);
         NameTxt.text = "";
         LevelTxt.text = "";
         TierTxt.text = "";
@@ -123,7 +123,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
             tier = Item.Tier;
             level = Slot.Level;
             stack = Slot.Stack;
-            ElementImage.sprite = null;
+            ElementImage.gameObject.SetActive(false);
             _ = LoadIcon(Item.Name, Image);
             IsUnlocked = Slot.Unlocked;
             TierTxt.text = $"{tier}µî±Þ";
@@ -132,6 +132,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         {
             name = Skill.Name;
             grade = Skill.Grade;
+            ElementImage.gameObject.SetActive(true);
             _ = LoadIcon(Enum.GetName(typeof(ElementType), Skill.Element), ElementImage);
             _ = LoadIcon(Enum.GetName(typeof(ESkillEffectType), Skill.SkillType), Image);
             level = Slot.Level;
