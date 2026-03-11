@@ -367,6 +367,7 @@ public class InventorySystem : Singleton<InventorySystem>
         CleanStatDict();
         AddPassiveStats(EDataType.Weapon);
         AddPassiveStats(EDataType.Accessories); //유물도 나중에 추가해야함
+        AddPassiveStats(EDataType.Artifact);
         AddPassiveStats(EDataType.Skill);
         AddEquipStats(_equippedWeapon);
         AddEquipStats(_equippedAccessory);
