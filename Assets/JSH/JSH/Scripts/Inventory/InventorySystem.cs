@@ -259,6 +259,7 @@ public class InventorySystem : Singleton<InventorySystem>
             else
             {
                 //강화실패
+                return;
             }
         }
         StatModifyToPlayer();

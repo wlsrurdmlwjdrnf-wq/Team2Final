@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class ItemCardView : MonoBehaviour, IPoolable
 {
@@ -47,6 +48,7 @@ public class ItemCardView : MonoBehaviour, IPoolable
             case GradeType.Heroic: _icon.color = new Color(1f, 0f, 1f); break;
             case GradeType.Legendary: _icon.color = Color.yellow; break;
             case GradeType.Mythical: _icon.color = Color.red; break;
+            case GradeType.Immortal: _icon.color = Color.black; break;
         }
     }
     private async Task LoadIcon(string address)

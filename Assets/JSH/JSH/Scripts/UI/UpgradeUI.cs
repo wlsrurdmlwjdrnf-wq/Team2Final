@@ -9,6 +9,7 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _equipStatsTxt;
     [SerializeField] private TextMeshProUGUI _passiveStatsTxt;
     [SerializeField] private TextMeshProUGUI _costTxt;
+    [SerializeField] private TextMeshProUGUI _currCubeTxt;
     [SerializeField] private Button _upgradePanelButton;
     [SerializeField] private Button _upgradeButton;
     [SerializeField] private Button _equipButton;
@@ -150,7 +151,9 @@ public class UpgradeUI : MonoBehaviour
             _equipButton.image.color = Color.gray;
         }
         int cost = slot.GetUpgradeCost();
+        BigNumber currCube = PlayerResourceManager.Instance.GetResource(ResourceType.EnhancementCube);
         _costTxt.text = $"{cost}";
+        _currCubeTxt.text = $"{currCube}";
     }
     private void OnSliderValueChanged(float value)
     {
