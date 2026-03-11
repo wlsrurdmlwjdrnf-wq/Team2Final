@@ -21,6 +21,7 @@ public class TierStageInfo
 public class AdventureStageInfo
 {
     public int number;
+    public ElementType element;
     public StageSO stageData;
 }
 public class StageManager : Singleton<StageManager>
@@ -40,7 +41,7 @@ public class StageManager : Singleton<StageManager>
     private const int MAX_SUBNUMBER = 20; // 최대 보조 스테이지 수
     public const int ADVENTURE_BASE_DIAMOND_AMOUNT = 1000;
     public const int ADVENTURE_BASE_EMERALD_AMOUNT = 200;
-    public const float ADVENTURE_BASE_ARTIFACT_PROBABILITY = 0.05f;
+    public const float ADVENTURE_BASE_ARTIFACT_PROBABILITY = 0.1f;
 
     private ItemDataSO _artifact;
     private bool _isClearing = false; // 클리어 중 인지 여부
@@ -48,6 +49,7 @@ public class StageManager : Singleton<StageManager>
     public int CurrentMainNumber { get; private set; }
     public int CurrentSubNumber { get; private set; }
     public StageSO CurrentStageData => _currentStageData;
+    public ElementType CurrentElementType => _currentAdventureElement;
 
     private WaitForSeconds _waitFadeOut = new WaitForSeconds(1f);
     private WaitForSeconds _delayClear = new WaitForSeconds(0.5f);
@@ -60,6 +62,7 @@ public class StageManager : Singleton<StageManager>
     // 상태
     private int _currentMonsterCount = 0;
     private int _currentAdventureNumber;
+    private ElementType _currentAdventureElement;
     private StageSO _currentStageData;
     private StageSO _tmpStageData;
 
@@ -270,6 +273,7 @@ public class StageManager : Singleton<StageManager>
             if (stage.number == number)
             {
                 _currentAdventureNumber = number;
+                _currentAdventureElement = stage.element;
                 return stage.stageData;
             }
         }

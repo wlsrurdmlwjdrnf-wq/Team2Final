@@ -186,6 +186,12 @@ MonoBehaviour:
   - {fileID: 0}
   artifactRewardText: {fileID: 0}
   questListText: {fileID: 0}
+  elementSprite: {fileID: 0}
+  elementSprites:
+  - {fileID: 21300000, guid: c49b975dec13d5e4ebca82b95d9672d6, type: 3}
+  - {fileID: 21300000, guid: 06463a8ed1f4c064f97374e63d8bc297, type: 3}
+  - {fileID: 21300000, guid: a8c68b30c63bfd646b921499ed1bba77, type: 3}
+  - {fileID: 21300000, guid: 5ce0adfce38894449b8d787f6b3cb9ed, type: 3}
 --- !u!1 &1900284214424346641
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +362,9 @@ MonoBehaviour:
   needHideObjects:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  needBossHideObjects:
   - {fileID: 0}
 --- !u!1 &6253562237778171938
 GameObject:

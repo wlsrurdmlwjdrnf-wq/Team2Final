@@ -19,6 +19,9 @@ public class AdventureView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI artifactRewardText;
     [SerializeField] private TextMeshProUGUI questListText;
 
+    [SerializeField] private Image elementSprite;
+    [SerializeField] private Sprite[] elementSprites;
+
     public event Action<int, Button> OnAdventureStageButtonClicked;
     public event Action OnAdventureStageStartButtonClicked;
 
@@ -77,6 +80,22 @@ public class AdventureView : MonoBehaviour
             emeraldRewardText[i].text = (StageManager.ADVENTURE_BASE_EMERALD_AMOUNT * number).ToString();
         }
         questListText.text = "[ " + number + " / 10 ]";
+
+        switch (StageManager.Instance.CurrentElementType)
+        {
+            case ElementType.Fire:
+                elementSprite.sprite = elementSprites[0];
+                break;
+            case ElementType.Water:
+                elementSprite.sprite = elementSprites[1];
+                break;
+            case ElementType.Wind:
+                elementSprite.sprite = elementSprites[2];
+                break;
+            case ElementType.Earth:
+                elementSprite.sprite = elementSprites[3];
+                break;
+        }
     }
     public void HideSelectAdventurePanel()
     {

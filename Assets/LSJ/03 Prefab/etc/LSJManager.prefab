@@ -855,6 +855,38 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
+      propertyPath: allAdventureStages.Array.data[0].element
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
+      propertyPath: allAdventureStages.Array.data[1].element
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
+      propertyPath: allAdventureStages.Array.data[2].element
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
+      propertyPath: allAdventureStages.Array.data[4].element
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
+      propertyPath: allAdventureStages.Array.data[5].element
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
+      propertyPath: allAdventureStages.Array.data[6].element
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
+      propertyPath: allAdventureStages.Array.data[7].element
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
+      propertyPath: allAdventureStages.Array.data[8].element
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7252029360099649766, guid: 06febf59e09597a479c3c0aa7d298eef, type: 3}
       propertyPath: allAdventureStages.Array.data[0].stageData
       value: 
       objectReference: {fileID: 11400000, guid: 0159327735b521d4184d86a31c8f6ee7, type: 2}
