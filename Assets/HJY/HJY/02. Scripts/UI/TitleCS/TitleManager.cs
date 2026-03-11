@@ -59,6 +59,11 @@ public class TitleManager : MonoBehaviour
         StartCoroutine(LoginLoadingCoroutine());
     }
 
+    // 인증 패널 끄기
+    public void OffAuthPanel()
+    {
+        authPanel.SetActive(false);
+    }
 
     // 인증 패널 켜기
     public void OnServerButtonClick()

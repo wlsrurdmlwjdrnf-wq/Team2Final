@@ -49,7 +49,7 @@ public class LogoutManager : MonoBehaviour
     // 로그아웃 리퀘스트
     void SendLogoutRequest()
     {
-        // TODO: 서버에 로그아웃 요청 보내기
+        // 서버에 로그아웃 요청 보내기
         // 재화, 인게임 데이터 등을 함께 전달
         Debug.Log("로그아웃 요청 전송됨");
     }
