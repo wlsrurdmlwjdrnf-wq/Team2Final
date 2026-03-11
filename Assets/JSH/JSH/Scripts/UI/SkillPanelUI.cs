@@ -29,12 +29,18 @@ public class SkillPanelUI : MonoBehaviour
         _prevSlotButton.onClick.AddListener(() =>
         {
             var prev = InventorySystem.instance.GetPrevSlot(_currSlot);
-            if (prev != null) OpenPopUp(prev);
+            if (prev != null)
+            {
+                _eventChannel.RaiseEvent(EGameEventType.SlotClicked, new SlotPayload(prev));
+            }
         });
         _nextSlotButton.onClick.AddListener(() =>
         {
             var next = InventorySystem.instance.GetNextSlot(_currSlot);
-            if (next != null) OpenPopUp(next);
+            if (next != null)
+            {
+                _eventChannel.RaiseEvent(EGameEventType.SlotClicked, new SlotPayload(next));
+            }
         });
     }
     private void OnDestroy()
@@ -62,7 +68,7 @@ public class SkillPanelUI : MonoBehaviour
     }
     private void OpenPopUp(InventorySlot slot)
     {
-        if (slot.GetDataType() != EDataType.Skill) { return; }
+        if (slot.GetDataType() != EDataType.Skill || slot == null) { return; }
         _currSlot = slot;
         gameObject.SetActive(true);
 
@@ -87,8 +93,8 @@ public class SkillPanelUI : MonoBehaviour
         if (_currSlot != null && slot.Id != _currSlot.Id) return;
 
         RefreshText(slot);
-        _prevSlotButton.interactable = InventorySystem.instance.GetPrevSlot(slot) != null;
-        _nextSlotButton.interactable = InventorySystem.instance.GetNextSlot(slot) != null;
+        //_prevSlotButton.interactable = InventorySystem.instance.GetPrevSlot(slot) != null;
+        //_nextSlotButton.interactable = InventorySystem.instance.GetNextSlot(slot) != null;
     }
     private void RefreshText(InventorySlot slot)
     {

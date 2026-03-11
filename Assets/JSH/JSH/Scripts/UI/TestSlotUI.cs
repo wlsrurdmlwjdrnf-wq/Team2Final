@@ -96,6 +96,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         Frame.color = Color.gray;
         Image.color = Color.black;
         Image.sprite = null;
+        if(ElementImage != null)
         ElementImage.gameObject.SetActive(false);
         NameTxt.text = "";
         LevelTxt.text = "";

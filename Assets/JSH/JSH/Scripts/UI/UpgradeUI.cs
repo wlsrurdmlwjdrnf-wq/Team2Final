@@ -38,13 +38,21 @@ public class UpgradeUI : MonoBehaviour
 
         _prevSlotButton.onClick.AddListener(() =>
         {
+            Debug.Log("prev");
             var prev = InventorySystem.instance.GetPrevSlot(_currSlot);
-            if (prev != null) OpenPopUp(prev);
+            if (prev != null)
+            {
+                _eventChannel.RaiseEvent(EGameEventType.SlotClicked, new SlotPayload(prev));
+            }
+            else { Debug.Log("asd"); }
         });
         _nextSlotButton.onClick.AddListener(() =>
         {
             var next = InventorySystem.instance.GetNextSlot(_currSlot);
-            if (next != null) OpenPopUp(next);
+            if (next != null)
+            {
+                _eventChannel.RaiseEvent(EGameEventType.SlotClicked, new SlotPayload(next));
+            }
         });
         _combineSlider.onValueChanged.AddListener(OnSliderValueChanged);
 
@@ -74,11 +82,13 @@ public class UpgradeUI : MonoBehaviour
     }
     private void OpenPopUp(InventorySlot slot) 
     {
-        if (slot.GetDataType() == EDataType.Skill) { return; }
-        _combinePanel.SetActive(true);
+        if (slot.GetDataType() == EDataType.Skill || slot == null) { return; }
+        _combinePanel.SetActive(false);
         _currSlot = slot;
         gameObject.SetActive(true);
 
+        _combinePanelButton.image.color = Color.gray;
+        _upgradePanelButton.image.color = _tempColor;
         if (slot.Unlocked)
         {
             _upgradeButton.interactable = true;
@@ -100,8 +110,8 @@ public class UpgradeUI : MonoBehaviour
         if(_currSlot != null && slot.Id != _currSlot.Id) return;
         RefreshText(slot);
 
-        _prevSlotButton.interactable = InventorySystem.instance.GetPrevSlot(slot) != null;
-        _nextSlotButton.interactable = InventorySystem.instance.GetNextSlot(slot) != null;
+        //_prevSlotButton.interactable = InventorySystem.instance.GetPrevSlot(slot) != null;
+        //_nextSlotButton.interactable = InventorySystem.instance.GetNextSlot(slot) != null;
     }
     private void RefreshText(InventorySlot slot) 
     {
@@ -159,7 +169,7 @@ public class UpgradeUI : MonoBehaviour
     {
         var payload = new VolumeUpdatePayload { volume = value };
         _currSlotStackTxt.text = $"{_currSlot.Stack}(-{value * 5})";
-        _currSlotStackTxt.text = $"{_nextSlot.Stack}(+{value})";
+        _nextSlotStackTxt.text = $"{_nextSlot.Stack}(+{value})";
     }
     public void OpenCombinePanel() 
     { 
@@ -173,7 +183,7 @@ public class UpgradeUI : MonoBehaviour
 
         _afterSlotUI.SetEmpty();
         _afterSlotUI.SetUp(_nextSlot);
-        _currSlotStackTxt.text = $"{_nextSlot.Stack}(+0)";
+        _nextSlotStackTxt.text = $"{_nextSlot.Stack}(+0)";
 
         _combineSlider.maxValue = _currSlot.Stack / PublicConst.UpgradeStack;
         _combineSlider.value = 0f;
@@ -190,9 +200,8 @@ public class UpgradeUI : MonoBehaviour
     public void CloseCombinePanel() 
     { 
         _combinePanel.SetActive(false);
-        Color temp = _combinePanelButton.image.color;
-        _combinePanelButton.image.color = _upgradePanelButton.image.color;
-        _upgradePanelButton.image.color = temp;
+        _combinePanelButton.image.color = _tempColor;
+        _upgradePanelButton.image.color = Color.gray;
     }
     public void Close() { gameObject.SetActive(false); }
 }

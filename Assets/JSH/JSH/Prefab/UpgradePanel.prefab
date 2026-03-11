@@ -2099,14 +2099,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6093670372000740950}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3296168612293202438}
   m_Father: {fileID: 1825560259743611915}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 100, y: 140}
@@ -4037,6 +4037,10 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 3243012406174856107, guid: 0b81874ecdb66364fa6534594f412564, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3438997240166753180, guid: 0b81874ecdb66364fa6534594f412564, type: 3}
       propertyPath: m_Name
       value: Button
@@ -4162,6 +4166,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7423741883820839566}
     m_Modifications:
+    - target: {fileID: 3243012406174856107, guid: 0b81874ecdb66364fa6534594f412564, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3438997240166753180, guid: 0b81874ecdb66364fa6534594f412564, type: 3}
       propertyPath: m_Name
       value: Button (1)
