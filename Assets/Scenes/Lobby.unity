@@ -3056,6 +3056,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2938706f1d3a104cb96e7dff73d6c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &497468984 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1110715605792667626, guid: b77ebc1092560c744a8b1ec580f3eba2, type: 3}
+  m_PrefabInstance: {fileID: 497468982}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86579eefc00b2414091d53443661de79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &521690038
 GameObject:
   m_ObjectHideFlags: 0
@@ -7967,6 +7978,10 @@ PrefabInstance:
       propertyPath: diaRewardText
       value: 
       objectReference: {fileID: 1423146223672858427}
+    - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
+      propertyPath: elementSprite
+      value: 
+      objectReference: {fileID: 2595222081271262685}
     - target: {fileID: 299863195693467184, guid: bdce05d483490fe448ae1fa1c664c9e9, type: 3}
       propertyPath: gameOverPanel
       value: 
@@ -27592,6 +27607,7 @@ GameObject:
   - component: {fileID: 5422316723505183119}
   - component: {fileID: 2046553603004776429}
   - component: {fileID: 8848513767892618042}
+  - component: {fileID: 8848513767892618043}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -33973,6 +33989,7 @@ GameObject:
   - component: {fileID: 5976511131258022525}
   - component: {fileID: 4081257900126436962}
   - component: {fileID: 9180367960820068696}
+  - component: {fileID: 9180367960820068697}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -65487,6 +65504,7 @@ GameObject:
   - component: {fileID: 8150497732202806811}
   - component: {fileID: 4830992842163991665}
   - component: {fileID: 1844559090032262200}
+  - component: {fileID: 8150497732202806812}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -73877,6 +73895,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7007298247052786707}
   m_CullTransparentMesh: 1
+--- !u!114 &8150497732202806812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7007298247052786707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468984}
+        m_TargetAssemblyTypeName: GrowUpPresenter, Assembly-CSharp
+        m_MethodName: StrUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &8154536063389313524
 GameObject:
   m_ObjectHideFlags: 0
@@ -74833,6 +74880,7 @@ GameObject:
   - component: {fileID: 6226581662434388166}
   - component: {fileID: 3344233193127876360}
   - component: {fileID: 1745288734378412428}
+  - component: {fileID: 8279604967316057724}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -74840,6 +74888,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8279604967316057724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8279604967316057723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468984}
+        m_TargetAssemblyTypeName: GrowUpPresenter, Assembly-CSharp
+        m_MethodName: VitUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!222 &8285740970133812698
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -79109,6 +79186,35 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8848513767892618043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506147561206225395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468984}
+        m_TargetAssemblyTypeName: GrowUpPresenter, Assembly-CSharp
+        m_MethodName: HpUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!114 &8851612937659028245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80858,6 +80964,7 @@ GameObject:
   - component: {fileID: 8795326759907799417}
   - component: {fileID: 6108082641925845451}
   - component: {fileID: 7255029532120228912}
+  - component: {fileID: 9076702551363442512}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -80865,6 +80972,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9076702551363442512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9076702551363442511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468984}
+        m_TargetAssemblyTypeName: GrowUpPresenter, Assembly-CSharp
+        m_MethodName: CriUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!114 &9078048442737466881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81493,6 +81629,35 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &9180367960820068697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399106204027910706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468984}
+        m_TargetAssemblyTypeName: GrowUpPresenter, Assembly-CSharp
+        m_MethodName: LukUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!224 &9183328957966267076
 RectTransform:
   m_ObjectHideFlags: 0
