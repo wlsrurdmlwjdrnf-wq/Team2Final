@@ -2480,7 +2480,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC6B0\uC704 \uC18D\uC131 : \uB300\uBBF8\uC9C0 x2"
+  m_text: "\uC5F4\uC704 \uC18D\uC131 : \uB300\uBBF8\uC9C0 x 0.7"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
   m_sharedMaterial: {fileID: -1962616221610082763, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
@@ -2507,8 +2507,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3785,7 +3785,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC6B0\uC704 \uC18D\uC131 : \uB300\uBBF8\uC9C0 x2"
+  m_text: "\uC6B0\uC704 \uC18D\uC131 : \uB300\uBBF8\uC9C0 x 2"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
   m_sharedMaterial: {fileID: -1962616221610082763, guid: f3d841e31bbccea4987a38a4b52fedcb, type: 2}
@@ -13211,6 +13211,10 @@ MonoBehaviour:
   _beforeSlotUI: {fileID: 0}
   _afterSlotUI: {fileID: 0}
   _combineSlider: {fileID: 0}
+  _currSlotStackTxt: {fileID: 0}
+  _nextSlotStackTxt: {fileID: 0}
+  _prevSlotButton: {fileID: 0}
+  _nextSlotButton: {fileID: 0}
   _presentSlotUI: {fileID: 0}
 --- !u!114 &1819339161
 MonoBehaviour:
@@ -18226,6 +18230,7 @@ MonoBehaviour:
   Image: {fileID: 514183451192659346}
   Frame: {fileID: 1631267296628261022}
   CoolTimeImage: {fileID: 252481599}
+  ElementImage: {fileID: 0}
   NameTxt: {fileID: 525900380019108972}
   LevelTxt: {fileID: 3610447958622116708}
   TierTxt: {fileID: 676621009983328578}
@@ -26987,6 +26992,7 @@ MonoBehaviour:
   Image: {fileID: 1612608970338082171}
   Frame: {fileID: 567718233731780727}
   CoolTimeImage: {fileID: 1123830930}
+  ElementImage: {fileID: 0}
   NameTxt: {fileID: 1589704511359630469}
   LevelTxt: {fileID: 2547206725695540109}
   TierTxt: {fileID: 1738472426892313003}
@@ -29652,6 +29658,7 @@ MonoBehaviour:
   Image: {fileID: 1879717561109361469}
   Frame: {fileID: 835359185699405361}
   CoolTimeImage: {fileID: 0}
+  ElementImage: {fileID: 0}
   NameTxt: {fileID: 1907548966771069635}
   LevelTxt: {fileID: 3399731168997877195}
   TierTxt: {fileID: 1465764513069068269}
@@ -31027,14 +31034,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8219596, b: 0.3075471, a: 1}
+  m_Color: {r: 0.6754716, g: 0.32886377, b: 0.008921288, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 763040013418f5a488fe6e33dd037f03, type: 3}
+  m_Sprite: {fileID: 21300020, guid: 0eaf9fe6c11160f438c2d72544ae3270, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -51491,6 +51498,7 @@ MonoBehaviour:
   Image: {fileID: 4732699944084743764}
   Frame: {fileID: 5777061070403988312}
   CoolTimeImage: {fileID: 0}
+  ElementImage: {fileID: 0}
   NameTxt: {fileID: 4738645535909447594}
   LevelTxt: {fileID: 8400816203007996066}
   TierTxt: {fileID: 5759124948250065540}
@@ -57559,6 +57567,10 @@ MonoBehaviour:
   _beforeSlotUI: {fileID: 0}
   _afterSlotUI: {fileID: 0}
   _combineSlider: {fileID: 0}
+  _currSlotStackTxt: {fileID: 0}
+  _nextSlotStackTxt: {fileID: 0}
+  _prevSlotButton: {fileID: 0}
+  _nextSlotButton: {fileID: 0}
   _presentSlotUI: {fileID: 0}
 --- !u!1 &5834907740389034058
 GameObject:
