@@ -8,7 +8,7 @@ public class AdventurePresenter : MonoBehaviour
 {
     [SerializeField] private AdventureView view;
 
-    [SerializeField] private Color selectedColor = new Color(0.9f, 0.9f, 1f); // ¿¹: »ìÂ¦ ÆÄ¶õ Åæ
+    [SerializeField] private Color selectedColor = new Color(0.9f, 0.9f, 1f);
     [SerializeField] private Color normalColor = Color.white;
 
     private StageSO _stage;
