@@ -3045,6 +3045,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77ebc1092560c744a8b1ec580f3eba2, type: 3}
+--- !u!114 &497468983 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2071198596754165351, guid: b77ebc1092560c744a8b1ec580f3eba2, type: 3}
+  m_PrefabInstance: {fileID: 497468982}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2938706f1d3a104cb96e7dff73d6c38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &521690038
 GameObject:
   m_ObjectHideFlags: 0
@@ -13201,6 +13212,7 @@ MonoBehaviour:
   _equipStatsTxt: {fileID: 0}
   _passiveStatsTxt: {fileID: 0}
   _costTxt: {fileID: 1858542342}
+  _currCubeTxt: {fileID: 0}
   _upgradePanelButton: {fileID: 0}
   _upgradeButton: {fileID: 785336132}
   _equipButton: {fileID: 890169259}
@@ -30451,6 +30463,7 @@ GameObject:
   - component: {fileID: 8841386643600962751}
   - component: {fileID: 3072156959439729775}
   - component: {fileID: 5659816988189468860}
+  - component: {fileID: 8841386643600962752}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -57557,6 +57570,7 @@ MonoBehaviour:
   _equipStatsTxt: {fileID: 0}
   _passiveStatsTxt: {fileID: 0}
   _costTxt: {fileID: 6216795466591072140}
+  _currCubeTxt: {fileID: 0}
   _upgradePanelButton: {fileID: 0}
   _upgradeButton: {fileID: 4162121145737762059}
   _equipButton: {fileID: 2208313806989732239}
@@ -67688,6 +67702,7 @@ GameObject:
   - component: {fileID: 6938743238663325432}
   - component: {fileID: 8475313911549824065}
   - component: {fileID: 7888658604670232619}
+  - component: {fileID: 8475313911549824066}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -70149,6 +70164,7 @@ GameObject:
   - component: {fileID: 5667846963516855599}
   - component: {fileID: 7951268586680435961}
   - component: {fileID: 1129999996882824251}
+  - component: {fileID: 8045761964002884823}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -72480,6 +72496,7 @@ GameObject:
   - component: {fileID: 8735057449961344819}
   - component: {fileID: 7723799884248796902}
   - component: {fileID: 6246554234461850247}
+  - component: {fileID: 8735057449961344820}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -72930,6 +72947,35 @@ RectTransform:
   m_AnchoredPosition: {x: 258, y: -1}
   m_SizeDelta: {x: 140, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8045761964002884823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651666078342891427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468983}
+        m_TargetAssemblyTypeName: PowerUpPresenter, Assembly-CSharp
+        m_MethodName: CriDmgUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &8054291363738103531
 GameObject:
   m_ObjectHideFlags: 0
@@ -75868,6 +75914,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8475313911549824066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7331176672424225467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468983}
+        m_TargetAssemblyTypeName: PowerUpPresenter, Assembly-CSharp
+        m_MethodName: HpRegenUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!224 &8485512887693337087
 RectTransform:
   m_ObjectHideFlags: 0
@@ -76452,6 +76527,7 @@ GameObject:
   - component: {fileID: 7591998767987789560}
   - component: {fileID: 351696071015057787}
   - component: {fileID: 8908652194153124468}
+  - component: {fileID: 8908652194153124469}
   m_Layer: 5
   m_Name: upBtn
   m_TagString: Untagged
@@ -77960,6 +78036,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7970079911639505066}
   m_CullTransparentMesh: 1
+--- !u!114 &8735057449961344820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7970079911639505066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468983}
+        m_TargetAssemblyTypeName: PowerUpPresenter, Assembly-CSharp
+        m_MethodName: AtkUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!114 &8736052476421205591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78734,6 +78839,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1856972886868544845}
   m_CullTransparentMesh: 1
+--- !u!114 &8841386643600962752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856972886868544845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468983}
+        m_TargetAssemblyTypeName: PowerUpPresenter, Assembly-CSharp
+        m_MethodName: HpUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!224 &8842634157382581689
 RectTransform:
   m_ObjectHideFlags: 0
@@ -79156,6 +79290,35 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8908652194153124469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8543196517035201192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2647742cefbee4d8e94b75369cc5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 0.5
+  repeatInterval: 0.05
+  onHoldRepeat:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 497468983}
+        m_TargetAssemblyTypeName: PowerUpPresenter, Assembly-CSharp
+        m_MethodName: CriRateUpButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!222 &8909047403990303159
 CanvasRenderer:
   m_ObjectHideFlags: 0
