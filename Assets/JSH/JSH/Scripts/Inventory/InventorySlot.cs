@@ -37,7 +37,7 @@ public class InventorySlot
     }
     public int GetUpgradeCost() 
     {
-        return Level * 100; //юс╫ц
+        return Level * 100; 
     }
     public void Upgrade() 
     {

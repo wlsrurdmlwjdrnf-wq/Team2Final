@@ -127,6 +127,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
             ElementImage.gameObject.SetActive(false);
             _ = LoadIcon(Item.Name, Image);
             IsUnlocked = Slot.Unlocked;
+            IsUnlocked = Slot.Stack > 0;
             TierTxt.text = $"{tier}µî±Þ";
         }
         else if (Slot.BaseData is SkillDataSO Skill) 

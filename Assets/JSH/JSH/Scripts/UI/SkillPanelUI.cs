@@ -93,8 +93,6 @@ public class SkillPanelUI : MonoBehaviour
         if (_currSlot != null && slot.Id != _currSlot.Id) return;
 
         RefreshText(slot);
-        //_prevSlotButton.interactable = InventorySystem.instance.GetPrevSlot(slot) != null;
-        //_nextSlotButton.interactable = InventorySystem.instance.GetNextSlot(slot) != null;
     }
     private void RefreshText(InventorySlot slot)
     {
