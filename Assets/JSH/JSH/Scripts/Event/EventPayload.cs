@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
-
-
 public interface IGameEventPayload { }
 [System.Serializable]
 public class InventoryEventPayload : IGameEventPayload
