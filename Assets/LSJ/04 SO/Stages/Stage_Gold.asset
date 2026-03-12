@@ -16,11 +16,11 @@ MonoBehaviour:
   isBossStage: 0
   isAdventureStage: 0
   mainNumber: 4
-  subNumber: 10
+  subNumber: 20
   monsterPrefabs:
-  - {fileID: 6791333248513922386, guid: 682bbd141fdfae2429d639fe500b8087, type: 3}
-  spawnCount: 25
-  spawnAreaWidth: 60
+  - {fileID: 2816875129211681332, guid: 2d9e92eee80681d43ba2cc83cb0a35c4, type: 3}
+  spawnCount: 1
+  spawnAreaWidth: 10
   minDistance: 2
-  yFixedPosition: 0.5
+  yFixedPosition: 0
   backgroundSprite: {fileID: 21300000, guid: 844aa8a92c93bc9429ed2b1c4fa87afd, type: 3}

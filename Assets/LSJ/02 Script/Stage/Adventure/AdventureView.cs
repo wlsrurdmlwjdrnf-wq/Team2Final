@@ -118,9 +118,8 @@ public class AdventureView : MonoBehaviour
     }
     private void ShowFailPanel()
     {
-        if (!_isAdventure) return;
         gameOverPanel.SetActive(true);
-        ToggleIsAdventure();
+        if (_isAdventure) ToggleIsAdventure();
     }
     public void HideFailPanel()
     {

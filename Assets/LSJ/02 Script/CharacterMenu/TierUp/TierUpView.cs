@@ -38,16 +38,18 @@ public class TierUpView : MonoBehaviour
         {
             icon.sprite = tierIcons[(int)PlayerStatManager.Instance.PlayerTier];
         }
+        if (PlayerStatManager.Instance.PlayerTier != Tier.Stone)
+            promoteCompleteText[(int)PlayerStatManager.Instance.PlayerTier - 1].text = "½Â±Þ ¿Ï·á";
 
         if (!_isTier) return;
 
         tierText.text = PlayerStatManager.Instance.PlayerTier.ToString();
-        for(int i = 0; i < stageButtons.Length; i++)
+
+        for (int i = 0; i < stageButtons.Length; i++)
         {
             if(PlayerStatManager.Instance.PlayerTier == (Tier)i)
             {
                 stageButtons[i].gameObject.SetActive(true);
-                if (i != 0) promoteCompleteText[i - 1].text = "½Â±Þ ¿Ï·á";
                 continue;
             }
             stageButtons[i].gameObject.SetActive(false);

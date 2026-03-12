@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 9074165579749837068}
   - component: {fileID: 686427300230830322}
   - component: {fileID: -762815717279514181}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: boss_08
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!95 &4187964795567607764
 Animator:
   serializedVersion: 5

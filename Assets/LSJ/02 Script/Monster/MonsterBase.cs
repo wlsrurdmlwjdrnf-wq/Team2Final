@@ -86,7 +86,7 @@ public class MonsterBase : EntityStateMachine, IDamageable, IPoolable2
         }
 
         // 데미지 텍스트
-        Color color = isCritical ? new Color(1f, 0.3f, 0.2f) : Color.white;
+        Color color = isCritical ? new Color(1f, 0.1f, 0.1f) : Color.white;
 
         GameObject dmgObj = PoolManager2.Instance.Get(
             _damageTextPrefab,
