@@ -9,6 +9,8 @@ public class PlayerIdleState : IEntityState
 
     public void OnEnter()
     {
+        _player.Collider.enabled = true; // 죽음 상태에서 콜라이더가 꺼짐 상태 플레이어가 부활하면서 다시 켜지지만 혹시나 싶어 한번 더
+        
         _player.Animator.SetInteger("AttackIndex", 0);
         _player.Animator.SetBool("IsKnockBack", false);
         _player.Animator.SetBool("IsDead", false);

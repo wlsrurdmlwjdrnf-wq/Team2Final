@@ -28,7 +28,7 @@ public class DamageText : MonoBehaviour, IPoolable2
 
         transform.position = worldPosition + Vector3.up * 0.8f;
         canvasGroup.alpha = 1f;
-        transform.localScale = Vector3.one * 0.5f;  // 작게 시작
+        transform.localScale = Vector3.one * 1.7f;  // 크게 시작
     }
 
     public void OnSpawn()
@@ -36,7 +36,7 @@ public class DamageText : MonoBehaviour, IPoolable2
         transform.DOKill(true);  // true = children 포함 모두 kill
 
         canvasGroup.alpha = 1f;
-        transform.localScale = Vector3.one * 0.8f;
+        transform.localScale = Vector3.one;
         transform.localPosition = Vector3.zero;  
 
         Sequence seq = DOTween.Sequence();
@@ -45,11 +45,11 @@ public class DamageText : MonoBehaviour, IPoolable2
         seq.Append(transform.DOLocalMoveY(moveUpDistance, duration)
             .SetEase(Ease.OutQuad));
 
-        seq.Join(transform.DOScale(Vector3.one * 1.3f, duration * 0.5f)
-            .SetEase(Ease.OutBack));
+        seq.Join(transform.DOScale(Vector3.one*0.8f, duration)
+            .SetEase(Ease.InQuint));
 
         seq.AppendInterval(fadeStartDelay);
-        seq.Append(canvasGroup.DOFade(0f, duration - fadeStartDelay)
+        seq.Append(canvasGroup.DOFade(0f, 0.3f)
             .SetEase(Ease.InQuad));
 
         seq.OnComplete(() => PoolManager2.Instance.Release(gameObject));

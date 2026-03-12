@@ -22,5 +22,5 @@ MonoBehaviour:
   spawnCount: 10
   spawnAreaWidth: 20
   minDistance: 1
-  yFixedPosition: 0.5
+  yFixedPosition: 0.3
   backgroundSprite: {fileID: 21300000, guid: d6b5ce26de043184f84fa5f96e7284a6, type: 3}
