@@ -12,7 +12,7 @@ public abstract class RecycleStageScroll<T> : MonoBehaviour
 
     [Space]
     [Header("슬롯 설정")]
-    [SerializeField] protected int bufferCount = 1; // 추가적으로 미리 만들어둘 위와 아래의 슬롯 개수
+    [SerializeField] protected int bufferCount = 5; // 추가적으로 미리 만들어둘 위와 아래의 슬롯 개수
     [SerializeField] protected float spacing;       // 아이템 간의 간격
 
     [Space]
@@ -81,6 +81,12 @@ public abstract class RecycleStageScroll<T> : MonoBehaviour
 
         // 스크롤 이벤트
         scrollRect.onValueChanged.AddListener(OnScroll);
+    }
+
+    // 화면 갱신
+    public void Refresh()
+    {
+        UpdateData(dataList);
     }
 
     // 데이터 갱신

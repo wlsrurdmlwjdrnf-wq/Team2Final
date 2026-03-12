@@ -10,7 +10,13 @@ public class StageScroll : RecycleStageScroll<StageSO>
 
     private int currentMainNumber = -1;                     // 현재 화면 기준으로 메인 넘버를 저장 -> 중복 호출 방지!!!
 
-    
+    private void Start()
+    {
+        // StageManager 이벤트 연결
+        StageManager.Instance.OnStageChanged += () => Refresh();
+        StageManager.Instance.OnAllMonstersCleared += () => Refresh();
+    }
+
     // 스크롤이 움직였다면 호출
     protected override void OnScroll(Vector2 scrollPosition)
     {
