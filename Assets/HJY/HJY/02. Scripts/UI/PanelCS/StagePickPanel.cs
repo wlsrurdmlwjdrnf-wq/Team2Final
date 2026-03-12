@@ -61,7 +61,7 @@ public class StagePickPanel : MonoBehaviour
     }
 
     // 패널을 닫아라.
-    private void ClosePanel()
+    public void ClosePanel()
     {
         gameObject.SetActive(false);
     }

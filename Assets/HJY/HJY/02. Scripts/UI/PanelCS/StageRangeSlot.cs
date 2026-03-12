@@ -37,12 +37,12 @@ public class StageRangeSlot : RecycleScrollSlot<StageSO>
         warpButton.onClick.AddListener(OnClickEnter);
 
         // 안 열린 스테이지 프리팹 블러로 처리하기
-        if(stageSO.mainNumber < StageManager.Instance.GetRecord().bestMainNumber)
-            lockBlur.SetActive(false);
-        else if(stageSO.mainNumber == StageManager.Instance.GetRecord().bestMainNumber
-            && stageSO.subNumber <= StageManager.Instance.GetRecord().bestSubNumber)
-            lockBlur.SetActive(false);
-        else lockBlur.SetActive(true);
+        bool isUnlocked =
+        (stageSO.mainNumber < StageManager.Instance.GetRecord().bestMainNumber) ||
+        (stageSO.mainNumber == StageManager.Instance.GetRecord().bestMainNumber &&
+         stageSO.subNumber <= StageManager.Instance.GetRecord().bestSubNumber);
+
+        lockBlur.SetActive(!isUnlocked);
 
     }
 
@@ -51,5 +51,13 @@ public class StageRangeSlot : RecycleScrollSlot<StageSO>
     {
         // StageManager를 통해 해당 스테이지 적용
         StageManager.Instance.ApplyStage(currentSO);
+
+        // 패널 닫기
+        StagePickPanel panel = FindObjectOfType<StagePickPanel>();
+        if (panel == null)
+            return;
+
+        panel.ClosePanel();
+
     }
 }
