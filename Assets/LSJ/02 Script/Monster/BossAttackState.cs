@@ -7,55 +7,38 @@ public class BossAttackState : IEntityState
     private readonly Boss _boss;
 
     public BossAttackState(Boss boss) => _boss = boss;
-    public void OnEnter() 
+
+    public void OnEnter()
     {
         _boss.Animator.speed = _boss.AttackSpeed;
         _boss.Animator.SetBool("IsAttacking", true);
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(
-            _boss.AttackPoint.position,
-            _boss.AttackRange,
-            _boss.PlayerLayer
-            );
-
-        if (hits.Length > 0)
-        {
-            PlayerHpMp target = hits[0].GetComponent<PlayerHpMp>();
-            if (target != null)
-            {
-                BigNumber damage = _boss.CurrentAtk;
-                TryKnockBackAttack();
-                target.TakeDamage(damage);
-                _boss.LastAttackTime = Time.time;
-            }
-        }
-
     }
-    public void OnUpdate() 
+
+    public void OnUpdate()
     {
-        if (_boss.CanAttack())
-        {
-            Collider2D hit = Physics2D.OverlapCircle(
-                _boss.AttackPoint.position,
-                _boss.AttackRange,
-                _boss.PlayerLayer
-            );
+        //if (_boss.CanAttack())
+        //{
+        //    Collider2D hit = Physics2D.OverlapCircle(
+        //        _boss.AttackPoint.position,
+        //        _boss.AttackRange,
+        //        _boss.PlayerLayer
+        //    );
 
-            if (hit == null)
-                _boss.ChangeState(_boss.IdleState);
-            else
-                _boss.ChangeState(_boss.AttackState); // 재진입
-        }
+        //    if (hit == null)
+        //        _boss.ChangeState(_boss.IdleState);
+        //    else
+        //        _boss.ChangeState(_boss.AttackState); // 재진입
+        //}
+
+        // 애니메이션이벤트로 공격애니메이션 끝날때 이벤트 추가해서 강제로 Idle상태로 복귀
+
     }
+
     public void OnFixedUpdate() { }
-    public void OnExit() 
+
+    public void OnExit()
     {
         _boss.Animator.speed = 1f;
     }
 
-    private void TryKnockBackAttack()
-    {
-        int rand = Random.Range(0, 100);
-        if (rand < 30) Player.TriggerKnockBack();
-    }
 }

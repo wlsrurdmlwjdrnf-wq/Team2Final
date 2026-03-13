@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949981c9c9f64de48a4bbb3c505bebc2, type: 3}
+  m_Name: Stage_Silver
+  m_EditorClassIdentifier: 
+  isTierStage: 1
+  isBossStage: 0
+  isAdventureStage: 0
+  mainNumber: 3
+  subNumber: 10
+  monsterPrefabs:
+  - {fileID: 3327221700254952552, guid: a77d58cc4b3aaa8419dc0d55d3cecd2f, type: 3}
+  spawnCount: 15
+  spawnAreaWidth: 30
+  minDistance: 1
+  yFixedPosition: 0.4
+  backgroundSprite: {fileID: 21300000, guid: 844aa8a92c93bc9429ed2b1c4fa87afd, type: 3}

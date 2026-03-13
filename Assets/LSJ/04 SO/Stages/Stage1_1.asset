@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 949981c9c9f64de48a4bbb3c505bebc2, type: 3}
   m_Name: Stage1_1
   m_EditorClassIdentifier: 
+  isTierStage: 0
+  isBossStage: 0
+  isAdventureStage: 0
   mainNumber: 1
   subNumber: 1
+  monsterPrefabs:
+  - {fileID: 345202284924123219, guid: 9b50232c77fb09b4f9140454955e59a2, type: 3}
+  spawnCount: 12
+  spawnAreaWidth: 40
+  minDistance: 2
+  yFixedPosition: 0.2
+  backgroundSprite: {fileID: 21300000, guid: 54bd53b820c103941973bfda675c99eb, type: 3}

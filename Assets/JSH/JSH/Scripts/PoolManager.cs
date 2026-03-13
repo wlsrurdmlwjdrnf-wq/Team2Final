@@ -5,10 +5,15 @@ public class PoolManager : MonoBehaviour
 {
     public static PoolManager Instance { get; private set; }
 
-    private static Dictionary<string, object> pools = new Dictionary<string, object>();
+    private static Dictionary<string, IPool> pools = new Dictionary<string, IPool>();
 
     private void Awake()
     {
+        if (transform.parent != null)
+        {
+            transform.SetParent(null);
+        }
+
         if (Instance == null)
         {
             Instance = this;
@@ -20,7 +25,7 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    public void CreatePool<T>(T prefab, int generateCount, Transform parent = null) where T : MonoBehaviour
+    public void CreatePool<T>(T prefab, int generateCount, Transform parent = null) where T : MonoBehaviour, IPoolable
     {
         if (prefab == null) return;
 
@@ -30,7 +35,7 @@ public class PoolManager : MonoBehaviour
         pools.Add(key, new ObjectPool<T>(prefab, generateCount, parent));
     }
 
-    public T GetFromPool<T>(T prefab) where T : MonoBehaviour
+    public T GetFromPool<T>(T prefab) where T : MonoBehaviour, IPoolable
     {
         if (prefab == null) return null;
 
@@ -38,20 +43,6 @@ public class PoolManager : MonoBehaviour
         if (!pools.TryGetValue(key, out var box)) return null;
 
         return (box as ObjectPool<T>)?.Dequeue();
-    }
-
-    public void ReturnPool<T>(T instance) where T : MonoBehaviour
-    {
-        if (instance == null) return;
-
-        string key = instance.GetInstanceID().ToString();
-        if (!pools.TryGetValue(key, out var box))
-        {
-            Destroy(instance.gameObject);
-            return;
-        }
-
-        (box as ObjectPool<T>)?.Enqueue(instance);
     }
 }
 

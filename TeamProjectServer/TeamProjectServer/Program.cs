@@ -63,9 +63,9 @@ DataManager.Initialize();
 
 
 
-app.UseAuthentication();
-app.UseAuthorization();
-app.UseHttpsRedirection();
+app.UseAuthentication(); // 누구인지 인증
+app.UseAuthorization(); // 그 사람이 권한이 있는지 체크
+//app.UseHttpsRedirection();
 
 
 

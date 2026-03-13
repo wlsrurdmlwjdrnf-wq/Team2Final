@@ -12,6 +12,7 @@ public class Player : EntityStateMachine
 
     private Animator _anim;
     private SpriteRenderer _sr;
+    private Collider2D _col;
 
     private float _lastAttackTime;
 
@@ -23,6 +24,7 @@ public class Player : EntityStateMachine
 
     public Animator Animator => _anim;
     public SpriteRenderer SpriteRenderer => _sr;
+    public Collider2D Collider => _col;
     public Transform AttackPoint => _attackPoint;
     public LayerMask MonsterLayer => _monsterLayer;
     public float AttackRange => _attackRange;
@@ -36,14 +38,13 @@ public class Player : EntityStateMachine
     public static event Action OnAttack;
     public static event Action OnNoAttack;
     public static event Action OnDead;
+    public static event Action OnSkill;
 
     private void Awake()
     {
-        OnKnockBack += ChangeKnockBackState;
-
         _anim = GetComponent<Animator>();
         _sr = GetComponent<SpriteRenderer>();
-        _lastAttackTime = Time.time;
+        _col = GetComponent<Collider2D>();
 
         // 상태 초기화
         IdleState = new PlayerIdleState(this);
@@ -51,10 +52,20 @@ public class Player : EntityStateMachine
         SkillState = new PlayerSkillState(this);
         KnockBackState = new PlayerKnockBackState(this);
         DeadState = new PlayerDeadState(this);
-
+    }
+    private void OnEnable()
+    {
+        OnKnockBack += ChangeKnockBackState;
+        //OnSkill += ChangeSkillState;
+        _col.enabled = true;
+        _lastAttackTime = Time.time;
         ChangeState(IdleState);
     }
-
+    private void OnDisable()
+    {
+        OnKnockBack -= ChangeKnockBackState;
+        //OnSkill -= ChangeSkillState;
+    }
     public bool CanAttack()
     {
         return Time.time >= _lastAttackTime + (1f / PlayerStatManager.Instance.AttackSpeed);
@@ -62,6 +73,10 @@ public class Player : EntityStateMachine
     private void ChangeKnockBackState()
     {
         ChangeState(KnockBackState);
+    }
+    private void ChangeSkillState()
+    {
+        ChangeState(SkillState);
     }
     public static void TriggerKnockBack()
     {
@@ -79,8 +94,49 @@ public class Player : EntityStateMachine
     {
         OnDead?.Invoke();
     }
-    private void OnDisable()
+    public static void TriggerSkill()
     {
-        OnKnockBack -= ChangeKnockBackState;
+        OnSkill?.Invoke();
+    }
+
+    // Animation Event가 부를 함수
+    public void OnAttackHit()
+    {
+        RandomSwingSoundPlay();
+        IDamageable target = EnemyManager.Instance.GetClosestEnemy(transform.position);
+
+        if (target != null)
+        {
+            BigNumber damage = PlayerStatManager.Instance.AttackPower;
+            // 크리티컬
+            if (UnityEngine.Random.value < PlayerStatManager.Instance.CritRate)
+            {
+                damage *= PlayerStatManager.Instance.CritDamage;
+                target.TakeDamage(damage, true);
+            }
+            else target.TakeDamage(damage);
+
+            // 이펙트나 사운드 넣으면 될 듯
+        }
+    }
+    private void RandomSwingSoundPlay()
+    {
+        int rand = UnityEngine.Random.Range(1, 4);
+        switch (rand)
+        {
+            case 1:
+                SoundManager.Instance.PlaySFX(ESFXType.SwingAxe1);
+                break;
+            case 2:
+                SoundManager.Instance.PlaySFX(ESFXType.SwingAxe2);
+                break;
+            case 3:
+                SoundManager.Instance.PlaySFX(ESFXType.SwingAxe3);
+                break;
+        }
+    }
+    public void OnChangeIdle()
+    {
+        ChangeState(IdleState);
     }
 }

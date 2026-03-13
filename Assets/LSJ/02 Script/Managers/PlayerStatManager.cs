@@ -77,6 +77,9 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
     // 모든 모디파이어
     private readonly List<StatModifier> _modifiers = new List<StatModifier>();
 
+    // 스탯 변경 알림 이벤트
+    public event Action OnStatChanged;
+
     private void Awake()
     {
         if (_baseStats == null)
@@ -100,12 +103,22 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         MarkDirty();
     }
 
-    public void RemoveModifier(StatModifier modifier)
+    public bool RemoveModifier(StatModifier modifier)
     {
-        _modifiers.Remove(modifier);
-        MarkDirty();
+        for (int i = 0; i < _modifiers.Count; i++)
+        {
+            var m = _modifiers[i];
+            if (m.statType == modifier.statType &&
+                m.operation == modifier.operation &&
+                Mathf.Approximately(m.value, modifier.value))
+            {
+                _modifiers.RemoveAt(i); 
+                MarkDirty();
+                return true;
+            }
+        }
+        return false;
     }
-    // 모디파이어 객체 비교 쉽게 하는 거 추가하기
 
     public void ClearModifiers()
     {
@@ -120,7 +133,7 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         _bigCachedValues.Clear();
         _floatCachedValues.Clear();
 
-        BigNumber tierBonus = new BigNumber(GetTierBonus(_currentTier));
+        BigNumber tierBonus = GetTierBonus(_currentTier);
 
         // BigNumber 스탯들
         _bigCachedValues[StatType.AttackPower] = CalculateBigStat(StatType.AttackPower, tierBonus, 1.0);
@@ -138,15 +151,17 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         _floatCachedValues[StatType.MoveSpeed] = CalculateFloatStat(StatType.MoveSpeed, v => Mathf.Max(-10f, v));
 
         _isDirty = false;
+        OnStatChanged?.Invoke();
     }
 
     // BigNumber 스탯 계산 헬퍼
     private BigNumber CalculateBigStat(StatType type, BigNumber baseMultiplier, double minValue)
     {
         BigNumber baseVal = new BigNumber(GetBaseValue(type));
-        BigNumber final = baseVal * baseMultiplier;
+        BigNumber final = baseVal;
         final += GetAdditiveBig(type);
         final *= GetMultiplicativeBig(type);
+        final *= baseMultiplier;
         return final >= new BigNumber(minValue) ? final : new BigNumber(minValue);
     }
 
@@ -266,25 +281,31 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         MarkDirty();
     }
 
-    public void PromoteTier(Tier newTier)
+    public void PromoteTier()
     {
-        _currentTier = newTier;
+        Tier tier = _currentTier;
+        Tier[] values = (Tier[])Enum.GetValues(typeof(Tier));
+
+        int index = Array.IndexOf(values, tier);
+        _currentTier = values[index + 1];
+
         MarkDirty();
     }
 
-    private float GetTierBonus(Tier tier)
+    private BigNumber GetTierBonus(Tier tier)
     {
         switch (tier)
         {
-            case Tier.Bronze: return 2f;
-            case Tier.Silver: return 5f;
-            case Tier.Gold: return 10f;
-            case Tier.Platinum: return 20f;
-            case Tier.Diamond: return 50f;
-            case Tier.Amethyst: return 100f;
-            case Tier.Ruby: return 300f;
-            case Tier.Brilliance: return 1000f;
-            default: return 1f;
+            case Tier.Bronze: return new BigNumber(2);
+            case Tier.Iron: return new BigNumber(5);
+            case Tier.Silver: return new BigNumber(18);
+            case Tier.Gold: return new BigNumber(25);
+            case Tier.Platinum: return new BigNumber(50);
+            case Tier.Diamond: return new BigNumber(100);
+            case Tier.Amethyst: return new BigNumber(300);
+            case Tier.Ruby: return new BigNumber(1000);
+            case Tier.Brilliance: return new BigNumber(5000);
+            default: return new BigNumber(1);
         }
     }
 
@@ -310,7 +331,7 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
             saveData.modifiers.Add(new SerializableModifier(mod));
         }
 
-        return JsonUtility.ToJson(saveData, true);
+        return JsonUtility.ToJson(saveData);
     }
 
     public bool LoadFromJson(string json)
@@ -371,20 +392,6 @@ public class PlayerStatManager : Singleton<PlayerStatManager>
         else
         {
             return BigNumberFormatter.ToFormatted(_floatCachedValues[type]);
-        }
-    }
-    // 디버그용
-    [ContextMenu("Log All Stats")]
-    private void LogStats()
-    {
-        RecalculateIfNeeded();
-        foreach (var kvp in _bigCachedValues)
-        {
-            Debug.Log($"{kvp.Key} (Big): {GetFormatted(kvp.Key)}");
-        }
-        foreach (var kvp in _floatCachedValues)
-        {
-            Debug.Log($"{kvp.Key} (float): {GetFormatted(kvp.Key)}");
         }
     }
 }

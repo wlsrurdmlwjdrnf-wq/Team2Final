@@ -2,23 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ResourceType
-{
-    EXP,
-    StatPoint,
-    Gold,
-    Emerald,
-    Diamond,
-    EnhancementCube,
-    FireStone,
-    WaterStone,
-    WindStone,
-    EarthStone,
-}
-
 public class PlayerResourceManager : Singleton<PlayerResourceManager>
 {
     private readonly Dictionary<ResourceType, BigNumber> _resources = new();
+    private BigNumber _tmpMultiplier;
 
     private void Awake()
     {
@@ -28,16 +15,34 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
         }
 
         // 시작 재화 테스트
-        _resources[ResourceType.Gold] = new BigNumber(1000);
-        _resources[ResourceType.Diamond] = new BigNumber(123456789101112);
-        _resources[ResourceType.EXP] = new BigNumber(MathF.Pow(10,10));
+        //_resources[ResourceType.Gold] = new BigNumber(1,100);
+        _resources[ResourceType.Diamond] = new BigNumber(100000);
+        _resources[ResourceType.Emerald] = new BigNumber(100000);
+        _resources[ResourceType.EnhancementCube] = new BigNumber(100000);
+        _resources[ResourceType.Feather] = new BigNumber(100);
+        //_resources[ResourceType.StatPoint] = new BigNumber(1000);
     }
 
     public void AddResource(ResourceType type, BigNumber amount)
     {
         if (amount.mantissa == 0) return;
-        _resources[type] = _resources[type] + amount;
-        Debug.Log($"[{type}] +{amount} (현재: {GetFormatted(type)})");
+
+        switch (type)
+        {
+            case ResourceType.Gold:
+                _tmpMultiplier = PlayerStatManager.Instance.GoldMultiplier;
+                break;
+            case ResourceType.EXP:
+                _tmpMultiplier = PlayerStatManager.Instance.ExpMultiplier;
+                break;
+            default:
+                _tmpMultiplier = new BigNumber(1.0);
+                break;
+        }
+
+        _resources[type] = _resources[type] + amount * _tmpMultiplier;
+
+        ResourcesModel.TriggerResourceChange(type, _resources[type]);
     }
 
     public bool SpendResource(ResourceType type, BigNumber amount)
@@ -46,12 +51,14 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
 
         if (current < amount)
         {
-            Debug.LogWarning($"[{type}] 부족! 필요: {amount}, 보유: {current}");
+            Debug.LogWarning($"[{type}] 부족!");
             return false;
         }
 
         _resources[type] = current - amount;
-        Debug.Log($"[{type}] -{amount} (남은: {GetFormatted(type)})");
+
+        ResourcesModel.TriggerResourceChange(type, _resources[type]);
+
         return true;
     }
 
@@ -93,7 +100,7 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
             });
         }
 
-        return JsonUtility.ToJson(saveData, true);
+        return JsonUtility.ToJson(saveData);
     }
 
     public bool LoadFromJson(string json)
@@ -123,16 +130,6 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
         {
             Debug.LogError($"자원 로드 실패: {e.Message}");
             return false;
-        }
-    }
-
-    // 디버그용
-    [ContextMenu("Log All Resources")]
-    private void LogAll()
-    {
-        foreach (var kvp in _resources)
-        {
-            Debug.Log($"{kvp.Key}: {kvp.Value} ({GetFormatted(kvp.Key)})");
         }
     }
 }

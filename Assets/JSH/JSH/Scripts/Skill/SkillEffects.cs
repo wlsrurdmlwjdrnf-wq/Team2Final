@@ -1,62 +1,122 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class TestSkill_1 : ISkillEffect 
+public class FireExplosion : ISkillEffect
 {
     private SkillVFX _vfx;
-
-    public TestSkill_1(SkillVFX vfx)
+    private ESkillEffectType _skillEffectType;
+    private ElementType _elementType;
+    public FireExplosion(SkillVFX vfx, ESkillEffectType effectType)
     {
         _vfx = vfx;
+        _skillEffectType = effectType;
     }
-    public void Apply() 
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
     {
+        if (enemies == null || enemies.Count <= 0)
+        {
+            return;
+        }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
-        effect.transform.position = Vector3.zero;
-        Debug.Log("TestSkill_1");
+        effect.Setup(_elementType, SkillManager.Instance.GetClosestEnemy(enemies), damageDuplicator);
+        SoundManager.Instance.PlaySFX(ESFXType.Explosion);
     }
 }
-public class TestSkill_2 : ISkillEffect
+public class EarthGrow : ISkillEffect
 {
     private SkillVFX _vfx;
-
-    public TestSkill_2(SkillVFX vfx)
+    private ESkillEffectType _skillEffectType;
+    private ElementType _elementType;
+    public EarthGrow(SkillVFX vfx, ESkillEffectType effectType)
     {
         _vfx = vfx;
+        _skillEffectType = effectType;
     }
-    public void Apply()
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
     {
+        if (enemies == null || enemies.Count <= 0)
+        {
+            return;
+        }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
-        effect.transform.position = Vector3.zero;
-        Debug.Log("TestSkill_2");
+        effect.Setup(_elementType, SkillManager.Instance.GetClosestEnemy(enemies), damageDuplicator);
+        SoundManager.Instance.PlaySFX(ESFXType.EarthGrow);
     }
 }
-public class TestSkill_3 : ISkillEffect
+public class WindGust : ISkillEffect
 {
     private SkillVFX _vfx;
-
-    public TestSkill_3(SkillVFX vfx)
+    private ESkillEffectType _skillEffectType;
+    private ElementType _elementType;
+    public WindGust(SkillVFX vfx, ESkillEffectType effectType)
     {
         _vfx = vfx;
+        _skillEffectType = effectType;
     }
-    public void Apply()
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
     {
+        if (enemies == null || enemies.Count <= 0)
+        {
+            return;
+        }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
-        effect.transform.position = Vector3.zero;
-        Debug.Log("TestSkill_3");
+        effect.Setup(_elementType, SkillManager.Instance.GetClosestEnemy(enemies), damageDuplicator);
+        SoundManager.Instance.PlaySFX(ESFXType.WindGust);
     }
 }
-public class TestSkill_4 : ISkillEffect
+public class IceSlash : ISkillEffect
 {
     private SkillVFX _vfx;
-
-    public TestSkill_4(SkillVFX vfx)
+    private ESkillEffectType _skillEffectType;
+    private ElementType _elementType;
+    public IceSlash(SkillVFX vfx, ESkillEffectType effectType)
     {
         _vfx = vfx;
+        _skillEffectType = effectType;
     }
-    public void Apply()
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
     {
+        if (enemies == null || enemies.Count <= 0)
+        {
+            return;
+        }
         var effect = PoolManager.Instance.GetFromPool(_vfx);
-        effect.transform.position = Vector3.zero;
-        Debug.Log("TestSkill_4");
+        effect.Setup(_elementType, SkillManager.Instance.GetClosestEnemy(enemies), damageDuplicator);
+        SoundManager.Instance.PlaySFX(ESFXType.IceSlash);
+    }
+}
+public class Lightning : ISkillEffect
+{
+    private SkillVFX _vfx;
+    private ESkillEffectType _skillEffectType;
+    private ElementType _elementType;
+    private WaitForSeconds _effectWaitSec = new WaitForSeconds(0.1f);
+    private Vector3 _effectOffset = new Vector3(2.5f, 0f, 0f);
+
+    public Lightning(SkillVFX vfx, ESkillEffectType effectType)
+    {
+        _vfx = vfx;
+        _skillEffectType = effectType;
+    }
+    public void Apply(List<IDamageable> enemies, float damageDuplicator)
+    {
+        if (enemies == null || enemies.Count <= 0)
+        {
+            return;
+        }
+        SkillManager.Instance.StartCoroutine(SpawnLightning(enemies, damageDuplicator));
+    }
+    private IEnumerator SpawnLightning(List<IDamageable> enemies, float damageDuplicator) 
+    {
+        Vector3 spawnPos = SkillManager.Instance.GetClosestEnemy(enemies).transform.position;
+        for (int i = 0; i < 5; i++)
+        {
+            var effect = PoolManager.Instance.GetFromPool(_vfx);
+            effect.Setup(_elementType, spawnPos, damageDuplicator);
+            SoundManager.Instance.PlaySFX(ESFXType.Lightning);
+            spawnPos += _effectOffset;
+            yield return _effectWaitSec;
+        }
     }
 }

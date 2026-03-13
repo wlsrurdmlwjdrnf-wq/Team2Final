@@ -20,8 +20,8 @@ MonoBehaviour:
   baseCritRate: 0.05
   baseCritDamage: 1.5
   baseMaxMana: 100
-  baseManaRegenPerSec: 1
+  baseManaRegenPerSec: 5
   baseGoldMultiplier: 1
   baseExpMultiplier: 1
-  baseAttackSpeed: 1
+  baseAttackSpeed: 1.5
   baseMoveSpeed: 4

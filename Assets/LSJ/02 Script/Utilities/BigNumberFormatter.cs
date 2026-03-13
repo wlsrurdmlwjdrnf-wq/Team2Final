@@ -1,18 +1,31 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 public static class BigNumberFormatter
 {
     // 약어 배열 천 단위로
-    private static readonly string[] suffixes = new string[]
+    private static readonly string[] suffixes;
+
+    static BigNumberFormatter()
     {
-        "", "K", "M", "B", "T",
-        "aa", "ab", "ac", "ad", "ae", "af", "ag", "ah", "ai", "aj",
-        "ak", "al", "am", "an", "ao", "ap", "aq", "ar", "as", "at",
-        "au", "av", "aw", "ax", "ay", "az",
-        "ba", "bb", "bc", "bd", "be", "bf", "bg", "bh", "bi", "bj",
-        "bk", "bl", "bm", "bn", "bo", "bp", "bq", "br", "bs", "bt",
-        "bu", "bv", "bw", "bx", "by", "bz"
-    };
+        suffixes = GenerateSuffixes();
+    }
+
+    private static string[] GenerateSuffixes()
+    {
+        var list = new List<string> { "", "K", "M", "B", "T" };
+
+        // aa ~ zz
+        for (char first = 'a'; first <= 'z'; first++)
+        {
+            for (char second = 'a'; second <= 'z'; second++)
+            {
+                list.Add($"{first}{second}");
+            }
+        }
+
+        return list.ToArray();
+    }
 
     // 1000이상 다 과학적 표기
     public static string ToString(BigNumber bn)
@@ -40,7 +53,7 @@ public static class BigNumberFormatter
         if (bn.exponent >= 0 && bn.exponent <= 3)
         {
             double value = absMantissa * Math.Pow(10, bn.exponent);
-            string formatted = value.ToString("N2");
+            string formatted = value.ToString("N0");
             formatted = CleanDecimal(formatted);
             return isNegative ? "-" + formatted : formatted;
         }
@@ -71,7 +84,7 @@ public static class BigNumberFormatter
         // 1000 미만 -> 일반 숫자
         if (absValue < 1000)
         {
-            string formatted = absValue.ToString("N2");
+            string formatted = absValue.ToString("N1");
             formatted = CleanDecimal(formatted);
             return isNegative ? "-" + formatted : formatted;
         }
@@ -90,7 +103,6 @@ public static class BigNumberFormatter
         string result = numberPart + suffix;
         return isNegative ? "-" + result : result;
     }
-
     // 소수점 정리 헬퍼
     private static string CleanDecimal(string s)
     {

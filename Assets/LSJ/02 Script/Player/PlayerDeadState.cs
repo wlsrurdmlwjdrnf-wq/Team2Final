@@ -4,13 +4,13 @@ using UnityEngine;
 public class PlayerDeadState : IEntityState
 {
     private readonly Player _player;
-    private WaitForSeconds _deadDuration = new WaitForSeconds(1f);
+    private WaitForSeconds _deadDuration = new WaitForSeconds(0.8f);
+
     public PlayerDeadState(Player player) => _player = player;
     public void OnEnter() 
     {
         _player.LockState(true);
 
-        _player.Animator.speed = 1f;
         _player.Animator.SetInteger("AttackIndex", 0);
         _player.Animator.SetBool("IsKnockBack", false);
         _player.Animator.SetBool("IsDead", true);
@@ -22,15 +22,16 @@ public class PlayerDeadState : IEntityState
     }
     public void OnUpdate() { }
     public void OnFixedUpdate() { }
-    public void OnExit() 
-    {
-
-    }
+    public void OnExit() { }
     private IEnumerator WaitResurrectionCo()
     {
-        _player.GetComponent<Collider2D>().enabled = false;
+        _player.Collider.enabled = false;
+        
         yield return _deadDuration;
 
-        // ÇÃ·¹ÀÌ¾î ÃÊ±âÈ­
+        Player.TriggerDead(); // ³Ë¹é ÈÄ Á×¾úÀ» ¶§ ¸ØÃãÀ¯Áö
+        StageManager.Instance.GameOver();
+        _player.LockState(false);
+        _player.gameObject.SetActive(false);
     }
 }

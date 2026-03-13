@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillInstance : IUpgradable
@@ -7,11 +8,14 @@ public class SkillInstance : IUpgradable
     public ISkillEffect effect;
     private float _lastCastTime;
     private float _currAttackCount;
-    public SkillInstance(SkillDataSO data, ISkillEffect skillEffect)
+    private List<IDamageable> _enemyDamageables;
+    public SkillInstance(InventorySlot slot, ISkillEffect effect)
     {
-        baseData = data;
-        currentLevel = data.Level;
-        effect = skillEffect;
+        baseData = slot.BaseData as SkillDataSO;
+        currentLevel = slot.Level;
+        this.effect = effect;
+        _lastCastTime = Time.time;
+        _currAttackCount = 0;
     }
     public int Level => currentLevel;
     public void Upgrade()
@@ -22,21 +26,56 @@ public class SkillInstance : IUpgradable
     {
         _currAttackCount++;
     }
-    //나중에 매개변수 수정 필요할 수 있음
-    public bool CanCast(float mana) 
+    public bool CanCast(PlayerHpMp playerHpMp)
     {
-        if (Time.time < _lastCastTime + baseData.CoolTime) return false;  //쿨타임체크 
-        if (mana < baseData.ManaCost) return false;  //마나체크
-        if (_currAttackCount < baseData.TriggerCount) return false;  //평타횟수체크
+        if (baseData.TriggerCount > 0)
+        {
+            if (_currAttackCount < baseData.TriggerCount)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if (Time.time < _lastCastTime + baseData.CoolTime)
+            {
+                return false;
+            }
+        }
+
+        _enemyDamageables = SkillManager.Instance.CheckEnemy(PublicConst.SkillDetectRange);
+        if (_enemyDamageables == null || _enemyDamageables.Count <= 0)
+        {
+            SkillManager.instance.GetNewEnemy();
+            return false;
+        }
+
+        if (!playerHpMp.UseMana(baseData.ManaCost))
+        {
+            return false;
+        }
         return true;
     }
-    public void Cast(PlayerStatManager player) 
+
+    public void Cast()
     {
-        //현재마나로 수정필요
-        if (!CanCast(player.MaxMana)) return;
-        //마나감소
         _lastCastTime = Time.time;
         _currAttackCount = 0;
-        effect.Apply();
+        effect.Apply(_enemyDamageables, baseData.Damage);
+    }
+
+    public float GetCooldownProgress() 
+    {
+        float progress;
+        if (baseData.TriggerCount > 0)
+        {
+            progress = Mathf.Clamp01(_currAttackCount / (float)baseData.TriggerCount);
+        }
+        else
+        {
+            float elapsed = Time.time - _lastCastTime;
+            progress = Mathf.Clamp01(elapsed / baseData.CoolTime);
+        }
+        return progress;
     }
 }

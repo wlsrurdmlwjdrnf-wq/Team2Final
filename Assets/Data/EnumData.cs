@@ -1,8 +1,11 @@
 public enum ElementType
 {
     Fire,
+    Water,
+    Wind,
+    Earth,
+    Normal
 }
-
 public enum GradeType
 {     
     Normal,
@@ -10,13 +13,15 @@ public enum GradeType
     Rare,
     Heroic,
     Legendary,
-    Mythical
+    Mythical,
+    Immortal
 }
 
 public enum Tier
 {
     Stone,
     Bronze,
+    Iron,
     Silver, 
     Gold, 
     Platinum, 
@@ -54,7 +59,8 @@ public enum Operation
 
 public enum EDataType
 {
-    Weapon,
-    Accessories,
-    Skill
+    Weapon = 0,
+    Accessories = 1,
+    Skill = 2,
+    Artifact = 3,
 }

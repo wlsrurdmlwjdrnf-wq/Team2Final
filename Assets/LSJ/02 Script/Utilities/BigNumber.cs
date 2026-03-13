@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class BigNumber : IComparable<BigNumber>
 {
     public double mantissa; // 항상 양수 (1 <= m < 10)
     public long exponent;
     public int sign; // 부호 (1, -1, 0)
+
+    private const double ComparisonEpsilon = 1e-9;
 
     // 생성자들
     public BigNumber() : this(0.0) { }
@@ -64,8 +66,29 @@ public class BigNumber : IComparable<BigNumber>
             mantissa *= 10.0;
             exponent--;
         }
-    }
 
+        // 정수에 매우 가까운 수는 정수로 스냅
+        double nearest = Math.Round(mantissa);
+        if (Math.Abs(mantissa - nearest) <= ComparisonEpsilon)
+        {
+            mantissa = nearest;
+
+            // 10.0이 된 경우 바로 정규화
+            if (mantissa >= 10.0)
+            {
+                mantissa = 1.0;
+                exponent++;
+            }
+        }
+
+        // 극단적인 underflow 방지
+        if (exponent < -100)
+        {
+            mantissa = 0;
+            exponent = 0;
+            sign = 0;
+        }
+    }
     // 덧셈
     public static BigNumber operator +(BigNumber a, BigNumber b)
     {
@@ -115,28 +138,41 @@ public class BigNumber : IComparable<BigNumber>
         if (a.sign == 0 || b.sign == 0) return new BigNumber(0);
         return new BigNumber(a.mantissa * b.mantissa, a.exponent + b.exponent, a.sign * b.sign);
     }
+    
+    // 나눗셈
+    public static BigNumber operator /(BigNumber a, BigNumber b)
+    {
+        if (b.sign == 0)
+            throw new DivideByZeroException("0으로 나눌 수 없습니다! (Divide by zero)");
 
+        if (a.sign == 0)
+            return new BigNumber(0);
+
+        double newMantissa = a.mantissa / b.mantissa;
+        long newExponent = a.exponent - b.exponent;
+        int newSign = a.sign * b.sign;  // 나눗셈은 부호 반대
+
+        // Normalize()가 생성자에서 자동 호출되므로 안전
+        return new BigNumber(newMantissa, newExponent, newSign);
+    }
     // 비교
     public int CompareTo(BigNumber other)
     {
         if (other == null) return 1;
-        if (sign != other.sign) return sign.CompareTo(other.sign); // 부호 먼저 (양 > 0 > 음)
 
-        if (sign == 0) return 0; // 둘 다 0
+        if (sign != other.sign)
+            return sign.CompareTo(other.sign);
 
-        long expDiff = exponent - other.exponent;
+        if (sign == 0) return 0;
 
-        if (expDiff > 1) return sign; // this가 더 큼 (sign=1 or -1)
-        if (expDiff < -1) return -sign; // other가 더 큼
+        if (exponent != other.exponent)
+            return exponent.CompareTo(other.exponent) * sign;
 
-        double thisAdj = mantissa;
-        double otherAdj = other.mantissa;
+        double diff = mantissa - other.mantissa;
+        if (Math.Abs(diff) < ComparisonEpsilon)
+            return 0;
 
-        if (expDiff == 1) otherAdj *= 0.1; // other 보정
-        else if (expDiff == -1) thisAdj *= 0.1; // this 보정
-
-        int cmp = thisAdj.CompareTo(otherAdj);
-        return sign * cmp; // 부호 고려 (음수면 반대)
+        return diff > 0 ? sign : -sign;
     }
 
     public static bool operator >(BigNumber a, BigNumber b) => a.CompareTo(b) > 0;
@@ -148,13 +184,33 @@ public class BigNumber : IComparable<BigNumber>
     {
         if (ReferenceEquals(a, b)) return true;
         if (a is null || b is null) return false;
+
         if (a.sign != b.sign) return false;
         if (a.exponent != b.exponent) return false;
-        return Math.Abs(a.mantissa - b.mantissa) < 1e-10;
+
+        return Math.Abs(a.mantissa - b.mantissa) < ComparisonEpsilon;
     }
 
     public static bool operator !=(BigNumber a, BigNumber b) => !(a == b);
 
+    public double ToDoubleSafe()
+    {
+        if (sign == 0) return 0.0;
+
+        // double이 표현 가능한 범위 대략 체크
+        if (exponent > 308)
+        {
+            return double.PositiveInfinity * sign;  // 또는 그냥 double.MaxValue * sign 써도 됨
+        }
+        if (exponent < -308)
+        {
+            return 0.0;  // 아주 작은 값은 0으로 취급 
+        }
+
+        // 정상 범위 -> 안전하게 계산
+        double value = mantissa * Math.Pow(10.0, exponent);
+        return sign * value;
+    }
     public override bool Equals(object obj)
     {
         return obj is BigNumber other && this == other;
