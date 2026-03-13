@@ -154,7 +154,7 @@ public class PowerUpPresenter : MonoBehaviour
         switch (type)
         {
             case StatType.AttackPower:
-                return $"{level * 2 * bonus} ¡æ {(level + 1) * 2 * bonus}";
+                return $"{level * 3 * bonus} ¡æ {(level + 1) * 3 * bonus}";
             case StatType.MaxHP:
                 return $"{level * 5 * bonus} ¡æ {(level + 1) * 5 * bonus}";
             case StatType.HPRegenPerSec:
@@ -172,8 +172,8 @@ public class PowerUpPresenter : MonoBehaviour
         switch (type)
         {
             case StatType.AttackPower:
-                PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, (level - 1) * 2));
-                PlayerStatManager.Instance.AddModifier(new StatModifier(type, Operation.Add, level * 2));
+                PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, (level - 1) * 3));
+                PlayerStatManager.Instance.AddModifier(new StatModifier(type, Operation.Add, level * 3));
                 if (level != 0 && level % 1000 == 0)
                 {
                     PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Multiply, level / 1000));

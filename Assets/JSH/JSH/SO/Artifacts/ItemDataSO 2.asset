@@ -21,13 +21,13 @@ MonoBehaviour:
   EquipStat: 4
   EquipValue: 0
   PassiveStat: 4
-  PassiveValue: 10
+  PassiveValue: 0.5
   CriticalDMG: 0
   CriticalRate: 0
   GoldPer: 0
   EquipATKbyLv: 0
-  PassiveATKbyLv: 10
-  CriticalDMGbyLv: 2
+  PassiveATKbyLv: 0.2
+  CriticalDMGbyLv: 0
   GoldPerbyLv: 0
   DataSO: 0
   IconKey: CritStone

@@ -21,7 +21,6 @@ public class AdventurePresenter : MonoBehaviour
 
     public void AdventureStageClick(int number, Button selected)
     {
-        Debug.Log($"{number}");
         _stage = StageManager.Instance.GetStageData(number);
         view.UpdateStageInfo(number);
         SelectTab(selected);

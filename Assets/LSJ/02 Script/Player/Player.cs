@@ -56,7 +56,7 @@ public class Player : EntityStateMachine
     private void OnEnable()
     {
         OnKnockBack += ChangeKnockBackState;
-        OnSkill += ChangeSkillState;
+        //OnSkill += ChangeSkillState;
         _col.enabled = true;
         _lastAttackTime = Time.time;
         ChangeState(IdleState);
@@ -64,7 +64,7 @@ public class Player : EntityStateMachine
     private void OnDisable()
     {
         OnKnockBack -= ChangeKnockBackState;
-        OnSkill -= ChangeSkillState;
+        //OnSkill -= ChangeSkillState;
     }
     public bool CanAttack()
     {

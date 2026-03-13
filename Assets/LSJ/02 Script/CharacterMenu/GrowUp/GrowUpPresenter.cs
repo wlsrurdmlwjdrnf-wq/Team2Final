@@ -125,13 +125,13 @@ public class GrowUpPresenter : MonoBehaviour
         switch (type)
         {
             case StatType.AttackPower:
-                return $"{level * 5} ¡æ {(level + 1) * 5}";
-            case StatType.MaxHP:
                 return $"{level * 10} ¡æ {(level + 1) * 10}";
+            case StatType.MaxHP:
+                return $"{level * 20} ¡æ {(level + 1) * 20}";
             case StatType.HPRegenPerSec:
-                return $"{level * 2} ¡æ {(level + 1) * 2}";
+                return $"{level * 4} ¡æ {(level + 1) * 4}";
             case StatType.CritDamage:
-                return $"{level * 2}% ¡æ {(level + 1) * 2}%";
+                return $"{level * 4}% ¡æ {(level + 1) * 4}%";
             case StatType.GoldMultiplier:
                 return $"{0.5f * level}% ¡æ {0.5f * (level + 1)}%";
         }
@@ -143,20 +143,20 @@ public class GrowUpPresenter : MonoBehaviour
         switch (type)
         {
             case StatType.AttackPower:
-                PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, (level - 1) * 5));
-                PlayerStatManager.Instance.AddModifier(new StatModifier(type, Operation.Add, level * 5));
-                break;
-            case StatType.MaxHP:
                 PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, (level - 1) * 10));
                 PlayerStatManager.Instance.AddModifier(new StatModifier(type, Operation.Add, level * 10));
                 break;
+            case StatType.MaxHP:
+                PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, (level - 1) * 20));
+                PlayerStatManager.Instance.AddModifier(new StatModifier(type, Operation.Add, level * 20));
+                break;
             case StatType.HPRegenPerSec:
-                PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, (level - 1) * 2));
-                PlayerStatManager.Instance.AddModifier(new StatModifier(type, Operation.Add, level * 2));
+                PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, (level - 1) * 4));
+                PlayerStatManager.Instance.AddModifier(new StatModifier(type, Operation.Add, level * 4));
                 break;
             case StatType.CritDamage:
-                PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, 0.02f * (level - 1)));
-                PlayerStatManager.Instance.AddModifier(new StatModifier(type, Operation.Add, 0.02f * level));
+                PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, 0.04f * (level - 1)));
+                PlayerStatManager.Instance.AddModifier(new StatModifier(type, Operation.Add, 0.04f * level));
                 break;
             case StatType.GoldMultiplier:
                 PlayerStatManager.Instance.RemoveModifier(new StatModifier(type, Operation.Add, 0.005f * (level - 1)));

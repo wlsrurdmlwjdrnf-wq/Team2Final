@@ -15,7 +15,7 @@ public static class BigNumberFormatter
     {
         var list = new List<string> { "", "K", "M", "B", "T" };
 
-        // aa ~ az, ba ~ bz, ca ~ cz, ...
+        // aa ~ zz
         for (char first = 'a'; first <= 'z'; first++)
         {
             for (char second = 'a'; second <= 'z'; second++)

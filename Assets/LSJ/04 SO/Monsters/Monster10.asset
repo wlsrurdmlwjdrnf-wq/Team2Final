@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: "\uC2AC\uB77C\uC784"
   baseAttackPower: 0
-  baseMaxHP: 20
+  baseMaxHP: 30
   baseDefensivePower: 0
   baseAttackSpeed: 0
   elementType: 4

@@ -15,6 +15,6 @@ MonoBehaviour:
   monsterName: "\uB460\uB460\uC774"
   baseAttackPower: 0
   baseMaxHP: 150
-  baseDefensivePower: 0
+  baseDefensivePower: 1
   baseAttackSpeed: 0
   elementType: 3

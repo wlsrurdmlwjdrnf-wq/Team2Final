@@ -156,7 +156,7 @@ public class UpgradeUI : MonoBehaviour
             _equipButton.image.color = Color.gray;
         }
         int cost = slot.GetUpgradeCost();
-        BigNumber currCube = PlayerResourceManager.Instance.GetResource(ResourceType.EnhancementCube);
+        string currCube = PlayerResourceManager.Instance.GetFormatted(ResourceType.EnhancementCube);
         _costTxt.text = $"{cost}";
         _currCubeTxt.text = $"{currCube}";
     }
