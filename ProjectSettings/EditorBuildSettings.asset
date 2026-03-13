@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 5558b3931a39a49478ddff1ec88270d9
-  - enabled: 1
+  - enabled: 0
     path: Assets/JSH/JSH/JSHLobby.unity
     guid: 3e9f91506c183834b987985c51a1f1a8
   m_configObjects:
