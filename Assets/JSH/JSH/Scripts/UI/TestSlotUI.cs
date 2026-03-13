@@ -116,6 +116,7 @@ public class TestSlotUI : MonoBehaviour, IPoolable
         int tier = 0;
         int level = 0;
         int stack = 0;  
+        if (Slot.Stack > 0) Slot.Unlocked = true;
   
         if (Slot.BaseData is ItemDataSO Item)
         {

@@ -22,7 +22,7 @@ MonoBehaviour:
   CoolTime: 7
   ManaCost: 10
   TriggerCount: 0
-  Range: 5
+  Range: 3
   Damage: 1.2
   DamagePerLevel: 0.1
   CriticalRate: 0
