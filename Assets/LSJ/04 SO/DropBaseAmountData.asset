@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb413f0de9656f444a03fdc231a0ba81, type: 3}
   m_Name: DropBaseAmountData
   m_EditorClassIdentifier: 
-  baseExpAmount: 10
+  baseExpAmount: 5
   baseGoldAmount: 20
   baseEnhancementCubeAmount: 10
   baseElementalStone: 1

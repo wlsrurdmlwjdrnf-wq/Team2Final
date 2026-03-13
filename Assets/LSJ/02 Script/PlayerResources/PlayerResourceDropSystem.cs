@@ -75,8 +75,8 @@ public class PlayerResourceDropSystem : Singleton<PlayerResourceDropSystem>
     private BigNumber DropAmountCorrection(float amount)
     {
         BigNumber bn = new BigNumber(amount) *
-            new BigNumber(Mathf.Pow(StageManager.Instance.CurrentMainNumber, 6)) *
-            new BigNumber((StageManager.Instance.CurrentSubNumber + StageManager.Instance.CurrentMainNumber - 2) * 3);
+            new BigNumber(Mathf.Pow(StageManager.Instance.CurrentMainNumber, 10)) *
+            new BigNumber(Mathf.Pow(StageManager.Instance.CurrentSubNumber + StageManager.Instance.CurrentMainNumber - 1, 2));
 
         if (bn <= new BigNumber(0)) return new BigNumber(amount);
         else return bn;

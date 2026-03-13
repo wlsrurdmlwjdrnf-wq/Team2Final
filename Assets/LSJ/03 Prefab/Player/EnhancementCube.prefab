@@ -106,8 +106,8 @@ MonoBehaviour:
   randomizeSpinDirection: 1
   yFixedPosition: 0
   doLandingShake: 1
-  shakeDuration: 0.18
-  shakeStrength: 0.07
+  shakeDuration: 0.15
+  shakeStrength: 0.1
   autoReturnDelayAfterLanding: 1
-  fadeOutDuration: 0.5
-  fadeEase: 5
+  fadeOutDuration: 0.4
+  fadeEase: 1

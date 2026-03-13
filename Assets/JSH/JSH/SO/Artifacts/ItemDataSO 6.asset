@@ -21,12 +21,12 @@ MonoBehaviour:
   EquipStat: 2
   EquipValue: 0
   PassiveStat: 2
-  PassiveValue: 5
+  PassiveValue: 50
   CriticalDMG: 0
   CriticalRate: 0
   GoldPer: 0
   EquipATKbyLv: 0
-  PassiveATKbyLv: 2
+  PassiveATKbyLv: 30
   CriticalDMGbyLv: 0
   GoldPerbyLv: 0
   DataSO: 0

@@ -45,7 +45,7 @@ public class DamageText : MonoBehaviour, IPoolable2
         seq.Append(transform.DOLocalMoveY(moveUpDistance, duration)
             .SetEase(Ease.OutQuad));
 
-        seq.Join(transform.DOScale(Vector3.one*0.8f, duration)
+        seq.Join(transform.DOScale(Vector3.one*0.5f, duration)
             .SetEase(Ease.InQuint));
 
         seq.AppendInterval(fadeStartDelay);

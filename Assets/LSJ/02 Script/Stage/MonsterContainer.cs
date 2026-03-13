@@ -53,7 +53,7 @@ public class MonsterContainer : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("IDamageable 컴포넌트 없음: " + monsterInstance.name);
+                return;
             }
         }
     }

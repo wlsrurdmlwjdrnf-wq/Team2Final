@@ -19,8 +19,8 @@ MonoBehaviour:
   subNumber: 6
   monsterPrefabs:
   - {fileID: 4867287794497949061, guid: 78c0a01544eebeb4bae77575faf83c3e, type: 3}
-  spawnCount: 22
-  spawnAreaWidth: 45
+  spawnCount: 40
+  spawnAreaWidth: 60
   minDistance: 1
   yFixedPosition: 0.2
   backgroundSprite: {fileID: 21300000, guid: 875133915fa1df84b8ab03b4b026cbeb, type: 3}

@@ -7,7 +7,8 @@ public static class PlayerLevelUpSystem
     // 레벨 업 버튼 누를 때 호출
     public static void TryPlayerLevelUp()
     {
-        _expRequirement = new BigNumber(Mathf.Pow(PlayerStatManager.Instance.PlayerLevel * 10, 2));
+        _expRequirement = new BigNumber(Mathf.Pow(PlayerStatManager.Instance.PlayerLevel * 10, 2))
+            * new BigNumber(PlayerStatManager.Instance.PlayerLevel);
 
         if (PlayerResourceManager.Instance.GetResource(ResourceType.EXP) < _expRequirement) return;
 
@@ -20,7 +21,8 @@ public static class PlayerLevelUpSystem
     // 경험치 필요량 UI로 보여주기용
     public static string GetExpRequirement()
     {
-        _expRequirement = new BigNumber(Mathf.Pow(PlayerStatManager.Instance.PlayerLevel * 10, 2));
+        _expRequirement = new BigNumber(Mathf.Pow(PlayerStatManager.Instance.PlayerLevel * 10, 2))
+            * new BigNumber(PlayerStatManager.Instance.PlayerLevel);
         return BigNumberFormatter.ToFormatted(_expRequirement);
     }
 

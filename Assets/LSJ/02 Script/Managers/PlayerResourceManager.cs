@@ -15,12 +15,12 @@ public class PlayerResourceManager : Singleton<PlayerResourceManager>
         }
 
         // 시작 재화 테스트
-        _resources[ResourceType.Gold] = new BigNumber(1,100);
+        //_resources[ResourceType.Gold] = new BigNumber(1,100);
         _resources[ResourceType.Diamond] = new BigNumber(100000);
         _resources[ResourceType.Emerald] = new BigNumber(100000);
         _resources[ResourceType.EnhancementCube] = new BigNumber(100000);
         _resources[ResourceType.Feather] = new BigNumber(100);
-        _resources[ResourceType.StatPoint] = new BigNumber(1000);
+        //_resources[ResourceType.StatPoint] = new BigNumber(1000);
     }
 
     public void AddResource(ResourceType type, BigNumber amount)

@@ -205,7 +205,7 @@ MonoBehaviour:
   _monsterLayer:
     serializedVersion: 2
     m_Bits: 64
-  _attackRange: 2
+  _attackRange: 2.5
 --- !u!114 &8165833104710470051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +245,10 @@ PrefabInstance:
     - target: {fileID: 337532403958636617, guid: bcf1f6c57859b0149b58224f61986fbc, type: 3}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 532869032232998068, guid: bcf1f6c57859b0149b58224f61986fbc, type: 3}
+      propertyPath: m_Interactable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2074510086433078455, guid: bcf1f6c57859b0149b58224f61986fbc, type: 3}
       propertyPath: m_LocalScale.x
@@ -450,6 +454,10 @@ PrefabInstance:
     - target: {fileID: 7319869414535504008, guid: dd2e71ee7cdb3d74295e352a41afae5e, type: 3}
       propertyPath: m_Name
       value: HpBarCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7462954804088544992, guid: dd2e71ee7cdb3d74295e352a41afae5e, type: 3}
+      propertyPath: m_Interactable
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8178918237298918222, guid: dd2e71ee7cdb3d74295e352a41afae5e, type: 3}
       propertyPath: m_Pivot.x
