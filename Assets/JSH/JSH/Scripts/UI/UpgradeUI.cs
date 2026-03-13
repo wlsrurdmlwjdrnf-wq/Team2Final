@@ -183,9 +183,8 @@ public class UpgradeUI : MonoBehaviour
         _combineSlider.maxValue = _currSlot.Stack / PublicConst.UpgradeStack;
         _combineSlider.value = 0f;
 
-        Color temp = _combinePanelButton.image.color;
-        _combinePanelButton.image.color = _upgradePanelButton.image.color;
-        _upgradePanelButton.image.color = temp;
+        _combinePanelButton.image.color = _tempColor;
+        _upgradePanelButton.image.color = Color.gray;
     }
     public void DoCombine() 
     { 
