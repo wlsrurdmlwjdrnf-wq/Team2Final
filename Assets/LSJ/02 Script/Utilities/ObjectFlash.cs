@@ -27,6 +27,7 @@ public class ObjectFlash : MonoBehaviour
 
         originalColor = spriteRenderer.color;
         propertyBlock = new MaterialPropertyBlock();
+
         _flashDrt = new WaitForSeconds(flashDuration * 0.4f);
     }
 
@@ -35,6 +36,7 @@ public class ObjectFlash : MonoBehaviour
         if (spriteRenderer == null) return;
 
         // 새로운 블록 생성 (매번 새로 만드는 게 안전)
+
         var block = new MaterialPropertyBlock();
 
         // 스프라이트 텍스처 유지 (하얀 덩어리 방지)
@@ -56,7 +58,6 @@ public class ObjectFlash : MonoBehaviour
         // 순간 유지 시간
         yield return _flashDrt;
 
-        // 복귀
         var block = new MaterialPropertyBlock();
 
         if (spriteRenderer.sprite != null)
@@ -64,6 +65,7 @@ public class ObjectFlash : MonoBehaviour
             block.SetTexture("_MainTex", spriteRenderer.sprite.texture);
         }
 
+        // 복귀
         block.SetColor("_Color", originalColor);
 
         spriteRenderer.SetPropertyBlock(block);
